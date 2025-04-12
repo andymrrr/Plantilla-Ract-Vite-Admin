@@ -1,0 +1,12 @@
+{
+  "name": "create-plantillaadmin",
+  "version": "1.0.0",
+  "description": "Generador de proyectos basado en mi plantilla Vite",
+  "bin": {
+    "create-plantillaadmin": "./create.js"
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.0"
+  },
+  "type": "module"
+}
