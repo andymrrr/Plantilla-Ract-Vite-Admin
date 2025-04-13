@@ -11,7 +11,7 @@ Este comando te permite crear nuevos proyectos rápidamente con tu configuració
 Primero clona este repositorio y entra a la carpeta:
 
 ```bash
-git clone https://github.com/tu-usuario/create-plantillaadmin.git
+git clone https://github.com/andymrrr/PlantillaAdmin.git
 cd create-plantillaadmin
 ```
 
