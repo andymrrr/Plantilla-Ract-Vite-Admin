@@ -10,7 +10,7 @@ interface InputFieldProps<T extends FieldValues> {
   type?: 'text' | 'email' | 'password' | 'number';
 }
 
-const InputField = <T extends FieldValues>({
+const HookFormInput = <T extends FieldValues>({
   label,
   name,
   register,
@@ -37,4 +37,4 @@ const InputField = <T extends FieldValues>({
   );
 };
 
-export default InputField;
+export default HookFormInput;
