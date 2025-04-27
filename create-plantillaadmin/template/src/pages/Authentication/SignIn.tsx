@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
+import Tarjeta from '../../components/comun/Ui/Tarjeta';
+import { Contenedor } from '../../components/comun/Ui/Contenedor';
 
 const SignIn: React.FC = () => {
   return (
-    <>
-      <Breadcrumb pageName="Sign In" />
-
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+   <Tarjeta>
+      
+     <Contenedor>
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
@@ -279,8 +279,8 @@ const SignIn: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+        </Contenedor>
+        </Tarjeta>
   );
 };
 
