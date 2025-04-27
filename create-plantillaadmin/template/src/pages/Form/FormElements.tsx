@@ -8,12 +8,36 @@ import SwitcherFour from '../../components/Switchers/SwitcherFour';
 import SwitcherOne from '../../components/Switchers/SwitcherOne';
 import SwitcherThree from '../../components/Switchers/SwitcherThree';
 import SwitcherTwo from '../../components/Switchers/SwitcherTwo';
-import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
-import DatePickerTwo from '../../components/Forms/DatePicker/DatePickerTwo';
-import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
-import MultiSelect from '../../components/Forms/MultiSelect';
+import { useState } from 'react';
+import Select from '../../components/FormulariosControles/Select';
+import MultiSelect from '../../components/FormulariosControles/MultiSelect';
 
 const FormElements = () => {
+  const [paisSeleccionado, setPaisSeleccionado] = useState<string>('');
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  const handleSelectionChange = (newSelectedValues: string[]) => {
+    setSelectedOptions(newSelectedValues);
+  };
+
+  const optionsMultiple = [
+    { value: '1', text: 'Opción 1' },
+    { value: '2', text: 'Opción 2' },
+    { value: '3', text: 'Opción 3' },
+    { value: '4', text: 'Opción 4' },
+  ];
+  // Lista de países
+  const paises = [
+    { valor: 'USA', etiqueta: 'Estados Unidos' },
+    { valor: 'UK', etiqueta: 'Reino Unido' },
+    { valor: 'Canada', etiqueta: 'Canadá' },
+    { valor: 'Mexico', etiqueta: 'México' },
+  ];
+
+  // Manejar el cambio del valor seleccionado
+  const manejarCambioPais = (valor: string) => {
+    setPaisSeleccionado(valor);
+  };
   return (
     <>
       <Breadcrumb pageName="Form Elements" />
@@ -79,18 +103,7 @@ const FormElements = () => {
             </div>
           </div>
 
-          {/* <!-- Time and date --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Time and date
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
-              <DatePickerOne />
-              <DatePickerTwo />
-            </div>
-          </div>
+         
 
           {/* <!-- File upload --> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -192,8 +205,13 @@ const FormElements = () => {
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
-              <SelectGroupTwo />
-              <MultiSelect id="multiSelect" />
+              <Select
+                etiqueta="Selecciona un país"
+                opciones={paises}
+                valorSeleccionado={paisSeleccionado}
+                onChange={manejarCambioPais}
+              />
+             <MultiSelect options={optionsMultiple} onChange={handleSelectionChange} />
             </div>
           </div>
         </div>
