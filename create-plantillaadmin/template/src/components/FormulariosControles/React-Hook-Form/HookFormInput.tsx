@@ -1,4 +1,6 @@
 import { FieldErrors, FieldValues, UseFormRegister, Path } from 'react-hook-form';
+import Tooltip from '../../UI/Tooltip';
+import clsx from 'clsx';
 
 interface InputFieldProps<T extends FieldValues> {
   label: string;
@@ -8,6 +10,7 @@ interface InputFieldProps<T extends FieldValues> {
   placeholder?: string;
   colSpan?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
   type?: 'text' | 'email' | 'password' | 'number';
+  tooltipMessage?: string;
 }
 
 const HookFormInput = <T extends FieldValues>({
@@ -18,10 +21,34 @@ const HookFormInput = <T extends FieldValues>({
   placeholder,
   colSpan = '6',
   type = 'text',
+  tooltipMessage
 }: InputFieldProps<T>) => {
+
+  const colSpanClass = {
+    '1': 'col-span-1',
+    '2': 'col-span-2',
+    '3': 'col-span-3',
+    '4': 'col-span-4',
+    '5': 'col-span-5',
+    '6': 'col-span-6',
+    '7': 'col-span-7',
+    '8': 'col-span-8',
+    '9': 'col-span-9',
+    '10': 'col-span-10',
+    '11': 'col-span-11',
+    '12': 'col-span-12',
+  }[colSpan] || 'col-span-6';
+  
   return (
-    <div className={`col-span-${colSpan}`}>
-      <label className="mb-1 block text-black dark:text-white">{label}</label>
+    <div className={clsx(colSpanClass)}>
+       <div className="flex items-center gap-1 mb-1">
+        <label className="block text-black dark:text-white">{label}</label>
+        {tooltipMessage && (
+          <Tooltip message={tooltipMessage}>
+            <span className="text-blue-500 cursor-pointer text-sm">ⓘ</span>
+          </Tooltip>
+        )}
+      </div>
       <input
         type={type}
         {...register(name, { required: `El ${label} es requerido` })}
