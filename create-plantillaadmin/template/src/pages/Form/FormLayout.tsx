@@ -1,7 +1,63 @@
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import { useForm } from 'react-hook-form';
+import HookFormInput from '../../components/FormulariosControles/React-Hook-Form/HookFormInput';
+import HookFormTextarea from '../../components/FormulariosControles/React-Hook-Form/HookFormTextarea';
+import HookFormCheckbox from '../../components/FormulariosControles/React-Hook-Form/HookFormCheckbox';
+
+interface ContactFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+interface SignInFormData {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const FormLayout = () => {
+  const {
+    register: registerContact,
+    handleSubmit: handleSubmitContact,
+    formState: { errors: errorsContact },
+  } = useForm<ContactFormData>();
+
+  const {
+    register: registerSignIn,
+    handleSubmit: handleSubmitSignIn,
+    formState: { errors: errorsSignIn },
+  } = useForm<SignInFormData>();
+
+  const {
+    register: registerSignUp,
+    handleSubmit: handleSubmitSignUp,
+    formState: { errors: errorsSignUp },
+    watch: watchSignUp,
+  } = useForm<SignUpFormData>();
+
+  const onSubmitContact = (data: ContactFormData) => {
+    console.log('Contact Form:', data);
+  };
+
+  const onSubmitSignIn = (data: SignInFormData) => {
+    console.log('Sign In Form:', data);
+  };
+
+  const onSubmitSignUp = (data: SignUpFormData) => {
+    console.log('Sign Up Form:', data);
+  };
+
   return (
     <>
       <Breadcrumb pageName="Form Layout" />
@@ -15,62 +71,65 @@ const FormLayout = () => {
                 Contact Form
               </h3>
             </div>
-            <form action="#">
+            <form onSubmit={handleSubmitContact(onSubmitContact)}>
               <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      First name
-                    </label>
-                    <input
-                      type="text"
+                    <HookFormInput
+                      label="First name"
+                      name="firstName"
+                      register={registerContact}
+                      errors={errorsContact}
                       placeholder="Enter your first name"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      tooltipMessage="Ingresa tu nombre"
                     />
                   </div>
 
                   <div className="w-full xl:w-1/2">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Last name
-                    </label>
-                    <input
-                      type="text"
+                    <HookFormInput
+                      label="Last name"
+                      name="lastName"
+                      register={registerContact}
+                      errors={errorsContact}
                       placeholder="Enter your last name"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      tooltipMessage="Ingresa tu apellido"
                     />
                   </div>
                 </div>
 
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Email <span className="text-meta-1">*</span>
-                  </label>
-                  <input
+                  <HookFormInput
+                    label="Email"
+                    name="email"
                     type="email"
+                    register={registerContact}
+                    errors={errorsContact}
                     placeholder="Enter your email address"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    tooltipMessage="Ingresa un email válido"
                   />
                 </div>
 
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Select subject"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  <HookFormInput
+                    label="Subject"
+                    name="subject"
+                    register={registerContact}
+                    errors={errorsContact}
+                    placeholder="Enter subject"
+                    tooltipMessage="Ingresa el asunto del mensaje"
                   />
                 </div>
+
                 <div className="mb-6">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Message
-                  </label>
-                  <textarea
-                    rows={6}
+                  <HookFormTextarea
+                    label="Message"
+                    name="message"
+                    register={registerContact}
+                    errors={errorsContact}
                     placeholder="Type your message"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  ></textarea>
+                    tooltipMessage="Escribe tu mensaje"
+                    rows={6}
+                  />
                 </div>
 
                 <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
@@ -89,60 +148,39 @@ const FormLayout = () => {
                 Sign In Form
               </h3>
             </div>
-            <form action="#">
+            <form onSubmit={handleSubmitSignIn(onSubmitSignIn)}>
               <div className="p-6.5">
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Email
-                  </label>
-                  <input
+                  <HookFormInput
+                    label="Email"
+                    name="email"
                     type="email"
+                    register={registerSignIn}
+                    errors={errorsSignIn}
                     placeholder="Enter your email address"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    tooltipMessage="Ingresa tu email"
                   />
                 </div>
 
-                <div>
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Password
-                  </label>
-                  <input
+                <div className="mb-4.5">
+                  <HookFormInput
+                    label="Password"
+                    name="password"
                     type="password"
+                    register={registerSignIn}
+                    errors={errorsSignIn}
                     placeholder="Enter password"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    tooltipMessage="Ingresa tu contraseña"
                   />
                 </div>
 
                 <div className="mt-5 mb-5.5 flex items-center justify-between">
-                  <label htmlFor="formCheckbox" className="flex cursor-pointer">
-                    <div className="relative pt-0.5">
-                      <input
-                        type="checkbox"
-                        id="formCheckbox"
-                        className="taskCheckbox sr-only"
-                      />
-                      <div className="box mr-3 flex h-5 w-5 items-center justify-center rounded border border-stroke dark:border-strokedark">
-                        <span className="text-white opacity-0">
-                          <svg
-                            className="fill-current"
-                            width="10"
-                            height="7"
-                            viewBox="0 0 10 7"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M9.70685 0.292804C9.89455 0.480344 10 0.734667 10 0.999847C10 1.26503 9.89455 1.51935 9.70685 1.70689L4.70059 6.7072C4.51283 6.89468 4.2582 7 3.9927 7C3.72721 7 3.47258 6.89468 3.28482 6.7072L0.281063 3.70701C0.0986771 3.5184 -0.00224342 3.26578 3.785e-05 3.00357C0.00231912 2.74136 0.10762 2.49053 0.29326 2.30511C0.4789 2.11969 0.730026 2.01451 0.992551 2.01224C1.25508 2.00996 1.50799 2.11076 1.69683 2.29293L3.9927 4.58607L8.29108 0.292804C8.47884 0.105322 8.73347 0 8.99896 0C9.26446 0 9.51908 0.105322 9.70685 0.292804Z"
-                              fill=""
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                    <p>Remember me</p>
-                  </label>
+                  <HookFormCheckbox
+                    label="Remember me"
+                    name="rememberMe"
+                    register={registerSignIn}
+                    errors={errorsSignIn}
+                  />
 
                   <Link to="#" className="text-sm text-primary hover:underline">
                     Forget password?
@@ -163,49 +201,52 @@ const FormLayout = () => {
                 Sign Up Form
               </h3>
             </div>
-            <form action="#">
+            <form onSubmit={handleSubmitSignUp(onSubmitSignUp)}>
               <div className="p-6.5">
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Name
-                  </label>
-                  <input
-                    type="text"
+                  <HookFormInput
+                    label="Name"
+                    name="name"
+                    register={registerSignUp}
+                    errors={errorsSignUp}
                     placeholder="Enter your full name"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    tooltipMessage="Ingresa tu nombre completo"
                   />
                 </div>
 
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Email
-                  </label>
-                  <input
+                  <HookFormInput
+                    label="Email"
+                    name="email"
                     type="email"
+                    register={registerSignUp}
+                    errors={errorsSignUp}
                     placeholder="Enter your email address"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    tooltipMessage="Ingresa un email válido"
                   />
                 </div>
 
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Password
-                  </label>
-                  <input
+                  <HookFormInput
+                    label="Password"
+                    name="password"
                     type="password"
+                    register={registerSignUp}
+                    errors={errorsSignUp}
                     placeholder="Enter password"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    tooltipMessage="Ingresa una contraseña segura"
                   />
                 </div>
 
                 <div className="mb-5.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Re-type Password
-                  </label>
-                  <input
+                  <HookFormInput
+                    label="Re-type Password"
+                    name="confirmPassword"
                     type="password"
+                    register={registerSignUp}
+                    errors={errorsSignUp}
                     placeholder="Re-enter password"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    tooltipMessage="Repite la contraseña"
                   />
                 </div>
 
