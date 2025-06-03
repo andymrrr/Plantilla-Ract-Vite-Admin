@@ -5,6 +5,8 @@ import HookFormTextarea from '../../components/FormulariosControles/React-Hook-F
 import HookFormCheckbox from '../../components/FormulariosControles/React-Hook-Form/HookFormCheckbox';
 import HookFormFile from '../../components/FormulariosControles/React-Hook-Form/HookFormFile';
 import HookFormSwitcher from '../../components/FormulariosControles/React-Hook-Form/HookFormSwitcher';
+import Tarjeta from '../../components/UI/Tarjeta';
+import { Contenedor } from '../../components/UI/Contenedor';
 
 interface FormData {
   defaultInput: string;
@@ -30,19 +32,18 @@ const FormElements = () => {
   };
 
   return (
-    <>
+   <Contenedor>
       <Breadcrumb pageName="Form Elements" />
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           {/* <!-- Input Fields --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Input Fields
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
+          <Tarjeta
+            titulo="Input Fields"
+            subtitulo="Diferentes tipos de campos de entrada"
+            variante="defecto"
+          >
+            <div className="flex flex-col gap-5.5">
               <HookFormInput
                 label="Default Input"
                 name="defaultInput"
@@ -71,16 +72,15 @@ const FormElements = () => {
                 tooltipMessage="Este campo está deshabilitado"
               />
             </div>
-          </div>
+          </Tarjeta>
 
           {/* <!-- Toggle switch input --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Toggle switch input
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
+          <Tarjeta
+            titulo="Toggle switch input"
+            subtitulo="Control de interruptor personalizado"
+            variante="defecto"
+          >
+            <div className="flex flex-col gap-5.5">
               <HookFormSwitcher
                 label="Activar notificaciones"
                 name="notifications"
@@ -89,16 +89,15 @@ const FormElements = () => {
                 tooltipMessage="Activa o desactiva las notificaciones"
               />
             </div>
-          </div>
+          </Tarjeta>
 
           {/* <!-- File upload --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                File upload
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
+          <Tarjeta
+            titulo="File upload"
+            subtitulo="Carga de archivos con previsualización"
+            variante="defecto"
+          >
+            <div className="flex flex-col gap-5.5">
               <HookFormFile
                 label="Adjuntar archivo"
                 name="file"
@@ -108,18 +107,17 @@ const FormElements = () => {
                 tooltipMessage="Formatos permitidos: PDF, DOC, DOCX"
               />
             </div>
-          </div>
+          </Tarjeta>
         </div>
 
         <div className="flex flex-col gap-9">
           {/* <!-- Textarea Fields --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Textarea Fields
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
+          <Tarjeta
+            titulo="Textarea Fields"
+            subtitulo="Campos de texto multilínea"
+            variante="defecto"
+          >
+            <div className="flex flex-col gap-5.5">
               <HookFormTextarea
                 label="Default Textarea"
                 name="defaultTextarea"
@@ -148,16 +146,15 @@ const FormElements = () => {
                 tooltipMessage="Esta área de texto está deshabilitada"
               />
             </div>
-          </div>
+          </Tarjeta>
 
           {/* <!-- Checkbox --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Checkbox
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
+          <Tarjeta
+            titulo="Checkbox"
+            subtitulo="Casillas de verificación personalizadas"
+            variante="defecto"
+          >
+            <div className="flex flex-col gap-5.5">
               <HookFormCheckbox
                 label="Acepto los términos y condiciones"
                 name="acceptTerms"
@@ -166,19 +163,19 @@ const FormElements = () => {
                 tooltipMessage="Debes aceptar los términos para continuar"
               />
             </div>
-          </div>
+          </Tarjeta>
         </div>
 
         <div className="col-span-full flex justify-end">
           <button
             type="submit"
-            className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            className="inline-flex items-center justify-center rounded-lg bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Guardar
           </button>
         </div>
       </form>
-    </>
+    </Contenedor>
   );
 };
 
