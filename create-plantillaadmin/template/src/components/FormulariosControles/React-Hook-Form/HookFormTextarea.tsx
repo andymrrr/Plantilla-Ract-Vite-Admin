@@ -2,30 +2,29 @@ import { FieldErrors, FieldValues, UseFormRegister, Path } from 'react-hook-form
 import Tooltip from '../../UI/Tooltip';
 import clsx from 'clsx';
 
-interface InputFieldProps<T extends FieldValues> {
+interface TextareaFieldProps<T extends FieldValues> {
   label: string;
   name: Path<T>;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
-  placeholder?: string;
-  colSpan?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
-  type?: 'text' | 'email' | 'password' | 'number';
   tooltipMessage?: string;
+  placeholder?: string;
+  rows?: number;
   disabled?: boolean;
+  colSpan?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
 }
 
-const HookFormInput = <T extends FieldValues>({
+const HookFormTextarea = <T extends FieldValues>({
   label,
   name,
   register,
   errors,
-  placeholder,
-  colSpan = '6',
-  type = 'text',
   tooltipMessage,
-  disabled = false
-}: InputFieldProps<T>) => {
-
+  placeholder,
+  rows = 6,
+  disabled = false,
+  colSpan = '6'
+}: TextareaFieldProps<T>) => {
   const colSpanClass = {
     '1': 'col-span-1',
     '2': 'col-span-2',
@@ -40,12 +39,12 @@ const HookFormInput = <T extends FieldValues>({
     '11': 'col-span-11',
     '12': 'col-span-12',
   }[colSpan] || 'col-span-6';
-  
+
   const { ref, onChange, ...rest } = register(name);
   
   return (
     <div className={clsx(colSpanClass)}>
-       <div className="flex items-center gap-1 mb-1">
+      <div className="flex items-center gap-1 mb-2.5">
         <label className="block text-black dark:text-white">{label}</label>
         {tooltipMessage && (
           <Tooltip message={tooltipMessage}>
@@ -53,9 +52,10 @@ const HookFormInput = <T extends FieldValues>({
           </Tooltip>
         )}
       </div>
-      <input
-        type={type}
+      
+      <textarea
         id={name}
+        rows={rows}
         disabled={disabled}
         placeholder={placeholder}
         className={clsx(
@@ -71,6 +71,7 @@ const HookFormInput = <T extends FieldValues>({
         }}
         ref={ref}
       />
+      
       {errors[name] && (
         <p className="text-red-500 text-sm mt-1">
           {errors[name]?.message as string}
@@ -80,4 +81,4 @@ const HookFormInput = <T extends FieldValues>({
   );
 };
 
-export default HookFormInput;
+export default HookFormTextarea; 

@@ -1,48 +1,39 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import CheckboxFive from '../../components/Checkboxes/CheckboxFive';
-import CheckboxFour from '../../components/Checkboxes/CheckboxFour';
-import CheckboxOne from '../../components/Checkboxes/CheckboxOne';
-import CheckboxThree from '../../components/Checkboxes/CheckboxThree';
-import CheckboxTwo from '../../components/Checkboxes/CheckboxTwo';
-import SwitcherFour from '../../components/Switchers/SwitcherFour';
-import SwitcherOne from '../../components/Switchers/SwitcherOne';
-import SwitcherThree from '../../components/Switchers/SwitcherThree';
-import SwitcherTwo from '../../components/Switchers/SwitcherTwo';
-import { useState } from 'react';
-import Select from '../../components/FormulariosControles/Select';
-import MultiSelect from '../../components/FormulariosControles/MultiSelect';
+import { useForm } from 'react-hook-form';
+import HookFormInput from '../../components/FormulariosControles/React-Hook-Form/HookFormInput';
+import HookFormTextarea from '../../components/FormulariosControles/React-Hook-Form/HookFormTextarea';
+import HookFormCheckbox from '../../components/FormulariosControles/React-Hook-Form/HookFormCheckbox';
+import HookFormFile from '../../components/FormulariosControles/React-Hook-Form/HookFormFile';
+import HookFormSwitcher from '../../components/FormulariosControles/React-Hook-Form/HookFormSwitcher';
+
+interface FormData {
+  defaultInput: string;
+  activeInput: string;
+  disabledInput: string;
+  defaultTextarea: string;
+  activeTextarea: string;
+  disabledTextarea: string;
+  acceptTerms: boolean;
+  notifications: boolean;
+  file: FileList;
+}
 
 const FormElements = () => {
-  const [paisSeleccionado, setPaisSeleccionado] = useState<string>('');
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const handleSelectionChange = (newSelectedValues: string[]) => {
-    setSelectedOptions(newSelectedValues);
+  const onSubmit = (data: FormData) => {
+    console.log('Form Data:', data);
   };
 
-  const optionsMultiple = [
-    { value: '1', text: 'Opción 1' },
-    { value: '2', text: 'Opción 2' },
-    { value: '3', text: 'Opción 3' },
-    { value: '4', text: 'Opción 4' },
-  ];
-  // Lista de países
-  const paises = [
-    { valor: 'USA', etiqueta: 'Estados Unidos' },
-    { valor: 'UK', etiqueta: 'Reino Unido' },
-    { valor: 'Canada', etiqueta: 'Canadá' },
-    { valor: 'Mexico', etiqueta: 'México' },
-  ];
-
-  // Manejar el cambio del valor seleccionado
-  const manejarCambioPais = (valor: string) => {
-    setPaisSeleccionado(valor);
-  };
   return (
     <>
       <Breadcrumb pageName="Form Elements" />
 
-      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           {/* <!-- Input Fields --> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -52,39 +43,33 @@ const FormElements = () => {
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Default Input
-                </label>
-                <input
-                  type="text"
-                  placeholder="Default Input"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
-              </div>
+              <HookFormInput
+                label="Default Input"
+                name="defaultInput"
+                register={register}
+                errors={errors}
+                placeholder="Default Input"
+                tooltipMessage="Este es un campo de entrada predeterminado"
+              />
 
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Active Input
-                </label>
-                <input
-                  type="text"
-                  placeholder="Active Input"
-                  className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
-                />
-              </div>
+              <HookFormInput
+                label="Active Input"
+                name="activeInput"
+                register={register}
+                errors={errors}
+                placeholder="Active Input"
+                tooltipMessage="Este campo está activo"
+              />
 
-              <div>
-                <label className="mb-3 block font-medium text-black dark:text-white">
-                  Disabled label
-                </label>
-                <input
-                  type="text"
-                  placeholder="Disabled label"
-                  disabled
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary dark:disabled:bg-black"
-                />
-              </div>
+              <HookFormInput
+                label="Disabled Input"
+                name="disabledInput"
+                register={register}
+                errors={errors}
+                placeholder="Disabled Input"
+                disabled={true}
+                tooltipMessage="Este campo está deshabilitado"
+              />
             </div>
           </div>
 
@@ -96,14 +81,15 @@ const FormElements = () => {
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
-              <SwitcherOne />
-              <SwitcherTwo />
-              <SwitcherThree />
-              <SwitcherFour />
+              <HookFormSwitcher
+                label="Activar notificaciones"
+                name="notifications"
+                register={register}
+                errors={errors}
+                tooltipMessage="Activa o desactiva las notificaciones"
+              />
             </div>
           </div>
-
-         
 
           {/* <!-- File upload --> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -113,25 +99,14 @@ const FormElements = () => {
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Attach file
-                </label>
-                <input
-                  type="file"
-                  className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                />
-              </div>
-
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Attach file
-                </label>
-                <input
-                  type="file"
-                  className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
-                />
-              </div>
+              <HookFormFile
+                label="Adjuntar archivo"
+                name="file"
+                register={register}
+                errors={errors}
+                accept=".pdf,.doc,.docx"
+                tooltipMessage="Formatos permitidos: PDF, DOC, DOCX"
+              />
             </div>
           </div>
         </div>
@@ -145,77 +120,64 @@ const FormElements = () => {
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Default textarea
-                </label>
-                <textarea
-                  rows={6}
-                  placeholder="Default textarea"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                ></textarea>
-              </div>
-
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Active textarea
-                </label>
-                <textarea
-                  rows={6}
-                  placeholder="Active textarea"
-                  className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
-                ></textarea>
-              </div>
-
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Disabled textarea
-                </label>
-                <textarea
-                  rows={6}
-                  disabled
-                  placeholder="Disabled textarea"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary dark:disabled:bg-black"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-
-          {/* <!-- Checkbox and radio --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Checkbox and radio
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
-              <CheckboxOne />
-              <CheckboxTwo />
-              <CheckboxThree />
-              <CheckboxFour />
-              <CheckboxFive />
-            </div>
-          </div>
-
-          {/* <!-- Select input --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Select input
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
-              <Select
-                etiqueta="Selecciona un país"
-                opciones={paises}
-                valorSeleccionado={paisSeleccionado}
-                onChange={manejarCambioPais}
+              <HookFormTextarea
+                label="Default Textarea"
+                name="defaultTextarea"
+                register={register}
+                errors={errors}
+                placeholder="Default textarea"
+                tooltipMessage="Este es un área de texto predeterminada"
               />
-             <MultiSelect options={optionsMultiple} onChange={handleSelectionChange} />
+
+              <HookFormTextarea
+                label="Active Textarea"
+                name="activeTextarea"
+                register={register}
+                errors={errors}
+                placeholder="Active textarea"
+                tooltipMessage="Esta área de texto está activa"
+              />
+
+              <HookFormTextarea
+                label="Disabled Textarea"
+                name="disabledTextarea"
+                register={register}
+                errors={errors}
+                placeholder="Disabled textarea"
+                disabled={true}
+                tooltipMessage="Esta área de texto está deshabilitada"
+              />
+            </div>
+          </div>
+
+          {/* <!-- Checkbox --> */}
+          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+              <h3 className="font-medium text-black dark:text-white">
+                Checkbox
+              </h3>
+            </div>
+            <div className="flex flex-col gap-5.5 p-6.5">
+              <HookFormCheckbox
+                label="Acepto los términos y condiciones"
+                name="acceptTerms"
+                register={register}
+                errors={errors}
+                tooltipMessage="Debes aceptar los términos para continuar"
+              />
             </div>
           </div>
         </div>
-      </div>
+
+        <div className="col-span-full flex justify-end">
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
     </>
   );
 };

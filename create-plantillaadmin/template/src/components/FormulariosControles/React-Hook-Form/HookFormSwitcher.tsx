@@ -2,30 +2,23 @@ import { FieldErrors, FieldValues, UseFormRegister, Path } from 'react-hook-form
 import Tooltip from '../../UI/Tooltip';
 import clsx from 'clsx';
 
-interface InputFieldProps<T extends FieldValues> {
+interface SwitcherFieldProps<T extends FieldValues> {
   label: string;
   name: Path<T>;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
-  placeholder?: string;
-  colSpan?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
-  type?: 'text' | 'email' | 'password' | 'number';
   tooltipMessage?: string;
-  disabled?: boolean;
+  colSpan?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
 }
 
-const HookFormInput = <T extends FieldValues>({
+const HookFormSwitcher = <T extends FieldValues>({
   label,
   name,
   register,
   errors,
-  placeholder,
-  colSpan = '6',
-  type = 'text',
   tooltipMessage,
-  disabled = false
-}: InputFieldProps<T>) => {
-
+  colSpan = '6'
+}: SwitcherFieldProps<T>) => {
   const colSpanClass = {
     '1': 'col-span-1',
     '2': 'col-span-2',
@@ -40,12 +33,12 @@ const HookFormInput = <T extends FieldValues>({
     '11': 'col-span-11',
     '12': 'col-span-12',
   }[colSpan] || 'col-span-6';
-  
+
   const { ref, onChange, ...rest } = register(name);
   
   return (
     <div className={clsx(colSpanClass)}>
-       <div className="flex items-center gap-1 mb-1">
+      <div className="flex items-center gap-1 mb-2.5">
         <label className="block text-black dark:text-white">{label}</label>
         {tooltipMessage && (
           <Tooltip message={tooltipMessage}>
@@ -53,24 +46,29 @@ const HookFormInput = <T extends FieldValues>({
           </Tooltip>
         )}
       </div>
-      <input
-        type={type}
-        id={name}
-        disabled={disabled}
-        placeholder={placeholder}
-        className={clsx(
-          "w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition",
-          "focus:border-primary active:border-primary",
-          "disabled:cursor-default disabled:bg-whiter",
-          "dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
-          disabled && "dark:disabled:bg-black"
-        )}
-        {...rest}
-        onChange={(e) => {
-          onChange(e);
-        }}
-        ref={ref}
-      />
+      
+      <label
+        htmlFor={name}
+        className="flex cursor-pointer select-none items-center"
+      >
+        <div className="relative">
+          <input
+            type="checkbox"
+            id={name}
+            className="peer sr-only"
+            {...rest}
+            onChange={(e) => {
+              onChange(e);
+            }}
+            ref={ref}
+          />
+          <div className="block h-8 w-14 rounded-full bg-meta-9 dark:bg-[#5A616B] peer-checked:bg-primary"></div>
+          <div
+            className="absolute left-1 top-1 h-6 w-6 rounded-full bg-white transition-all duration-200 peer-checked:left-7 peer-checked:bg-white"
+          ></div>
+        </div>
+      </label>
+      
       {errors[name] && (
         <p className="text-red-500 text-sm mt-1">
           {errors[name]?.message as string}
@@ -80,4 +78,4 @@ const HookFormInput = <T extends FieldValues>({
   );
 };
 
-export default HookFormInput;
+export default HookFormSwitcher; 
