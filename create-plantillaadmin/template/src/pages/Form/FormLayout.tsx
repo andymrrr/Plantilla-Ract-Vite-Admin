@@ -93,17 +93,7 @@ const FormLayout = () => {
     }
   };
 
-  const onSubmitContact = (data: ContactFormData) => {
-    console.log('Contact Form:', data);
-  };
 
-  const onSubmitSignIn = (data: SignInFormData) => {
-    console.log('Sign In Form:', data);
-  };
-
-  const onSubmitSignUp = (data: SignUpFormData) => {
-    console.log('Sign Up Form:', data);
-  };
 
   const onSubmit = (data: FormularioData) => {
     console.log(data);
