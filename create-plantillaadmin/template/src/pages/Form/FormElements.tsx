@@ -42,6 +42,17 @@ const FormElements = () => {
             titulo="Input Fields"
             subtitulo="Diferentes tipos de campos de entrada"
             variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: '2px',
+              color: 'blue'
+            }}
+            lineaDivisora={{
+              mostrar: true,
+              grosor: '1px',
+              color: 'gray',
+              className: 'my-6'
+            }}
           >
             <div className="flex flex-col gap-5.5">
               <HookFormInput
@@ -79,6 +90,11 @@ const FormElements = () => {
             titulo="Toggle switch input"
             subtitulo="Control de interruptor personalizado"
             variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: '2px',
+              color: 'green'
+            }}
           >
             <div className="flex flex-col gap-5.5">
               <HookFormSwitcher
@@ -96,6 +112,11 @@ const FormElements = () => {
             titulo="File upload"
             subtitulo="Carga de archivos con previsualización"
             variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: '2px',
+              color: 'yellow'
+            }}
           >
             <div className="flex flex-col gap-5.5">
               <HookFormFile
@@ -116,6 +137,17 @@ const FormElements = () => {
             titulo="Textarea Fields"
             subtitulo="Campos de texto multilínea"
             variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: '2px',
+              color: 'red'
+            }}
+            lineaDivisora={{
+              mostrar: true,
+              grosor: '1px',
+              color: 'gray',
+              className: 'my-6'
+            }}
           >
             <div className="flex flex-col gap-5.5">
               <HookFormTextarea
@@ -153,6 +185,11 @@ const FormElements = () => {
             titulo="Checkbox"
             subtitulo="Casillas de verificación personalizadas"
             variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: '2px',
+              color: 'blue'
+            }}
           >
             <div className="flex flex-col gap-5.5">
               <HookFormCheckbox

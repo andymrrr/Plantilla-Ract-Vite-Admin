@@ -11,6 +11,22 @@ interface TarjetaProps {
   sinRelleno?: boolean;
   conBorde?: boolean;
   variante?: 'defecto' | 'primario' | 'secundario';
+  lineaHeader?: {
+    mostrar?: boolean;
+    grosor?: '1px' | '2px' | '4px';
+    color?: 'gray' | 'blue' | 'red' | 'green' | 'yellow';
+  };
+  lineaFooter?: {
+    mostrar?: boolean;
+    grosor?: '1px' | '2px' | '4px';
+    color?: 'gray' | 'blue' | 'red' | 'green' | 'yellow';
+  };
+  lineaDivisora?: {
+    mostrar?: boolean;
+    grosor?: '1px' | '2px' | '4px';
+    color?: 'gray' | 'blue' | 'red' | 'green' | 'yellow';
+    className?: string;
+  };
 }
 
 const Tarjeta: React.FC<TarjetaProps> = ({
@@ -23,7 +39,10 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   piePagina,
   sinRelleno = false,
   conBorde = true,
-  variante = 'defecto'
+  variante = 'defecto',
+  lineaHeader = { mostrar: true, grosor: '1px', color: 'gray' },
+  lineaFooter = { mostrar: true, grosor: '1px', color: 'gray' },
+  lineaDivisora
 }) => {
   const obtenerClasesVariante = () => {
     switch (variante) {
@@ -35,6 +54,23 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         return 'bg-white dark:bg-boxdark';
     }
   };
+
+  const obtenerClaseColor = (color: string = 'gray') => {
+    return {
+      gray: 'border-gray-300 dark:border-strokedark',
+      blue: 'border-blue-500 dark:border-blue-700',
+      red: 'border-red-500 dark:border-red-700',
+      green: 'border-green-500 dark:border-green-700',
+      yellow: 'border-yellow-500 dark:border-yellow-700',
+    }[color];
+  };
+
+  const LineaDivisoraComponente = ({ grosor = '1px', color = 'gray', className = '' }) => (
+    <hr
+      className={`border-t ${obtenerClaseColor(color)} my-4 ${className}`}
+      style={{ borderWidth: grosor }}
+    />
+  );
 
   return (
     <div
@@ -48,32 +84,49 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     >
       {/* Sección de Encabezado */}
       {(titulo || subtitulo) && (
-        <div className={`border-b border-stroke px-6 py-4 dark:border-strokedark ${claseHeader}`}>
-          {titulo && (
-            typeof titulo === 'string' ? (
-              <h4 className="text-xl font-semibold text-black dark:text-white">
-                {titulo}
-              </h4>
-            ) : (
-              titulo
-            )
+        <>
+          <div className={`px-6 py-4 ${claseHeader}`}>
+            {titulo && (
+              typeof titulo === 'string' ? (
+                <h4 className="text-xl font-semibold text-black dark:text-white">
+                  {titulo}
+                </h4>
+              ) : (
+                titulo
+              )
+            )}
+            {subtitulo && (
+              <p className="mt-1 text-sm text-gray-5">{subtitulo}</p>
+            )}
+          </div>
+          {lineaHeader.mostrar && (
+            <div className={`border-t ${obtenerClaseColor(lineaHeader.color)}`} style={{ borderWidth: lineaHeader.grosor }} />
           )}
-          {subtitulo && (
-            <p className="mt-1 text-sm text-gray-5">{subtitulo}</p>
-          )}
-        </div>
+        </>
       )}
 
       {/* Sección del Cuerpo */}
       <div className={`${!sinRelleno ? 'p-6' : ''} ${claseCuerpo}`}>
         {children}
+        {lineaDivisora?.mostrar && (
+          <LineaDivisoraComponente
+            grosor={lineaDivisora.grosor}
+            color={lineaDivisora.color}
+            className={lineaDivisora.className}
+          />
+        )}
       </div>
 
       {/* Sección del Pie de Página */}
       {piePagina && (
-        <div className="border-t border-stroke px-6 py-4 dark:border-strokedark">
-          {piePagina}
-        </div>
+        <>
+          {lineaFooter.mostrar && (
+            <div className={`border-t ${obtenerClaseColor(lineaFooter.color)}`} style={{ borderWidth: lineaFooter.grosor }} />
+          )}
+          <div className="px-6 py-4">
+            {piePagina}
+          </div>
+        </>
       )}
     </div>
   );
