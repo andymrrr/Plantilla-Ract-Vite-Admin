@@ -1,4 +1,5 @@
-import { FieldErrors, FieldValues, UseFormRegister, Path } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, FieldValues, Path } from 'react-hook-form';
+import { FaQuestionCircle } from 'react-icons/fa';
 import Tooltip from '../../UI/Tooltip';
 import clsx from 'clsx';
 
@@ -7,11 +8,23 @@ interface InputFieldProps<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
+  type?: string;
   placeholder?: string;
-  colSpan?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
-  type?: 'text' | 'email' | 'password' | 'number';
-  tooltipMessage?: string;
   disabled?: boolean;
+  tooltipMessage?: string;
+  required?: string;
+  pattern?: {
+    value: RegExp;
+    message: string;
+  };
+  minLength?: {
+    value: number;
+    message: string;
+  };
+  maxLength?: {
+    value: number;
+    message: string;
+  };
 }
 
 const HookFormInput = <T extends FieldValues>({
@@ -19,62 +32,52 @@ const HookFormInput = <T extends FieldValues>({
   name,
   register,
   errors,
-  placeholder,
-  colSpan = '6',
   type = 'text',
+  placeholder,
+  disabled = false,
   tooltipMessage,
-  disabled = false
+  required,
+  pattern,
+  minLength,
+  maxLength,
 }: InputFieldProps<T>) => {
+  const registerOptions = {
+    ...(required && { required }),
+    ...(pattern && { pattern }),
+    ...(minLength && { minLength }),
+    ...(maxLength && { maxLength }),
+  };
 
-  const colSpanClass = {
-    '1': 'col-span-1',
-    '2': 'col-span-2',
-    '3': 'col-span-3',
-    '4': 'col-span-4',
-    '5': 'col-span-5',
-    '6': 'col-span-6',
-    '7': 'col-span-7',
-    '8': 'col-span-8',
-    '9': 'col-span-9',
-    '10': 'col-span-10',
-    '11': 'col-span-11',
-    '12': 'col-span-12',
-  }[colSpan] || 'col-span-6';
-  
-  const { ref, onChange, ...rest } = register(name);
-  
   return (
-    <div className={clsx(colSpanClass)}>
-       <div className="flex items-center gap-1 mb-1">
-        <label className="block text-black dark:text-white">{label}</label>
+    <div>
+      <label className="mb-2.5 block text-black dark:text-white">
+        {label}
         {tooltipMessage && (
           <Tooltip message={tooltipMessage}>
-            <span className="text-blue-500 cursor-pointer text-sm">ⓘ</span>
+            <FaQuestionCircle className="inline-block ml-1 text-gray-400" size={14} />
           </Tooltip>
         )}
+      </label>
+      <div className="relative">
+        <input
+          type={type}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={`w-full rounded border-[1.5px] bg-transparent py-3 px-5 font-medium outline-none transition
+            ${
+              errors[name]
+                ? 'border-danger focus:border-danger active:border-danger'
+                : 'border-stroke focus:border-primary active:border-primary'
+            }
+            ${disabled ? 'cursor-not-allowed' : ''}
+            dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
+          {...register(name, registerOptions)}
+        />
       </div>
-      <input
-        type={type}
-        id={name}
-        disabled={disabled}
-        placeholder={placeholder}
-        className={clsx(
-          "w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition",
-          "focus:border-primary active:border-primary",
-          "disabled:cursor-default disabled:bg-whiter",
-          "dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
-          disabled && "dark:disabled:bg-black"
-        )}
-        {...rest}
-        onChange={(e) => {
-          onChange(e);
-        }}
-        ref={ref}
-      />
       {errors[name] && (
-        <p className="text-red-500 text-sm mt-1">
+        <span className="text-sm text-danger mt-1 block">
           {errors[name]?.message as string}
-        </p>
+        </span>
       )}
     </div>
   );

@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useForm } from 'react-hook-form';
+import { Contenedor } from '../../components/UI/Contenedor';
+import Tarjeta from '../../components/UI/Tarjeta';
 import HookFormInput from '../../components/FormulariosControles/React-Hook-Form/HookFormInput';
 import HookFormTextarea from '../../components/FormulariosControles/React-Hook-Form/HookFormTextarea';
 import HookFormCheckbox from '../../components/FormulariosControles/React-Hook-Form/HookFormCheckbox';
+import EtiquetaEstado from '../../components/UI/Etiqueta-Estado';
+import { FaInfoCircle, FaSave, FaTimes } from 'react-icons/fa';
 
 interface ContactFormData {
   firstName: string;
@@ -26,6 +30,21 @@ interface SignUpFormData {
   confirmPassword: string;
 }
 
+interface FormularioData {
+  nombreCompleto: string;
+  email: string;
+  empresa: string;
+  telefono: string;
+  mensaje: string;
+  direccion: string;
+  ciudad: string;
+  pais: string;
+  codigoPostal: string;
+  terminosCondiciones: boolean;
+  nombre: string;
+  apellido: string;
+}
+
 const FormLayout = () => {
   const {
     register: registerContact,
@@ -46,6 +65,34 @@ const FormLayout = () => {
     watch: watchSignUp,
   } = useForm<SignUpFormData>();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormularioData>({
+    defaultValues: {
+      email: '',
+      telefono: '',
+      terminosCondiciones: false
+    }
+  });
+
+  // Validaciones personalizadas
+  const emailValidation = {
+    required: 'El email es requerido',
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      message: 'Email inválido'
+    }
+  };
+
+  const telefonoValidation = {
+    pattern: {
+      value: /^[0-9]{10}$/,
+      message: 'Teléfono inválido (10 dígitos)'
+    }
+  };
+
   const onSubmitContact = (data: ContactFormData) => {
     console.log('Contact Form:', data);
   };
@@ -58,207 +105,240 @@ const FormLayout = () => {
     console.log('Sign Up Form:', data);
   };
 
+  const onSubmit = (data: FormularioData) => {
+    console.log(data);
+  };
+
   return (
-    <>
-      <Breadcrumb pageName="Form Layout" />
+    <Contenedor>
+      <Breadcrumb pageName="Layouts de Formulario" />
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
-          {/* <!-- Contact Form --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Contact Form
-              </h3>
-            </div>
-            <form onSubmit={handleSubmitContact(onSubmitContact)}>
-              <div className="p-6.5">
-                <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                  <div className="w-full xl:w-1/2">
-                    <HookFormInput
-                      label="First name"
-                      name="firstName"
-                      register={registerContact}
-                      errors={errorsContact}
-                      placeholder="Enter your first name"
-                      tooltipMessage="Ingresa tu nombre"
-                    />
-                  </div>
-
-                  <div className="w-full xl:w-1/2">
-                    <HookFormInput
-                      label="Last name"
-                      name="lastName"
-                      register={registerContact}
-                      errors={errorsContact}
-                      placeholder="Enter your last name"
-                      tooltipMessage="Ingresa tu apellido"
-                    />
-                  </div>
+          {/* Formulario Simple */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Tarjeta
+              titulo="Formulario Simple"
+              subtitulo="Layout básico de una columna"
+              variante="defecto"
+              lineaHeader={{
+                mostrar: true,
+                grosor: '2px',
+                color: 'blue'
+              }}
+              piePagina={
+                <div className="flex justify-end gap-4">
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 rounded bg-gray-200 px-4 py-2 font-medium text-gray-600 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                  >
+                    <FaTimes /> Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex items-center gap-2 rounded bg-primary px-4 py-2 font-medium text-white hover:bg-opacity-90"
+                  >
+                    <FaSave /> Guardar
+                  </button>
                 </div>
-
-                <div className="mb-4.5">
-                  <HookFormInput
-                    label="Email"
-                    name="email"
-                    type="email"
-                    register={registerContact}
-                    errors={errorsContact}
-                    placeholder="Enter your email address"
-                    tooltipMessage="Ingresa un email válido"
-                  />
-                </div>
-
-                <div className="mb-4.5">
-                  <HookFormInput
-                    label="Subject"
-                    name="subject"
-                    register={registerContact}
-                    errors={errorsContact}
-                    placeholder="Enter subject"
-                    tooltipMessage="Ingresa el asunto del mensaje"
-                  />
-                </div>
-
-                <div className="mb-6">
-                  <HookFormTextarea
-                    label="Message"
-                    name="message"
-                    register={registerContact}
-                    errors={errorsContact}
-                    placeholder="Type your message"
-                    tooltipMessage="Escribe tu mensaje"
-                    rows={6}
-                  />
-                </div>
-
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
-                  Send Message
-                </button>
+              }
+            >
+              <div className="flex flex-col gap-5.5 p-6.5">
+                <HookFormInput
+                  label="Nombre Completo"
+                  name="nombreCompleto"
+                  register={register}
+                  errors={errors}
+                  placeholder="John Doe"
+                />
+                <HookFormInput
+                  label="Email"
+                  name="email"
+                  register={(name) => register(name, emailValidation)}
+                  errors={errors}
+                  placeholder="ejemplo@correo.com"
+                  type="email"
+                  tooltipMessage="Ingresa un email válido"
+                />
+                <HookFormTextarea
+                  label="Mensaje"
+                  name="mensaje"
+                  register={register}
+                  errors={errors}
+                  placeholder="Escribe tu mensaje aquí..."
+                />
               </div>
-            </form>
-          </div>
+            </Tarjeta>
+          </form>
+
+          {/* Formulario con Validación */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Tarjeta
+              titulo={
+                <div className="flex items-center justify-between">
+                  <span>Formulario con Validación</span>
+                  <EtiquetaEstado
+                    texto="Requerido"
+                    estado="info"
+                    icono={<FaInfoCircle size={12} />}
+                    tamaño="pequeño"
+                  />
+                </div>
+              }
+              subtitulo="Incluye validación de campos"
+              variante="defecto"
+              lineaHeader={{
+                mostrar: true,
+                grosor: '2px',
+                color: 'green'
+              }}
+            >
+              <div className="flex flex-col gap-5.5 p-6.5">
+                <HookFormInput
+                  label="Email"
+                  name="email"
+                  register={(name) => register(name, emailValidation)}
+                  errors={errors}
+                  placeholder="ejemplo@correo.com"
+                  type="email"
+                  tooltipMessage="Ingresa un email válido"
+                />
+                <HookFormInput
+                  label="Teléfono"
+                  name="telefono"
+                  register={(name) => register(name, telefonoValidation)}
+                  errors={errors}
+                  placeholder="1234567890"
+                  tooltipMessage="Ingresa un número de 10 dígitos"
+                />
+              </div>
+            </Tarjeta>
+          </form>
         </div>
 
         <div className="flex flex-col gap-9">
-          {/* <!-- Sign In Form --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Sign In Form
-              </h3>
-            </div>
-            <form onSubmit={handleSubmitSignIn(onSubmitSignIn)}>
+          {/* Formulario en Columnas */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Tarjeta
+              titulo="Formulario en Columnas"
+              subtitulo="Layout de dos columnas"
+              variante="defecto"
+              lineaHeader={{
+                mostrar: true,
+                grosor: '2px',
+                color: 'yellow'
+              }}
+              lineaDivisora={{
+                mostrar: true,
+                grosor: '1px',
+                color: 'gray'
+              }}
+            >
               <div className="p-6.5">
-                <div className="mb-4.5">
+                <div className="mb-4 grid grid-cols-2 gap-4">
+                  <HookFormInput
+                    label="Nombre"
+                    name="nombre"
+                    register={register}
+                    errors={errors}
+                    placeholder="John"
+                  />
+                  <HookFormInput
+                    label="Apellido"
+                    name="apellido"
+                    register={register}
+                    errors={errors}
+                    placeholder="Doe"
+                  />
+                </div>
+
+                <div className="mb-4 grid grid-cols-2 gap-4">
                   <HookFormInput
                     label="Email"
                     name="email"
+                    register={register}
+                    errors={errors}
+                    placeholder="ejemplo@correo.com"
                     type="email"
-                    register={registerSignIn}
-                    errors={errorsSignIn}
-                    placeholder="Enter your email address"
-                    tooltipMessage="Ingresa tu email"
                   />
-                </div>
-
-                <div className="mb-4.5">
                   <HookFormInput
-                    label="Password"
-                    name="password"
-                    type="password"
-                    register={registerSignIn}
-                    errors={errorsSignIn}
-                    placeholder="Enter password"
-                    tooltipMessage="Ingresa tu contraseña"
+                    label="Teléfono"
+                    name="telefono"
+                    register={register}
+                    errors={errors}
+                    placeholder="1234567890"
                   />
                 </div>
 
-                <div className="mt-5 mb-5.5 flex items-center justify-between">
+                <HookFormTextarea
+                  label="Dirección"
+                  name="direccion"
+                  register={register}
+                  errors={errors}
+                  placeholder="Ingresa tu dirección completa"
+                />
+
+                <div className="mt-4">
                   <HookFormCheckbox
-                    label="Remember me"
-                    name="rememberMe"
-                    register={registerSignIn}
-                    errors={errorsSignIn}
+                    label="Acepto los términos y condiciones"
+                    name="terminosCondiciones"
+                    register={register}
+                    errors={errors}
                   />
-
-                  <Link to="#" className="text-sm text-primary hover:underline">
-                    Forget password?
-                  </Link>
                 </div>
-
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
-                  Sign In
-                </button>
               </div>
-            </form>
-          </div>
+            </Tarjeta>
+          </form>
 
-          {/* <!-- Sign Up Form --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Sign Up Form
-              </h3>
-            </div>
-            <form onSubmit={handleSubmitSignUp(onSubmitSignUp)}>
-              <div className="p-6.5">
-                <div className="mb-4.5">
+          {/* Formulario de Dirección */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Tarjeta
+              titulo="Formulario de Dirección"
+              subtitulo="Información de envío"
+              variante="defecto"
+              lineaHeader={{
+                mostrar: true,
+                grosor: '2px',
+                color: 'red'
+              }}
+            >
+              <div className="grid grid-cols-1 gap-4 p-6.5">
+                <HookFormInput
+                  label="Dirección"
+                  name="direccion"
+                  register={register}
+                  errors={errors}
+                  placeholder="Calle y número"
+                />
+                <div className="grid grid-cols-2 gap-4">
                   <HookFormInput
-                    label="Name"
-                    name="name"
-                    register={registerSignUp}
-                    errors={errorsSignUp}
-                    placeholder="Enter your full name"
-                    tooltipMessage="Ingresa tu nombre completo"
+                    label="Ciudad"
+                    name="ciudad"
+                    register={register}
+                    errors={errors}
+                    placeholder="Ciudad"
+                  />
+                  <HookFormInput
+                    label="Código Postal"
+                    name="codigoPostal"
+                    register={register}
+                    errors={errors}
+                    placeholder="12345"
                   />
                 </div>
-
-                <div className="mb-4.5">
-                  <HookFormInput
-                    label="Email"
-                    name="email"
-                    type="email"
-                    register={registerSignUp}
-                    errors={errorsSignUp}
-                    placeholder="Enter your email address"
-                    tooltipMessage="Ingresa un email válido"
-                  />
-                </div>
-
-                <div className="mb-4.5">
-                  <HookFormInput
-                    label="Password"
-                    name="password"
-                    type="password"
-                    register={registerSignUp}
-                    errors={errorsSignUp}
-                    placeholder="Enter password"
-                    tooltipMessage="Ingresa una contraseña segura"
-                  />
-                </div>
-
-                <div className="mb-5.5">
-                  <HookFormInput
-                    label="Re-type Password"
-                    name="confirmPassword"
-                    type="password"
-                    register={registerSignUp}
-                    errors={errorsSignUp}
-                    placeholder="Re-enter password"
-                    tooltipMessage="Repite la contraseña"
-                  />
-                </div>
-
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
-                  Sign Up
-                </button>
+                <HookFormInput
+                  label="País"
+                  name="pais"
+                  register={register}
+                  errors={errors}
+                  placeholder="País"
+                />
               </div>
-            </form>
-          </div>
+            </Tarjeta>
+          </form>
         </div>
       </div>
-    </>
+    </Contenedor>
   );
 };
 
