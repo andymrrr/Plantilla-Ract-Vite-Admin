@@ -1,9 +1,10 @@
-import { FieldErrors, FieldValues, UseFormRegister, Path } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, FieldValues, Path } from 'react-hook-form';
 import Tooltip from '../../UI/Tooltip';
 import clsx from 'clsx';
+import React from 'react';
 
 interface FileFieldProps<T extends FieldValues> {
-  label: string;
+  label: string | React.ReactNode;
   name: Path<T>;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
@@ -11,6 +12,7 @@ interface FileFieldProps<T extends FieldValues> {
   accept?: string;
   multiple?: boolean;
   colSpan?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
+  className?: string;
 }
 
 const HookFormFile = <T extends FieldValues>({
@@ -21,7 +23,8 @@ const HookFormFile = <T extends FieldValues>({
   tooltipMessage,
   accept,
   multiple = false,
-  colSpan = '6'
+  colSpan = '6',
+  className = ''
 }: FileFieldProps<T>) => {
   const colSpanClass = {
     '1': 'col-span-1',
@@ -38,39 +41,29 @@ const HookFormFile = <T extends FieldValues>({
     '12': 'col-span-12',
   }[colSpan] || 'col-span-6';
 
-  const { ref, onChange, ...rest } = register(name);
-  
   return (
-    <div className={clsx(colSpanClass)}>
+    <div className={clsx(colSpanClass, className)}>
       <div className="flex items-center gap-1 mb-2.5">
-        <label className="block text-black dark:text-white">{label}</label>
-        {tooltipMessage && (
-          <Tooltip message={tooltipMessage}>
-            <span className="text-blue-500 cursor-pointer text-sm">ⓘ</span>
-          </Tooltip>
-        )}
+        <label className="block text-black dark:text-white cursor-pointer">
+          {label}
+          {tooltipMessage && (
+            <Tooltip message={tooltipMessage}>
+              <span className="text-blue-500 cursor-pointer text-sm">ⓘ</span>
+            </Tooltip>
+          )}
+        </label>
       </div>
       
-      <input
-        type="file"
-        id={name}
-        accept={accept}
-        multiple={multiple}
-        className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition 
-          file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke 
-          file:bg-whiter file:py-3 file:px-5 
-          file:hover:bg-primary file:hover:bg-opacity-10 
-          focus:border-primary active:border-primary 
-          disabled:cursor-default disabled:bg-whiter 
-          dark:border-form-strokedark dark:bg-form-input 
-          dark:file:border-form-strokedark dark:file:bg-white/30 
-          dark:file:text-white dark:focus:border-primary"
-        {...rest}
-        onChange={(e) => {
-          onChange(e);
-        }}
-        ref={ref}
-      />
+      <label className="hidden">
+        <input
+          type="file"
+          id={name}
+          accept={accept}
+          multiple={multiple}
+          className="hidden"
+          {...register(name)}
+        />
+      </label>
       
       {errors[name] && (
         <p className="text-red-500 text-sm mt-1">
