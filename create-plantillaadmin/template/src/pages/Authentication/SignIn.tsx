@@ -2,14 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
-import Tarjeta from '../../components/comun/Ui/Tarjeta';
-import { Contenedor } from '../../components/comun/Ui/Contenedor';
+import { Contenedor } from '../../components/UI/Contenedor';
+import Tarjeta from '../../components/UI/Tarjeta';
+
 
 const SignIn: React.FC = () => {
   return (
+    <Contenedor>
    <Tarjeta>
       
-     <Contenedor>
+     
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
@@ -279,8 +281,9 @@ const SignIn: React.FC = () => {
             </div>
           </div>
         </div>
-        </Contenedor>
+        
         </Tarjeta>
+        </Contenedor>
   );
 };
 
