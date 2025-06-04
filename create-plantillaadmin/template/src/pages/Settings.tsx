@@ -27,8 +27,7 @@ const Settings = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    watch
+    formState: { errors }
   } = useForm<SettingsFormData>({
     defaultValues: {
       notificacionesEmail: true,
@@ -60,11 +59,7 @@ const Settings = () => {
     <Contenedor>
       <Breadcrumb pageName="Configuración" />
 
-      <div className="grid grid-cols-1 gap-9 lg:grid-cols-2">
-        <div className="flex flex-col gap-9">
-          {/* Información Personal */}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Tarjeta
+         <Tarjeta
               titulo={
                 <div className="flex items-center gap-2.5">
                   <FaUser className="text-primary" />
@@ -94,16 +89,15 @@ const Settings = () => {
                   </button>
                 </div>
               }
+              tamano={6}
             >
-              <div className="p-6.5">
+       
+          {/* Información Personal */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+        
+             
                 {/* Foto de Perfil */}
-                <div className="mb-6 flex items-center gap-4">
-                  <img
-                    src="https://via.placeholder.com/80"
-                    alt="Foto de perfil"
-                    className="h-20 w-20 rounded-full object-cover"
-                  />
-                  <div>
+              
                     <HookFormFile
                       label={
                         <div className="flex items-center gap-2 rounded bg-primary px-4 py-2 font-medium text-white hover:bg-opacity-90">
@@ -114,14 +108,13 @@ const Settings = () => {
                       register={register}
                       errors={errors}
                       accept="image/*"
+                      colSpan='6'
                     />
                     <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                       PNG, JPG o GIF (Max. 2MB)
                     </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
+              
+                
                   <HookFormInput
                     label="Nombre Completo"
                     name="nombreCompleto"
@@ -139,9 +132,9 @@ const Settings = () => {
                     placeholder="ejemplo@correo.com"
                     tooltipMessage="Tu dirección de correo principal"
                   />
-                </div>
+               
 
-                <div className="mt-4">
+                
                   <HookFormTextarea
                     label="Biografía"
                     name="biografia"
@@ -150,9 +143,9 @@ const Settings = () => {
                     placeholder="Cuéntanos sobre ti..."
                     tooltipMessage="Una breve descripción sobre ti"
                   />
-                </div>
+                
 
-                <div className="mt-4 grid grid-cols-2 gap-4">
+              
                   <HookFormInput
                     label="Ubicación"
                     name="ubicacion"
@@ -169,49 +162,13 @@ const Settings = () => {
                     placeholder="https://tusitio.com"
                     tooltipMessage="Tu sitio web personal o profesional"
                   />
-                </div>
-              </div>
-            </Tarjeta>
+              
+         
+            
           </form>
-
-          {/* Configuración de Notificaciones */}
-          <Tarjeta
-            titulo={
-              <div className="flex items-center gap-2.5">
-                <FaEnvelope className="text-primary" />
-                <span>Notificaciones</span>
-              </div>
-            }
-            subtitulo="Gestiona tus preferencias de notificación"
-            variante="defecto"
-            lineaHeader={{
-              mostrar: true,
-              grosor: '2px',
-              color: 'green'
-            }}
-          >
-            <div className="p-6.5">
-              <div className="flex flex-col gap-4">
-                <HookFormCheckbox
-                  label="Notificaciones por Email"
-                  name="notificacionesEmail"
-                  register={register}
-                  errors={errors}
-                />
-                <HookFormCheckbox
-                  label="Notificaciones Push"
-                  name="notificacionesPush"
-                  register={register}
-                  errors={errors}
-                />
-              </div>
-            </div>
           </Tarjeta>
-        </div>
-
-        <div className="flex flex-col gap-9">
           {/* Cambiar Contraseña */}
-          <Tarjeta
+            <Tarjeta
             titulo={
               <div className="flex items-center gap-2.5">
                 <FaLock className="text-primary" />
@@ -225,9 +182,9 @@ const Settings = () => {
               grosor: '2px',
               color: 'red'
             }}
+            tamano={6}
           >
-            <div className="p-6.5">
-              <div className="flex flex-col gap-4">
+           
                 <HookFormInput
                   label="Contraseña Actual"
                   name="contraseñaActual"
@@ -255,9 +212,43 @@ const Settings = () => {
                   placeholder="••••••••"
                   tooltipMessage="Repite tu nueva contraseña"
                 />
-              </div>
-            </div>
+             
           </Tarjeta>
+          {/* Configuración de Notificaciones */}
+          <Tarjeta
+            titulo={
+              <div className="flex items-center gap-2.5">
+                <FaEnvelope className="text-primary" />
+                <span>Notificaciones</span>
+              </div>
+            }
+            subtitulo="Gestiona tus preferencias de notificación"
+            variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: '2px',
+              color: 'green'
+            }}
+            tamano={6}
+          >
+            
+                <HookFormCheckbox
+                  label="Notificaciones por Email"
+                  name="notificacionesEmail"
+                  register={register}
+                  errors={errors}
+                />
+                <HookFormCheckbox
+                  label="Notificaciones Push"
+                  name="notificacionesPush"
+                  register={register}
+                  errors={errors}
+                />
+            
+          </Tarjeta>
+       
+          {/* Cambiar Contraseña */}
+        
 
           {/* Configuración Avanzada */}
           <Tarjeta
@@ -274,6 +265,7 @@ const Settings = () => {
               grosor: '2px',
               color: 'yellow'
             }}
+            tamano={6}
           >
             <div className="p-6.5">
               <div className="flex flex-col gap-4">
@@ -300,8 +292,7 @@ const Settings = () => {
               </div>
             </div>
           </Tarjeta>
-        </div>
-      </div>
+
     </Contenedor>
   );
 };

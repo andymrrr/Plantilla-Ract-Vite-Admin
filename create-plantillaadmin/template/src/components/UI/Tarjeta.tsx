@@ -27,6 +27,7 @@ interface TarjetaProps {
     color?: 'gray' | 'blue' | 'red' | 'green' | 'yellow';
     className?: string;
   };
+  tamano?: 4 | 6 | 12; 
 }
 
 const Tarjeta: React.FC<TarjetaProps> = ({
@@ -42,7 +43,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   variante = 'defecto',
   lineaHeader = { mostrar: true, grosor: '1px', color: 'gray' },
   lineaFooter = { mostrar: true, grosor: '1px', color: 'gray' },
-  lineaDivisora
+  lineaDivisora,
+  tamano = 12, 
 }) => {
   const obtenerClasesVariante = () => {
     switch (variante) {
@@ -54,6 +56,20 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         return 'bg-white dark:bg-boxdark';
     }
   };
+    const obtenerClasesTamaño = (tam: 4 | 6 | 12) => {
+    switch (tam) {
+      case 4:
+        return 'col-span-12 md:col-span-6 xl:col-span-4';
+      case 6:
+        return 'col-span-12 md:col-span-6 xl:col-span-6';
+      case 12:
+        return 'col-span-12 md:col-span-12 xl:col-span-12';
+      default:
+        return 'col-span-12 md:col-span-6 xl:col-span-6';
+    }
+  };
+
+  const clasesTamano = obtenerClasesTamaño(tamano);
 
   const obtenerClaseColor = (color: string = 'gray') => {
     return {
@@ -80,6 +96,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         ${obtenerClasesVariante()}
         shadow-default 
         ${claseFooter}
+        ${clasesTamano} 
       `}
     >
       {/* Sección de Encabezado */}

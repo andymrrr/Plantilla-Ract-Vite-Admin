@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useForm } from 'react-hook-form';
 import { Contenedor } from '../../components/UI/Contenedor';
@@ -9,26 +8,7 @@ import HookFormCheckbox from '../../components/FormulariosControles/React-Hook-F
 import EtiquetaEstado from '../../components/UI/Etiqueta-Estado';
 import { FaInfoCircle, FaSave, FaTimes } from 'react-icons/fa';
 
-interface ContactFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  subject: string;
-  message: string;
-}
 
-interface SignInFormData {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
-
-interface SignUpFormData {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
 
 interface FormularioData {
   nombreCompleto: string;
@@ -46,25 +26,6 @@ interface FormularioData {
 }
 
 const FormLayout = () => {
-  const {
-    register: registerContact,
-    handleSubmit: handleSubmitContact,
-    formState: { errors: errorsContact },
-  } = useForm<ContactFormData>();
-
-  const {
-    register: registerSignIn,
-    handleSubmit: handleSubmitSignIn,
-    formState: { errors: errorsSignIn },
-  } = useForm<SignInFormData>();
-
-  const {
-    register: registerSignUp,
-    handleSubmit: handleSubmitSignUp,
-    formState: { errors: errorsSignUp },
-    watch: watchSignUp,
-  } = useForm<SignUpFormData>();
-
   const {
     register,
     handleSubmit,
@@ -103,8 +64,8 @@ const FormLayout = () => {
     <Contenedor>
       <Breadcrumb pageName="Layouts de Formulario" />
 
-      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        <div className="flex flex-col gap-9">
+       <div className="col-span-12  ">
+      
           {/* Formulario Simple */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <Tarjeta
@@ -132,8 +93,9 @@ const FormLayout = () => {
                   </button>
                 </div>
               }
+              tamano={6}
             >
-              <div className="flex flex-col gap-5.5 p-6.5">
+          
                 <HookFormInput
                   label="Nombre Completo"
                   name="nombreCompleto"
@@ -157,7 +119,7 @@ const FormLayout = () => {
                   errors={errors}
                   placeholder="Escribe tu mensaje aquí..."
                 />
-              </div>
+         
             </Tarjeta>
           </form>
 
@@ -204,9 +166,9 @@ const FormLayout = () => {
               </div>
             </Tarjeta>
           </form>
-        </div>
+       
 
-        <div className="flex flex-col gap-9">
+        
           {/* Formulario en Columnas */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <Tarjeta
@@ -326,7 +288,6 @@ const FormLayout = () => {
               </div>
             </Tarjeta>
           </form>
-        </div>
       </div>
     </Contenedor>
   );
