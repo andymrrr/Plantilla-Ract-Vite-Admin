@@ -64,6 +64,7 @@ export const menuConfig: MenuSection[] = [
           { to: "/forms/form-layout", label: "Form Layout" },
           { to: "/forms/form-step-by-step", label: "Step by Step" },
           { to: "/forms/dynamic-form", label: "Dynamic Fields" },
+          { to: "/forms/dynamic-form-hook", label: "Dynamic Hook Form" },
         ],
       },
       {
