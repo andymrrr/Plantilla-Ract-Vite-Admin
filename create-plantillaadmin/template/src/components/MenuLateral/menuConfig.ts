@@ -62,6 +62,7 @@ export const menuConfig: MenuSection[] = [
         links: [
           { to: "/forms/form-elements", label: "Form Elements" },
           { to: "/forms/form-layout", label: "Form Layout" },
+          { to: "/forms/form-step-by-step", label: "Step by Step" },
         ],
       },
       {
