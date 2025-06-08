@@ -6,6 +6,7 @@ import ECommerce from "../../pages/Dashboard/ECommerce";
 import FormElements from "../../pages/Form/FormElements";
 import FormLayout from "../../pages/Form/FormLayout";
 import FormStepByStep from "../../pages/Form/FormStepByStep";
+import DynamicFormExample from "../../pages/Form/DynamicFormExample";
 import Graficas from "../../pages/Graficas/Graficas";
 import Profile from "../../pages/Profile";
 import Settings from "../../pages/Settings";
@@ -44,6 +45,11 @@ export const routes: RouteConfig[] = [
     path: '/forms/form-step-by-step',
     title: 'Formulario Step by Step | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <FormStepByStep />,
+  },
+  {
+    path: '/forms/dynamic-form',
+    title: 'Formularios Dinámicos | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    element: <DynamicFormExample />,
   },
   {
     path: '/tables',
