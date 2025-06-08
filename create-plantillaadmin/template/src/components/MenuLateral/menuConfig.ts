@@ -8,11 +8,21 @@ import {
   FaChartBar,
   FaCube,
   FaSignInAlt,
+  FaEdit,
+  FaLayerGroup,
+  FaStepForward,
+  FaPlus,
+  FaCode,
+  FaExclamationTriangle,
+  FaPlay,
+  FaKey,
+  FaUserPlus,
 } from "react-icons/fa";
 
 export interface MenuLink {
   to: string;
   label: string;
+  icon?: React.ElementType; // Icono opcional para links en accordions
 }
 
 export interface MenuItem {
@@ -60,11 +70,11 @@ export const menuConfig: MenuSection[] = [
         label: "Forms",
         type: "accordion",
         links: [
-          { to: "/forms/form-elements", label: "Form Elements" },
-          { to: "/forms/form-layout", label: "Form Layout" },
-          { to: "/forms/form-step-by-step", label: "Step by Step" },
-          { to: "/forms/dynamic-form", label: "Dynamic Fields" },
-          { to: "/forms/dynamic-form-hook", label: "Dynamic Hook Form" },
+          { to: "/forms/form-elements", label: "Form Elements", icon: FaEdit },
+          { to: "/forms/form-layout", label: "Form Layout", icon: FaLayerGroup },
+          { to: "/forms/form-step-by-step", label: "Step by Step", icon: FaStepForward },
+          { to: "/forms/dynamic-form", label: "Dynamic Fields", icon: FaPlus },
+          { to: "/forms/dynamic-form-hook", label: "Dynamic Hook Form", icon: FaCode },
         ],
       },
       {
@@ -99,8 +109,8 @@ export const menuConfig: MenuSection[] = [
         label: "UI Elements",
         type: "accordion",
         links: [
-          { to: "/ui/alerts", label: "Alerts" },
-          { to: "/ui/buttons", label: "Buttons" },
+          { to: "/ui/alerts", label: "Alerts", icon: FaExclamationTriangle },
+          { to: "/ui/buttons", label: "Buttons", icon: FaPlay },
         ],
       },
       {
@@ -109,8 +119,8 @@ export const menuConfig: MenuSection[] = [
         label: "Authentication",
         type: "accordion",
         links: [
-          { to: "/auth/signin", label: "Sign In" },
-          { to: "/auth/signup", label: "Sign Up" },
+          { to: "/auth/signin", label: "Sign In", icon: FaKey },
+          { to: "/auth/signup", label: "Sign Up", icon: FaUserPlus },
         ],
       },
     ],
