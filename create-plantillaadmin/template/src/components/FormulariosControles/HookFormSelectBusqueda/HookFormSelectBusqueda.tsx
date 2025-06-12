@@ -9,11 +9,13 @@ import ErrorMessage from './ErrorMessage';
 /**
  * Componente avanzado de Select con búsqueda integrado con react-hook-form
  * Incluye múltiples variantes, soporte para grupos, multi-selección y más
+ * Soporta tanto register como control para máxima flexibilidad
  */
 const HookFormSelectBusqueda = <T extends FieldValues>({
   label,
   name,
   control,
+  register,
   errors,
   options = [],
   groups,
@@ -39,6 +41,11 @@ const HookFormSelectBusqueda = <T extends FieldValues>({
   reactSelectProps = {}
 }: HookFormSelectBusquedaProps<T>) => {
   
+  // Validar que al menos control o register esté presente
+  if (!control && !register) {
+    throw new Error('HookFormSelectBusqueda: Debes proporcionar either control o register');
+  }
+
   // Construir reglas de validación
   const validationRules = React.useMemo(() => {
     const rules: any = {};
@@ -67,6 +74,69 @@ const HookFormSelectBusqueda = <T extends FieldValues>({
     }
   };
 
+  // Si se proporciona register, usar el enfoque tradicional
+  if (register && !control) {
+    const registerProps = register(name, validationRules);
+    
+    return (
+      <div className={colSpanClass}>
+        <SelectLabel 
+          label={label}
+          tooltipMessage={tooltipMessage}
+          required={typeof required === 'string' ? true : required}
+        />
+
+        <SelectField
+          options={options}
+          groups={groups}
+          selectedValue={selectedValue}
+          onChange={(value) => {
+            handleFieldChange(value);
+            // Para register, necesitamos crear un evento sintético
+            const syntheticValue = isMulti && Array.isArray(value) ? value.join(',') : value;
+            const event = {
+              target: {
+                name,
+                value: syntheticValue,
+                type: 'select-one'
+              },
+              currentTarget: {
+                name,
+                value: syntheticValue
+              }
+            } as unknown as React.ChangeEvent<HTMLSelectElement>;
+            
+            if (registerProps.onChange) {
+              registerProps.onChange(event);
+            }
+          }}
+          placeholder={placeholder}
+          icon={icon}
+          variant={variant}
+          size={size}
+          isMulti={isMulti}
+          isClearable={isClearable}
+          isSearchable={isSearchable}
+          isLoading={isLoading}
+          disabled={disabled}
+          hasError={hasError}
+          noOptionsMessage={noOptionsMessage}
+          loadingMessage={loadingMessage}
+          customFilter={customFilter}
+          formatOptionLabel={formatOptionLabel}
+          reactSelectProps={reactSelectProps}
+          registerProps={registerProps}
+        />
+
+        <ErrorMessage 
+          name={name} 
+          errors={errors} 
+        />
+      </div>
+    );
+  }
+
+  // Si se proporciona control, usar Controller (enfoque actual)
   return (
     <div className={colSpanClass}>
       <SelectLabel 
@@ -77,7 +147,7 @@ const HookFormSelectBusqueda = <T extends FieldValues>({
 
       <Controller
         name={name}
-        control={control}
+        control={control!}
         rules={validationRules}
         render={({ field }) => (
           <SelectField

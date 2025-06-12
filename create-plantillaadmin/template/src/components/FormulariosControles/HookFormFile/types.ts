@@ -21,6 +21,7 @@ export interface FileFieldProps<T extends FieldValues> extends BaseFileProps<T> 
 export interface FileLabelProps {
   label: string | React.ReactNode;
   tooltipMessage?: string;
+  htmlFor?: string;
 }
 
 export interface FileFieldOnlyProps {

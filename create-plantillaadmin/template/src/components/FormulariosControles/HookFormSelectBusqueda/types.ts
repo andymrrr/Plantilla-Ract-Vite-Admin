@@ -1,5 +1,5 @@
 import React from 'react';
-import { Control, FieldErrors, FieldValues, Path } from 'react-hook-form';
+import { Control, FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import { GroupBase, Props as ReactSelectProps } from 'react-select';
 
 export type ColSpanType = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
@@ -23,7 +23,6 @@ export interface SelectGroup {
 
 export interface BaseSelectProps<T extends FieldValues> {
   name: Path<T>;
-  control: Control<T>;
   errors: FieldErrors<T>;
 }
 
@@ -35,6 +34,8 @@ export interface SelectValidationProps {
 export interface HookFormSelectBusquedaProps<T extends FieldValues> 
   extends BaseSelectProps<T>, SelectValidationProps {
   label: string;
+  control?: Control<T>;
+  register?: UseFormRegister<T>;
   options?: SelectOption[];
   groups?: SelectGroup[];
   selectedValue?: string | string[];
@@ -88,6 +89,7 @@ export interface SelectFieldProps {
   customFilter?: (option: SelectOption, inputValue: string) => boolean;
   formatOptionLabel?: (option: SelectOption) => React.ReactNode;
   reactSelectProps?: Partial<ReactSelectProps<SelectOption, boolean, GroupBase<SelectOption>>>;
+  registerProps?: any;
 }
 
 export interface SelectControllerProps<T extends FieldValues> {

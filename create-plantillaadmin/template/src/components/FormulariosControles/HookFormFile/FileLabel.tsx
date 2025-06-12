@@ -6,15 +6,19 @@ import { FileLabelProps } from './types';
  */
 export const FileLabel: React.FC<FileLabelProps> = ({ 
   label, 
-  tooltipMessage 
+  tooltipMessage,
+  htmlFor 
 }) => {
   return (
     <div className="flex items-center gap-1 mb-2.5">
-      <label className="block text-black dark:text-white cursor-pointer">
+      <label 
+        htmlFor={htmlFor}
+        className="block text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
+      >
         {label}
         {tooltipMessage && (
           <Tooltip message={tooltipMessage}>
-            <span className="text-blue-500 cursor-pointer text-sm">ⓘ</span>
+            <span className="ml-1 text-blue-500 hover:text-blue-600 cursor-pointer text-sm">ⓘ</span>
           </Tooltip>
         )}
       </label>

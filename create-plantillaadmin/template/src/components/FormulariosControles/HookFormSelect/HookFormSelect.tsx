@@ -6,7 +6,7 @@ import SelectLabel from './SelectLabel';
 import SelectField from './SelectField';
 import ErrorMessage from './ErrorMessage';
 
-export  const HookFormSelect = <T extends FieldValues>({
+const HookFormSelect = <T extends FieldValues>({
   label,
   name,
   options = [],
@@ -101,3 +101,5 @@ export  const HookFormSelect = <T extends FieldValues>({
     </div>
   );
 };
+
+export default HookFormSelect;

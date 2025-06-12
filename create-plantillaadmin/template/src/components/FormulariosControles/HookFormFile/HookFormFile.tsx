@@ -33,7 +33,8 @@ const HookFormFile = <T extends FieldValues>({
     <div className={`${colSpanClass} ${containerClasses}`}>
       <FileLabel 
         label={label} 
-        tooltipMessage={tooltipMessage} 
+        tooltipMessage={tooltipMessage}
+        htmlFor={name}
       />
       
       <FileField

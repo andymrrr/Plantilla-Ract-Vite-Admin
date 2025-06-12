@@ -7,8 +7,150 @@ interface FormValues {
   [key: string]: string
 }
 
+// Opciones extensas para demostrar la funcionalidad de búsqueda
+const opcionesPaises = [
+  { value: 'ar', label: 'Argentina' },
+  { value: 'bo', label: 'Bolivia' },
+  { value: 'br', label: 'Brasil' },
+  { value: 'cl', label: 'Chile' },
+  { value: 'co', label: 'Colombia' },
+  { value: 'cr', label: 'Costa Rica' },
+  { value: 'cu', label: 'Cuba' },
+  { value: 'do', label: 'República Dominicana' },
+  { value: 'ec', label: 'Ecuador' },
+  { value: 'sv', label: 'El Salvador' },
+  { value: 'es', label: 'España' },
+  { value: 'gt', label: 'Guatemala' },
+  { value: 'hn', label: 'Honduras' },
+  { value: 'mx', label: 'México' },
+  { value: 'ni', label: 'Nicaragua' },
+  { value: 'pa', label: 'Panamá' },
+  { value: 'py', label: 'Paraguay' },
+  { value: 'pe', label: 'Perú' },
+  { value: 'pr', label: 'Puerto Rico' },
+  { value: 'uy', label: 'Uruguay' },
+  { value: 've', label: 'Venezuela' },
+]
+
+const opcionesCiudades = [
+  { value: 'madrid', label: 'Madrid, España' },
+  { value: 'barcelona', label: 'Barcelona, España' },
+  { value: 'valencia', label: 'Valencia, España' },
+  { value: 'sevilla', label: 'Sevilla, España' },
+  { value: 'bilbao', label: 'Bilbao, España' },
+  { value: 'mexico_city', label: 'Ciudad de México, México' },
+  { value: 'guadalajara', label: 'Guadalajara, México' },
+  { value: 'monterrey', label: 'Monterrey, México' },
+  { value: 'puebla', label: 'Puebla, México' },
+  { value: 'tijuana', label: 'Tijuana, México' },
+  { value: 'buenos_aires', label: 'Buenos Aires, Argentina' },
+  { value: 'cordoba', label: 'Córdoba, Argentina' },
+  { value: 'rosario', label: 'Rosario, Argentina' },
+  { value: 'mendoza', label: 'Mendoza, Argentina' },
+  { value: 'bogota', label: 'Bogotá, Colombia' },
+  { value: 'medellin', label: 'Medellín, Colombia' },
+  { value: 'cali', label: 'Cali, Colombia' },
+  { value: 'barranquilla', label: 'Barranquilla, Colombia' },
+  { value: 'lima', label: 'Lima, Perú' },
+  { value: 'arequipa', label: 'Arequipa, Perú' },
+  { value: 'trujillo', label: 'Trujillo, Perú' },
+  { value: 'santiago', label: 'Santiago, Chile' },
+  { value: 'valparaiso', label: 'Valparaíso, Chile' },
+  { value: 'concepcion', label: 'Concepción, Chile' },
+]
+
+const opcionesUsuarios = [
+  { value: 'juan_perez', label: 'Juan Pérez - Desarrollador Frontend' },
+  { value: 'maria_garcia', label: 'María García - Diseñadora UX/UI' },
+  { value: 'carlos_rodriguez', label: 'Carlos Rodríguez - Backend Developer' },
+  { value: 'ana_martinez', label: 'Ana Martínez - Product Manager' },
+  { value: 'luis_gonzalez', label: 'Luis González - DevOps Engineer' },
+  { value: 'sofia_lopez', label: 'Sofía López - QA Tester' },
+  { value: 'diego_hernandez', label: 'Diego Hernández - Data Scientist' },
+  { value: 'laura_jimenez', label: 'Laura Jiménez - Marketing Manager' },
+  { value: 'miguel_ruiz', label: 'Miguel Ruiz - Sales Representative' },
+  { value: 'carmen_morales', label: 'Carmen Morales - HR Specialist' },
+  { value: 'antonio_vargas', label: 'Antonio Vargas - Financial Analyst' },
+  { value: 'patricia_castro', label: 'Patricia Castro - Content Writer' },
+  { value: 'fernando_ortega', label: 'Fernando Ortega - System Administrator' },
+  { value: 'isabel_ramos', label: 'Isabel Ramos - Customer Support' },
+  { value: 'roberto_flores', label: 'Roberto Flores - Business Analyst' },
+]
+
+const opcionesProductos = [
+  { value: 'laptop_dell', label: 'Laptop Dell XPS 13 - Ultrabook Premium' },
+  { value: 'laptop_hp', label: 'Laptop HP Pavilion 15 - Uso General' },
+  { value: 'laptop_lenovo', label: 'Laptop Lenovo ThinkPad - Empresarial' },
+  { value: 'laptop_asus', label: 'Laptop ASUS ROG - Gaming' },
+  { value: 'laptop_acer', label: 'Laptop Acer Aspire - Económica' },
+  { value: 'monitor_samsung', label: 'Monitor Samsung 27" 4K - Profesional' },
+  { value: 'monitor_lg', label: 'Monitor LG UltraWide - Productividad' },
+  { value: 'monitor_dell', label: 'Monitor Dell 24" Full HD - Oficina' },
+  { value: 'teclado_logitech', label: 'Teclado Logitech MX Keys - Inalámbrico' },
+  { value: 'teclado_corsair', label: 'Teclado Corsair K95 - Gaming Mecánico' },
+  { value: 'mouse_logitech', label: 'Mouse Logitech MX Master 3 - Ergonómico' },
+  { value: 'mouse_razer', label: 'Mouse Razer DeathAdder - Gaming' },
+  { value: 'auriculares_sony', label: 'Auriculares Sony WH-1000XM4 - Noise Cancelling' },
+  { value: 'auriculares_bose', label: 'Auriculares Bose QuietComfort - Premium' },
+  { value: 'webcam_logitech', label: 'Webcam Logitech C920 - Full HD' },
+]
+
+const opcionesCategorias = [
+  { value: 'tecnologia', label: 'Tecnología e Informática' },
+  { value: 'salud', label: 'Salud y Medicina' },
+  { value: 'educacion', label: 'Educación y Formación' },
+  { value: 'finanzas', label: 'Finanzas y Contabilidad' },
+  { value: 'marketing', label: 'Marketing y Publicidad' },
+  { value: 'ventas', label: 'Ventas y Comercio' },
+  { value: 'recursos_humanos', label: 'Recursos Humanos' },
+  { value: 'ingenieria', label: 'Ingeniería y Construcción' },
+  { value: 'diseno', label: 'Diseño y Creatividad' },
+  { value: 'legal', label: 'Legal y Jurídico' },
+  { value: 'logistica', label: 'Logística y Transporte' },
+  { value: 'turismo', label: 'Turismo y Hospitalidad' },
+  { value: 'agricultura', label: 'Agricultura y Ganadería' },
+  { value: 'manufactura', label: 'Manufactura e Industria' },
+  { value: 'energia', label: 'Energía y Medio Ambiente' },
+]
+
+const opcionesLibros = [
+  { value: 'clean_code', label: 'Clean Code - Robert C. Martin' },
+  { value: 'design_patterns', label: 'Design Patterns - Gang of Four' },
+  { value: 'refactoring', label: 'Refactoring - Martin Fowler' },
+  { value: 'pragmatic_programmer', label: 'The Pragmatic Programmer - Hunt & Thomas' },
+  { value: 'code_complete', label: 'Code Complete - Steve McConnell' },
+  { value: 'you_dont_know_js', label: 'You Don\'t Know JS - Kyle Simpson' },
+  { value: 'eloquent_javascript', label: 'Eloquent JavaScript - Marijn Haverbeke' },
+  { value: 'javascript_good_parts', label: 'JavaScript: The Good Parts - Douglas Crockford' },
+  { value: 'react_up_running', label: 'React: Up & Running - Stoyan Stefanov' },
+  { value: 'node_js_action', label: 'Node.js in Action - Manning Publications' },
+  { value: 'python_crash_course', label: 'Python Crash Course - Eric Matthes' },
+  { value: 'automate_boring_stuff', label: 'Automate the Boring Stuff - Al Sweigart' },
+  { value: 'effective_python', label: 'Effective Python - Brett Slatkin' },
+  { value: 'learning_python', label: 'Learning Python - Mark Lutz' },
+  { value: 'fluent_python', label: 'Fluent Python - Luciano Ramalho' },
+]
+
+// Grupos de prioridad para ejemplos
+const gruposPrioridad = [
+  {
+    label: 'Alta Prioridad',
+    options: [
+      { value: 'critica', label: 'Crítica', color: '#ef4444' },
+      { value: 'alta', label: 'Alta', color: '#f97316' },
+    ]
+  },
+  {
+    label: 'Prioridad Normal',
+    options: [
+      { value: 'media', label: 'Media', color: '#eab308' },
+      { value: 'baja', label: 'Baja', color: '#22c55e' },
+    ]
+  }
+];
+
 export default function HookFormSelectBusquedaExamples() {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm<FormValues>()
+  const { control, handleSubmit, formState: { errors }, watch } = useForm<FormValues>()
   
   const watchedValues = watch()
   
@@ -22,129 +164,13 @@ export default function HookFormSelectBusquedaExamples() {
     console.log('Datos del formulario:', data)
   }
 
-  // Opciones extensas para demostrar la funcionalidad de búsqueda
-  const opcionesPaises = [
-    { valor: 'ar', etiqueta: 'Argentina' },
-    { valor: 'bo', etiqueta: 'Bolivia' },
-    { valor: 'br', etiqueta: 'Brasil' },
-    { valor: 'cl', etiqueta: 'Chile' },
-    { valor: 'co', etiqueta: 'Colombia' },
-    { valor: 'cr', etiqueta: 'Costa Rica' },
-    { valor: 'cu', etiqueta: 'Cuba' },
-    { valor: 'do', etiqueta: 'República Dominicana' },
-    { valor: 'ec', etiqueta: 'Ecuador' },
-    { valor: 'sv', etiqueta: 'El Salvador' },
-    { valor: 'es', etiqueta: 'España' },
-    { valor: 'gt', etiqueta: 'Guatemala' },
-    { valor: 'hn', etiqueta: 'Honduras' },
-    { valor: 'mx', etiqueta: 'México' },
-    { valor: 'ni', etiqueta: 'Nicaragua' },
-    { valor: 'pa', etiqueta: 'Panamá' },
-    { valor: 'py', etiqueta: 'Paraguay' },
-    { valor: 'pe', etiqueta: 'Perú' },
-    { valor: 'pr', etiqueta: 'Puerto Rico' },
-    { valor: 'uy', etiqueta: 'Uruguay' },
-    { valor: 've', etiqueta: 'Venezuela' },
-  ]
-
-  const opcionesCiudades = [
-    { valor: 'madrid', etiqueta: 'Madrid, España' },
-    { valor: 'barcelona', etiqueta: 'Barcelona, España' },
-    { valor: 'valencia', etiqueta: 'Valencia, España' },
-    { valor: 'sevilla', etiqueta: 'Sevilla, España' },
-    { valor: 'bilbao', etiqueta: 'Bilbao, España' },
-    { valor: 'mexico_city', etiqueta: 'Ciudad de México, México' },
-    { valor: 'guadalajara', etiqueta: 'Guadalajara, México' },
-    { valor: 'monterrey', etiqueta: 'Monterrey, México' },
-    { valor: 'puebla', etiqueta: 'Puebla, México' },
-    { valor: 'tijuana', etiqueta: 'Tijuana, México' },
-    { valor: 'buenos_aires', etiqueta: 'Buenos Aires, Argentina' },
-    { valor: 'cordoba', etiqueta: 'Córdoba, Argentina' },
-    { valor: 'rosario', etiqueta: 'Rosario, Argentina' },
-    { valor: 'mendoza', etiqueta: 'Mendoza, Argentina' },
-    { valor: 'bogota', etiqueta: 'Bogotá, Colombia' },
-    { valor: 'medellin', etiqueta: 'Medellín, Colombia' },
-    { valor: 'cali', etiqueta: 'Cali, Colombia' },
-    { valor: 'barranquilla', etiqueta: 'Barranquilla, Colombia' },
-    { valor: 'lima', etiqueta: 'Lima, Perú' },
-    { valor: 'arequipa', etiqueta: 'Arequipa, Perú' },
-    { valor: 'trujillo', etiqueta: 'Trujillo, Perú' },
-    { valor: 'santiago', etiqueta: 'Santiago, Chile' },
-    { valor: 'valparaiso', etiqueta: 'Valparaíso, Chile' },
-    { valor: 'concepcion', etiqueta: 'Concepción, Chile' },
-  ]
-
-  const opcionesUsuarios = [
-    { valor: 'juan_perez', etiqueta: 'Juan Pérez - Desarrollador Frontend' },
-    { valor: 'maria_garcia', etiqueta: 'María García - Diseñadora UX/UI' },
-    { valor: 'carlos_rodriguez', etiqueta: 'Carlos Rodríguez - Backend Developer' },
-    { valor: 'ana_martinez', etiqueta: 'Ana Martínez - Product Manager' },
-    { valor: 'luis_gonzalez', etiqueta: 'Luis González - DevOps Engineer' },
-    { valor: 'sofia_lopez', etiqueta: 'Sofía López - QA Tester' },
-    { valor: 'diego_hernandez', etiqueta: 'Diego Hernández - Data Scientist' },
-    { valor: 'laura_jimenez', etiqueta: 'Laura Jiménez - Marketing Manager' },
-    { valor: 'miguel_ruiz', etiqueta: 'Miguel Ruiz - Sales Representative' },
-    { valor: 'carmen_morales', etiqueta: 'Carmen Morales - HR Specialist' },
-    { valor: 'antonio_vargas', etiqueta: 'Antonio Vargas - Financial Analyst' },
-    { valor: 'patricia_castro', etiqueta: 'Patricia Castro - Content Writer' },
-    { valor: 'fernando_ortega', etiqueta: 'Fernando Ortega - System Administrator' },
-    { valor: 'isabel_ramos', etiqueta: 'Isabel Ramos - Customer Support' },
-    { valor: 'roberto_flores', etiqueta: 'Roberto Flores - Business Analyst' },
-  ]
-
-  const opcionesProductos = [
-    { valor: 'laptop_dell', etiqueta: 'Laptop Dell XPS 13 - Ultrabook Premium' },
-    { valor: 'laptop_hp', etiqueta: 'Laptop HP Pavilion 15 - Uso General' },
-    { valor: 'laptop_lenovo', etiqueta: 'Laptop Lenovo ThinkPad - Empresarial' },
-    { valor: 'laptop_asus', etiqueta: 'Laptop ASUS ROG - Gaming' },
-    { valor: 'laptop_acer', etiqueta: 'Laptop Acer Aspire - Económica' },
-    { valor: 'monitor_samsung', etiqueta: 'Monitor Samsung 27" 4K - Profesional' },
-    { valor: 'monitor_lg', etiqueta: 'Monitor LG UltraWide - Productividad' },
-    { valor: 'monitor_dell', etiqueta: 'Monitor Dell 24" Full HD - Oficina' },
-    { valor: 'teclado_logitech', etiqueta: 'Teclado Logitech MX Keys - Inalámbrico' },
-    { valor: 'teclado_corsair', etiqueta: 'Teclado Corsair K95 - Gaming Mecánico' },
-    { valor: 'mouse_logitech', etiqueta: 'Mouse Logitech MX Master 3 - Ergonómico' },
-    { valor: 'mouse_razer', etiqueta: 'Mouse Razer DeathAdder - Gaming' },
-    { valor: 'auriculares_sony', etiqueta: 'Auriculares Sony WH-1000XM4 - Noise Cancelling' },
-    { valor: 'auriculares_bose', etiqueta: 'Auriculares Bose QuietComfort - Premium' },
-    { valor: 'webcam_logitech', etiqueta: 'Webcam Logitech C920 - Full HD' },
-  ]
-
-  const opcionesCategorias = [
-    { valor: 'tecnologia', etiqueta: 'Tecnología e Informática' },
-    { valor: 'salud', etiqueta: 'Salud y Medicina' },
-    { valor: 'educacion', etiqueta: 'Educación y Formación' },
-    { valor: 'finanzas', etiqueta: 'Finanzas y Contabilidad' },
-    { valor: 'marketing', etiqueta: 'Marketing y Publicidad' },
-    { valor: 'ventas', etiqueta: 'Ventas y Comercio' },
-    { valor: 'recursos_humanos', etiqueta: 'Recursos Humanos' },
-    { valor: 'ingenieria', etiqueta: 'Ingeniería y Construcción' },
-    { valor: 'diseno', etiqueta: 'Diseño y Creatividad' },
-    { valor: 'legal', etiqueta: 'Legal y Jurídico' },
-    { valor: 'logistica', etiqueta: 'Logística y Transporte' },
-    { valor: 'turismo', etiqueta: 'Turismo y Hospitalidad' },
-    { valor: 'agricultura', etiqueta: 'Agricultura y Ganadería' },
-    { valor: 'manufactura', etiqueta: 'Manufactura e Industria' },
-    { valor: 'energia', etiqueta: 'Energía y Medio Ambiente' },
-  ]
-
-  const opcionesLibros = [
-    { valor: 'clean_code', etiqueta: 'Clean Code - Robert C. Martin' },
-    { valor: 'design_patterns', etiqueta: 'Design Patterns - Gang of Four' },
-    { valor: 'refactoring', etiqueta: 'Refactoring - Martin Fowler' },
-    { valor: 'pragmatic_programmer', etiqueta: 'The Pragmatic Programmer - Hunt & Thomas' },
-    { valor: 'code_complete', etiqueta: 'Code Complete - Steve McConnell' },
-    { valor: 'you_dont_know_js', etiqueta: 'You Don\'t Know JS - Kyle Simpson' },
-    { valor: 'eloquent_javascript', etiqueta: 'Eloquent JavaScript - Marijn Haverbeke' },
-    { valor: 'javascript_good_parts', etiqueta: 'JavaScript: The Good Parts - Douglas Crockford' },
-    { valor: 'react_up_running', etiqueta: 'React: Up & Running - Stoyan Stefanov' },
-    { valor: 'node_js_action', etiqueta: 'Node.js in Action - Manning Publications' },
-    { valor: 'python_crash_course', etiqueta: 'Python Crash Course - Eric Matthes' },
-    { valor: 'automate_boring_stuff', etiqueta: 'Automate the Boring Stuff - Al Sweigart' },
-    { valor: 'effective_python', etiqueta: 'Effective Python - Brett Slatkin' },
-    { valor: 'learning_python', etiqueta: 'Learning Python - Mark Lutz' },
-    { valor: 'fluent_python', etiqueta: 'Fluent Python - Luciano Ramalho' },
-  ]
+  // Función helper para manejar cambios de valor
+  const handleValueChange = (value: string | string[]) => {
+    if (typeof value === 'string') {
+      return value;
+    }
+    return Array.isArray(value) ? value[0] || '' : '';
+  }
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -162,33 +188,33 @@ export default function HookFormSelectBusquedaExamples() {
             </h2>
             <div className="grid grid-cols-12 gap-4">
               <HookFormSelectBusqueda
-                etiqueta="País"
+                label="País"
                 name="paisBasico"
-                opciones={opcionesPaises}
-                register={register}
+                options={opcionesPaises}
+                control={control}
                 errors={errors}
-                valorSeleccionado={pais}
-                onChange={setPais}
+                selectedValue={pais}
+                onChange={(value) => setPais(handleValueChange(value))}
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                etiqueta="Ciudad"
+                label="Ciudad"
                 name="ciudadBasica"
-                opciones={opcionesCiudades}
-                register={register}
+                options={opcionesCiudades}
+                control={control}
                 errors={errors}
-                valorSeleccionado={ciudad}
-                onChange={setCiudad}
+                selectedValue={ciudad}
+                onChange={(value) => setCiudad(handleValueChange(value))}
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                etiqueta="Usuario"
+                label="Usuario"
                 name="usuarioBasico"
-                opciones={opcionesUsuarios}
-                register={register}
+                options={opcionesUsuarios}
+                control={control}
                 errors={errors}
-                valorSeleccionado={usuario}
-                onChange={setUsuario}
+                selectedValue={usuario}
+                onChange={(value) => setUsuario(handleValueChange(value))}
                 colSpan="12"
               />
             </div>
@@ -201,136 +227,252 @@ export default function HookFormSelectBusquedaExamples() {
             </h2>
             <div className="grid grid-cols-12 gap-4">
               <HookFormSelectBusqueda
-                etiqueta="Empleado"
+                label="Empleado"
                 name="empleado"
-                opciones={opcionesUsuarios}
-                register={register}
+                options={opcionesUsuarios}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
-                icono={<FaUser />}
+                icon={<FaUser />}
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                etiqueta="Ubicación"
+                label="Ubicación"
                 name="ubicacion"
-                opciones={opcionesCiudades}
-                register={register}
+                options={opcionesCiudades}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
-                icono={<FaCity />}
+                icon={<FaCity />}
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                etiqueta="Región"
+                label="Región"
                 name="region"
-                opciones={opcionesPaises}
-                register={register}
+                options={opcionesPaises}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
-                icono={<FaGlobe />}
+                icon={<FaGlobe />}
                 colSpan="4"
               />
               <HookFormSelectBusqueda
-                etiqueta="Categoría"
+                label="Categoría"
                 name="categoriaIcono"
-                opciones={opcionesCategorias}
-                register={register}
+                options={opcionesCategorias}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
-                icono={<FaTag />}
+                icon={<FaTag />}
                 colSpan="4"
               />
               <HookFormSelectBusqueda
-                etiqueta="Libro"
+                label="Libro"
                 name="libroIcono"
-                opciones={opcionesLibros}
-                register={register}
+                options={opcionesLibros}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
-                icono={<FaBook />}
+                icon={<FaBook />}
                 colSpan="4"
               />
             </div>
           </div>
 
-          {/* Sección 3: Diferentes tamaños */}
+          {/* Sección 3: Diferentes variantes */}
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              3. Diferentes Tamaños de Columna
+              3. Diferentes Variantes Visuales
             </h2>
             <div className="grid grid-cols-12 gap-4">
               <HookFormSelectBusqueda
-                etiqueta="Ancho Completo (12) - Seleccionar producto con descripción detallada"
-                name="productoCompleto"
-                opciones={opcionesProductos}
-                register={register}
+                label="Variante Básica"
+                name="variantBasic"
+                options={opcionesPaises}
+                control={control}
                 errors={errors}
-                valorSeleccionado={producto}
-                onChange={setProducto}
-                colSpan="12"
-              />
-              <HookFormSelectBusqueda
-                etiqueta="Medio Ancho (6)"
-                name="medioAncho1"
-                opciones={opcionesPaises}
-                register={register}
-                errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
+                variant="basic"
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                etiqueta="Medio Ancho (6)"
-                name="medioAncho2"
-                opciones={opcionesCategorias}
-                register={register}
+                label="Variante Moderna"
+                name="variantModern"
+                options={opcionesCiudades}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
+                variant="modern"
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                etiqueta="Un Tercio (4)"
-                name="tercio1"
-                opciones={opcionesCiudades}
-                register={register}
+                label="Variante con Icono"
+                name="variantIcon"
+                options={opcionesUsuarios}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
+                variant="icon"
+                icon={<FaUser />}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Variante Compacta"
+                name="variantCompact"
+                options={opcionesCategorias}
+                control={control}
+                errors={errors}
+                variant="compact"
+                colSpan="6"
+              />
+            </div>
+          </div>
+
+          {/* Sección 4: Diferentes tamaños */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              4. Diferentes Tamaños
+            </h2>
+            <div className="grid grid-cols-12 gap-4">
+              <HookFormSelectBusqueda
+                label="Tamaño Pequeño (sm)"
+                name="sizeSmall"
+                options={opcionesPaises}
+                control={control}
+                errors={errors}
+                size="sm"
                 colSpan="4"
               />
               <HookFormSelectBusqueda
-                etiqueta="Un Tercio (4)"
-                name="tercio2"
-                opciones={opcionesUsuarios}
-                register={register}
+                label="Tamaño Mediano (md)"
+                name="sizeMedium"
+                options={opcionesCiudades}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
+                size="md"
                 colSpan="4"
               />
               <HookFormSelectBusqueda
-                etiqueta="Un Tercio (4)"
-                name="tercio3"
-                opciones={opcionesLibros}
-                register={register}
+                label="Tamaño Grande (lg)"
+                name="sizeLarge"
+                options={opcionesUsuarios}
+                control={control}
                 errors={errors}
-                valorSeleccionado=""
-                onChange={() => {}}
+                size="lg"
                 colSpan="4"
               />
             </div>
           </div>
 
-          {/* Sección 4: Casos de uso reales */}
+          {/* Sección 5: Diferentes tamaños de columna */}
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              4. Casos de Uso Reales
+              5. Diferentes Tamaños de Columna
+            </h2>
+            <div className="grid grid-cols-12 gap-4">
+              <HookFormSelectBusqueda
+                label="Ancho Completo (12) - Seleccionar producto con descripción detallada"
+                name="productoCompleto"
+                options={opcionesProductos}
+                control={control}
+                errors={errors}
+                selectedValue={producto}
+                onChange={(value) => setProducto(handleValueChange(value))}
+                colSpan="12"
+              />
+              <HookFormSelectBusqueda
+                label="Medio Ancho (6)"
+                name="medioAncho1"
+                options={opcionesPaises}
+                control={control}
+                errors={errors}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Medio Ancho (6)"
+                name="medioAncho2"
+                options={opcionesCategorias}
+                control={control}
+                errors={errors}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Un Tercio (4)"
+                name="tercio1"
+                options={opcionesCiudades}
+                control={control}
+                errors={errors}
+                colSpan="4"
+              />
+              <HookFormSelectBusqueda
+                label="Un Tercio (4)"
+                name="tercio2"
+                options={opcionesUsuarios}
+                control={control}
+                errors={errors}
+                colSpan="4"
+              />
+              <HookFormSelectBusqueda
+                label="Un Tercio (4)"
+                name="tercio3"
+                options={opcionesLibros}
+                control={control}
+                errors={errors}
+                colSpan="4"
+              />
+            </div>
+          </div>
+
+          {/* Sección 6: Funcionalidades avanzadas */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              6. Funcionalidades Avanzadas
+            </h2>
+            <div className="grid grid-cols-12 gap-4">
+              <HookFormSelectBusqueda
+                label="Selección Múltiple"
+                name="multiSelect"
+                options={opcionesPaises}
+                control={control}
+                errors={errors}
+                isMulti={true}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="No Limpiable"
+                name="notClearable"
+                options={opcionesCiudades}
+                control={control}
+                errors={errors}
+                isClearable={false}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Sin Búsqueda"
+                name="notSearchable"
+                options={opcionesUsuarios}
+                control={control}
+                errors={errors}
+                isSearchable={false}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Deshabilitado"
+                name="disabled"
+                options={opcionesProductos}
+                control={control}
+                errors={errors}
+                disabled={true}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Con Tooltip"
+                name="withTooltip"
+                options={opcionesCategorias}
+                control={control}
+                errors={errors}
+                tooltipMessage="Este es un tooltip informativo que explica el propósito de este campo"
+                colSpan="12"
+              />
+            </div>
+          </div>
+
+          {/* Sección 7: Casos de uso reales */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              7. Casos de Uso Reales
             </h2>
             
             {/* Gestión de empleados */}
@@ -340,47 +482,39 @@ export default function HookFormSelectBusquedaExamples() {
               </h3>
               <div className="grid grid-cols-12 gap-4">
                 <HookFormSelectBusqueda
-                  etiqueta="Supervisor Directo"
+                  label="Supervisor Directo"
                   name="supervisorDirecto"
-                  opciones={opcionesUsuarios}
-                  register={register}
+                  options={opcionesUsuarios}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
-                  icono={<FaUser />}
+                  icon={<FaUser />}
                   colSpan="6"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Departamento"
+                  label="Departamento"
                   name="departamento"
-                  opciones={opcionesCategorias}
-                  register={register}
+                  options={opcionesCategorias}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
-                  icono={<FaBuilding />}
+                  icon={<FaBuilding />}
                   colSpan="6"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Ubicación de Trabajo"
+                  label="Ubicación de Trabajo"
                   name="ubicacionTrabajo"
-                  opciones={opcionesCiudades}
-                  register={register}
+                  options={opcionesCiudades}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
-                  icono={<FaCity />}
+                  icon={<FaCity />}
                   colSpan="6"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Mentor Asignado"
+                  label="Mentor Asignado"
                   name="mentorAsignado"
-                  opciones={opcionesUsuarios}
-                  register={register}
+                  options={opcionesUsuarios}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
-                  icono={<FaUser />}
+                  icon={<FaUser />}
                   colSpan="6"
                 />
               </div>
@@ -393,42 +527,36 @@ export default function HookFormSelectBusquedaExamples() {
               </h3>
               <div className="grid grid-cols-12 gap-4">
                 <HookFormSelectBusqueda
-                  etiqueta="Líder del Proyecto"
+                  label="Líder del Proyecto"
                   name="liderProyecto"
-                  opciones={opcionesUsuarios}
-                  register={register}
+                  options={opcionesUsuarios}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
                   colSpan="6"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Cliente Principal"
+                  label="Cliente Principal"
                   name="clientePrincipal"
-                  opciones={opcionesUsuarios}
-                  register={register}
+                  options={opcionesUsuarios}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
                   colSpan="6"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Tecnología Principal"
+                  label="Tecnología Principal"
                   name="tecnologiaPrincipal"
-                  opciones={[
-                    { valor: 'react', etiqueta: 'React.js - Frontend Framework' },
-                    { valor: 'vue', etiqueta: 'Vue.js - Progressive Framework' },
-                    { valor: 'angular', etiqueta: 'Angular - Full Framework' },
-                    { valor: 'nodejs', etiqueta: 'Node.js - Backend Runtime' },
-                    { valor: 'python', etiqueta: 'Python - Versatile Language' },
-                    { valor: 'java', etiqueta: 'Java - Enterprise Language' },
-                    { valor: 'csharp', etiqueta: 'C# - Microsoft Stack' },
-                    { valor: 'php', etiqueta: 'PHP - Web Development' },
+                  options={[
+                    { value: 'react', label: 'React.js - Frontend Framework' },
+                    { value: 'vue', label: 'Vue.js - Progressive Framework' },
+                    { value: 'angular', label: 'Angular - Full Framework' },
+                    { value: 'nodejs', label: 'Node.js - Backend Runtime' },
+                    { value: 'python', label: 'Python - Versatile Language' },
+                    { value: 'java', label: 'Java - Enterprise Language' },
+                    { value: 'csharp', label: 'C# - Microsoft Stack' },
+                    { value: 'php', label: 'PHP - Web Development' },
                   ]}
-                  register={register}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
                   colSpan="12"
                 />
               </div>
@@ -441,49 +569,41 @@ export default function HookFormSelectBusquedaExamples() {
               </h3>
               <div className="grid grid-cols-12 gap-4">
                 <HookFormSelectBusqueda
-                  etiqueta="Producto"
+                  label="Producto"
                   name="productoInventario"
-                  opciones={opcionesProductos}
-                  register={register}
+                  options={opcionesProductos}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
                   colSpan="8"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Proveedor"
+                  label="Proveedor"
                   name="proveedor"
-                  opciones={[
-                    { valor: 'tech_solutions', etiqueta: 'Tech Solutions S.A. - Equipos Informáticos' },
-                    { valor: 'office_supplies', etiqueta: 'Office Supplies Ltd. - Material de Oficina' },
-                    { valor: 'global_electronics', etiqueta: 'Global Electronics - Componentes' },
-                    { valor: 'premium_furniture', etiqueta: 'Premium Furniture - Mobiliario' },
-                    { valor: 'smart_devices', etiqueta: 'Smart Devices Inc. - Dispositivos Inteligentes' },
+                  options={[
+                    { value: 'tech_solutions', label: 'Tech Solutions S.A. - Equipos Informáticos' },
+                    { value: 'office_supplies', label: 'Office Supplies Ltd. - Material de Oficina' },
+                    { value: 'global_electronics', label: 'Global Electronics - Componentes' },
+                    { value: 'premium_furniture', label: 'Premium Furniture - Mobiliario' },
+                    { value: 'smart_devices', label: 'Smart Devices Inc. - Dispositivos Inteligentes' },
                   ]}
-                  register={register}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
                   colSpan="4"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Almacén de Destino"
+                  label="Almacén de Destino"
                   name="almacenDestino"
-                  opciones={opcionesCiudades}
-                  register={register}
+                  options={opcionesCiudades}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
                   colSpan="6"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Responsable de Almacén"
+                  label="Responsable de Almacén"
                   name="responsableAlmacen"
-                  opciones={opcionesUsuarios}
-                  register={register}
+                  options={opcionesUsuarios}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
                   colSpan="6"
                 />
               </div>
@@ -496,53 +616,63 @@ export default function HookFormSelectBusquedaExamples() {
               </h3>
               <div className="grid grid-cols-12 gap-4">
                 <HookFormSelectBusqueda
-                  etiqueta="Libro de Texto"
+                  label="Libro de Texto"
                   name="libroTexto"
-                  opciones={opcionesLibros}
-                  register={register}
+                  options={opcionesLibros}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
-                  icono={<FaBook />}
+                  icon={<FaBook />}
                   colSpan="6"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Instructor"
+                  label="Instructor"
                   name="instructor"
-                  opciones={opcionesUsuarios}
-                  register={register}
+                  options={opcionesUsuarios}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
-                  icono={<FaUser />}
+                  icon={<FaUser />}
                   colSpan="6"
                 />
                 <HookFormSelectBusqueda
-                  etiqueta="Área de Estudio"
+                  label="Área de Estudio"
                   name="areaEstudio"
-                  opciones={opcionesCategorias}
-                  register={register}
+                  options={opcionesCategorias}
+                  control={control}
                   errors={errors}
-                  valorSeleccionado=""
-                  onChange={() => {}}
                   colSpan="12"
                 />
               </div>
             </div>
           </div>
 
-          {/* Sección 5: Vista previa de valores */}
+          {/* Sección 8: Validaciones */}
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              5. Vista Previa de Valores Seleccionados
+              8. Campos con Validaciones
             </h2>
-            <div className="bg-gray-100 rounded-lg p-4">
-              <h3 className="text-lg font-medium text-gray-700 mb-2">
-                Valores actuales:
-              </h3>
-              <pre className="text-sm text-gray-600 overflow-auto max-h-96">
-                {JSON.stringify(watchedValues, null, 2)}
-              </pre>
+            <div className="grid grid-cols-12 gap-4">
+              <HookFormSelectBusqueda
+                label="Campo Requerido"
+                name="campoRequerido"
+                options={opcionesPaises}
+                control={control}
+                errors={errors}
+                required="Este campo es obligatorio"
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Validación Personalizada"
+                name="validacionPersonalizada"
+                options={opcionesUsuarios}
+                control={control}
+                errors={errors}
+                validate={(value) => {
+                  if (!value) return "Debes seleccionar un usuario";
+                  if (value === 'juan_perez') return "Juan Pérez no está disponible";
+                  return true;
+                }}
+                colSpan="6"
+              />
             </div>
           </div>
 
@@ -556,7 +686,142 @@ export default function HookFormSelectBusquedaExamples() {
             </button>
           </div>
         </form>
+
+        {/* Sección 9: Usando register en lugar de control */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">
+            9. Usando register (Alternativa a control)
+          </h3>
+          <p className="text-gray-600 mb-4">
+            El componente también soporta el uso de <code className="bg-gray-100 px-2 py-1 rounded">register</code> en lugar de <code className="bg-gray-100 px-2 py-1 rounded">control</code> 
+            para mayor flexibilidad en diferentes casos de uso.
+          </p>
+
+          <RegisterExampleForm />
+        </div>
       </div>
     </div>
   )
-} 
+}
+
+// Componente separado para demostrar el uso con register
+const RegisterExampleForm: React.FC = () => {
+  type RegisterFormData = {
+    pais: string;
+    ciudad: string;
+    categoria: string;
+    prioridad: string;
+  };
+
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<RegisterFormData>({
+    defaultValues: {
+      pais: '',
+      ciudad: '',
+      categoria: '',
+      prioridad: ''
+    }
+  });
+
+  // Observar valores para mostrar en tiempo real
+  const watchedValues = watch();
+
+  const onSubmit = (data: RegisterFormData) => {
+    console.log('Datos del formulario (register):', data);
+    alert('¡Formulario enviado! Revisa la consola para ver los datos.');
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <h4 className="font-semibold text-blue-800 mb-2">💡 Cómo usar con register:</h4>
+        <div className="text-sm text-blue-700 space-y-1">
+          <p>• Pasa <code className="bg-blue-100 px-1 rounded">register</code> en lugar de <code className="bg-blue-100 px-1 rounded">control</code></p>
+          <p>• El componente detectará automáticamente que usar</p>
+          <p>• Los valores se capturan igual que con cualquier input tradicional</p>
+          <p>• Funciona con validaciones y manejo de errores</p>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Ejemplo básico con register */}
+          <HookFormSelectBusqueda
+            label="País (con register)"
+            name="pais"
+            register={register}
+            errors={errors}
+            options={opcionesPaises}
+            placeholder="Selecciona un país..."
+            required="El país es requerido"
+            variant="basic"
+            colSpan="6"
+          />
+
+          {/* Ejemplo con validación personalizada */}
+          <HookFormSelectBusqueda
+            label="Ciudad (con validación)"
+            name="ciudad"
+            register={register}
+            errors={errors}
+            options={opcionesCiudades}
+            placeholder="Selecciona una ciudad..."
+            required="La ciudad es requerida"
+            validate={(value) => {
+              if (value === 'madrid' && watchedValues.pais !== 'es') {
+                return 'Madrid solo está disponible si seleccionas España';
+              }
+              return true;
+            }}
+            variant="modern"
+            colSpan="6"
+          />
+
+          {/* Ejemplo con multi-selección */}
+          <HookFormSelectBusqueda
+            label="Categorías (multi-select)"
+            name="categoria"
+            register={register}
+            errors={errors}
+            options={opcionesCategorias}
+            placeholder="Selecciona categorías..."
+            isMulti={true}
+            variant="icon"
+            icon={<FaTag />}
+            colSpan="6"
+          />
+
+          {/* Ejemplo con grupos */}
+          <HookFormSelectBusqueda
+            label="Prioridad (con grupos)"
+            name="prioridad"
+            register={register}
+            errors={errors}
+            groups={gruposPrioridad}
+            placeholder="Selecciona prioridad..."
+            required="La prioridad es requerida"
+            variant="compact"
+            colSpan="6"
+          />
+        </div>
+
+        {/* Vista previa de valores */}
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h4 className="font-semibold mb-2">Valores actuales (register):</h4>
+          <pre className="text-sm text-gray-700 bg-white p-3 rounded border overflow-auto">
+            {JSON.stringify(watchedValues, null, 2)}
+          </pre>
+        </div>
+
+        {/* Botón de envío */}
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Enviar Formulario (register)
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}; 

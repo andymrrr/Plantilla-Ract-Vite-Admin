@@ -46,7 +46,13 @@ export const SelectField: React.FC<SelectFieldProps> = ({
     if (!selectedValue) return isMulti ? [] : null;
     
     const allOptions = groups ? groups.flatMap(g => g.options) : options;
-    return findOptionByValue(allOptions, selectedValue);
+    
+    if (isMulti && Array.isArray(selectedValue)) {
+      return selectedValue.map(value => findOptionByValue(allOptions, value)).filter(Boolean);
+    } else {
+      const singleValue = Array.isArray(selectedValue) ? selectedValue[0] : selectedValue;
+      return findOptionByValue(allOptions, singleValue || '');
+    }
   }, [selectedValue, options, groups, isMulti]);
 
   // Manejar cambio de valor
