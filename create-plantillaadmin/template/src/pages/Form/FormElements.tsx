@@ -1,10 +1,10 @@
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { useForm } from "react-hook-form";
-import HookFormInput from "../../components/FormulariosControles/React-Hook-Form/HookFormInput";
-import HookFormTextarea from "../../components/FormulariosControles/React-Hook-Form/HookFormTextarea";
-import HookFormCheckbox from "../../components/FormulariosControles/React-Hook-Form/HookFormCheckbox";
-import HookFormFile from "../../components/FormulariosControles/React-Hook-Form/HookFormFile";
-import HookFormSwitcher from "../../components/FormulariosControles/React-Hook-Form/HookFormSwitcher";
+import { HookFormInput } from "../../components/FormulariosControles/HookFormInput";
+import { HookFormTextarea } from "../../components/FormulariosControles/HookFormTextTarea";
+import { HookFormCheckbox } from "../../components/FormulariosControles/HookFormCheckbox";
+import { HookFormFile } from "../../components/FormulariosControles/HookFormFile";
+import { HookFormSwitcher } from "../../components/FormulariosControles/HookFormSwitcher";
 import Tarjeta from "../../components/UI/Tarjeta";
 import { Contenedor } from "../../components/UI/Contenedor";
 import EtiquetaEstado from "../../components/UI/Etiqueta-Estado";

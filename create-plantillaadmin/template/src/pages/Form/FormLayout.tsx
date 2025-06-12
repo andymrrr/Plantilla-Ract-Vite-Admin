@@ -2,9 +2,9 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useForm } from 'react-hook-form';
 import { Contenedor } from '../../components/UI/Contenedor';
 import Tarjeta from '../../components/UI/Tarjeta';
-import HookFormInput from '../../components/FormulariosControles/React-Hook-Form/HookFormInput';
-import HookFormTextarea from '../../components/FormulariosControles/React-Hook-Form/HookFormTextarea';
-import HookFormCheckbox from '../../components/FormulariosControles/React-Hook-Form/HookFormCheckbox';
+import { HookFormInput } from '../../components/FormulariosControles/HookFormInput';
+import { HookFormTextarea } from '../../components/FormulariosControles/HookFormTextTarea';
+import { HookFormCheckbox } from '../../components/FormulariosControles/HookFormCheckbox';
 import EtiquetaEstado from '../../components/UI/Etiqueta-Estado';
 import { FaInfoCircle, FaSave, FaTimes } from 'react-icons/fa';
 

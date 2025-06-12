@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPlus, FaTrash } from 'react-icons/fa';
-import HookFormInput from '../FormulariosControles/React-Hook-Form/HookFormInput';
-import HookFormTextarea from '../FormulariosControles/React-Hook-Form/HookFormTextarea';
-import HookFormCheckbox from '../FormulariosControles/React-Hook-Form/HookFormCheckbox';
+import { HookFormInput } from '../FormulariosControles/HookFormInput';
+import { HookFormTextarea } from '../FormulariosControles/HookFormTextTarea';
+import { HookFormCheckbox } from '../FormulariosControles/HookFormCheckbox';
 
 // Tipos de campos permitidos
 export type TipoCampoHook = 'input' | 'select' | 'checkbox' | 'textarea';

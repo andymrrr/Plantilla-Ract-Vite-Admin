@@ -17,6 +17,16 @@ import {
   FaPlay,
   FaKey,
   FaUserPlus,
+  FaPuzzlePiece,
+  FaCheckSquare,
+  FaKeyboard,
+  FaAlignLeft,
+  FaCaretDown,
+  FaToggleOn,
+  FaFile,
+  FaClock,
+  FaSearch,
+  FaHome,
 } from "react-icons/fa";
 
 export interface MenuLink {
@@ -75,6 +85,23 @@ export const menuConfig: MenuSection[] = [
           { to: "/forms/form-step-by-step", label: "Step by Step", icon: FaStepForward },
           { to: "/forms/dynamic-form", label: "Dynamic Fields", icon: FaPlus },
           { to: "/forms/dynamic-form-hook", label: "Dynamic Hook Form", icon: FaCode },
+        ],
+      },
+      {
+        id: "componentes",
+        icon: FaPuzzlePiece,
+        label: "Componentes",
+        type: "accordion",
+        links: [
+          { to: "/componentes", label: "📚 Biblioteca Completa", icon: FaHome },
+          { to: "/componentes/input-examples", label: "HookForm Input", icon: FaKeyboard },
+          { to: "/componentes/textarea-examples", label: "HookForm Textarea", icon: FaAlignLeft },
+          { to: "/componentes/checkbox-examples", label: "HookForm Checkbox", icon: FaCheckSquare },
+          { to: "/componentes/select-examples", label: "Select FormHook", icon: FaCaretDown },
+          { to: "/componentes/switcher-examples", label: "HookForm Switcher", icon: FaToggleOn },
+          { to: "/componentes/file-examples", label: "HookForm File", icon: FaFile },
+          { to: "/componentes/time-selector-examples", label: "Time Selector", icon: FaClock },
+          { to: "/componentes/select-busqueda-examples", label: "Select Búsqueda", icon: FaSearch },
         ],
       },
       {
