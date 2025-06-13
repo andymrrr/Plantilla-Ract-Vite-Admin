@@ -1,7 +1,7 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import TablaPaginada from '../components/Tables/TablaPaginada';
+import TablaPaginada from '../components/UI/Tables/TablaPaginada';
 import { useState } from 'react';
-import { generarColumnas } from '../components/Tables/generarColumnas';
+import { generarColumnas } from '../components/UI/Tables/generarColumnas';
 
 interface Usuario {
   id: number;

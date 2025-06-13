@@ -104,6 +104,8 @@ export const menuConfig: MenuSection[] = [
           { to: "/componentes/time-selector-examples", label: "Time Selector", icon: FaClock },
           { to: "/componentes/select-busqueda-examples", label: "Select Búsqueda", icon: FaSearch },
           { to: "/componentes/dinamico-examples", label: "HookForm Dinámico", icon: FaCogs },
+          { to: "/componentes/tabla-paginada-examples", label: "Tabla Paginada", icon: FaTable },
+          { to: "/componentes/step-by-step-examples", label: "Step by Step", icon: FaStepForward },
         ],
       },
       {

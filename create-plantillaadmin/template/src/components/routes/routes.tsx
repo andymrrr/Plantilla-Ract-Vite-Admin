@@ -23,6 +23,8 @@ import HookFormFileExamples from "../../pages/Componentes/HookFormFileExamples";
 import HookFormTimeSelectorExamples from "../../pages/Componentes/HookFormTimeSelectorExamples";
 import HookFormSelectBusquedaExamples from "../../pages/Componentes/SelectBusquedaFormHookExamples";
 import HookFormDinamicoExamples from "../../pages/Componentes/HookFormDinamicoExamples";
+import TablaPaginadaExamples from "../../pages/Componentes/TablaPaginadaExamples";
+import StepByStepExamples from "../../pages/Componentes/StepByStepExamples";
 import { RouteConfig } from "./RouteConfig";
 
 export const routes: RouteConfig[] = [
@@ -150,5 +152,15 @@ export const routes: RouteConfig[] = [
     path: '/componentes/dinamico-examples',
     title: 'Ejemplos de HookFormDinamico | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <HookFormDinamicoExamples />,
+  },
+  {
+    path: '/componentes/tabla-paginada-examples',
+    title: 'Ejemplos de TablaPaginada | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    element: <TablaPaginadaExamples />,
+  },
+  {
+    path: '/componentes/step-by-step-examples',
+    title: 'Ejemplos de StepByStep | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    element: <StepByStepExamples />,
   },
 ];
