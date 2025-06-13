@@ -1,17 +1,30 @@
 import { FaQuestionCircle } from 'react-icons/fa';
 import Tooltip from '../../UI/Tooltip';
 import { InputLabelProps } from './types';
+import { getLabelSizeClasses } from './utils';
 
 /**
- * Componente para renderizar el label del input con tooltip opcional
+ * Componente para renderizar el label del input con tooltip opcional y tamaños
  */
-export const InputLabel: React.FC<InputLabelProps> = ({ label, tooltipMessage }) => {
+export const InputLabel: React.FC<InputLabelProps> = ({ 
+  label, 
+  tooltipMessage, 
+  size = 'md',
+  required = false 
+}) => {
+  const sizeClasses = getLabelSizeClasses(size);
+  
   return (
-    <label className="mb-2.5 block text-black dark:text-white">
+    <label className={`mb-2.5 block font-medium text-gray-900 dark:text-gray-100 ${sizeClasses}`}>
       {label}
+      {required && (
+        <span className="text-red-500 ml-1">*</span>
+      )}
       {tooltipMessage && (
         <Tooltip message={tooltipMessage}>
-          <FaQuestionCircle className="inline-block ml-1 text-gray-400" size={14} />
+          <span className="text-blue-500 cursor-pointer text-sm hover:text-blue-600 transition-colors ml-2">
+            ⓘ
+          </span>
         </Tooltip>
       )}
     </label>

@@ -93,11 +93,11 @@ export const menuConfig: MenuSection[] = [
         label: "Componentes",
         type: "accordion",
         links: [
-          { to: "/componentes", label: "📚 Biblioteca Completa", icon: FaHome },
+          { to: "/componentes", label: "Biblioteca Completa", icon: FaHome },
           { to: "/componentes/input-examples", label: "HookForm Input", icon: FaKeyboard },
           { to: "/componentes/textarea-examples", label: "HookForm Textarea", icon: FaAlignLeft },
           { to: "/componentes/checkbox-examples", label: "HookForm Checkbox", icon: FaCheckSquare },
-          { to: "/componentes/select-examples", label: "Select FormHook", icon: FaCaretDown },
+          { to: "/componentes/select-examples", label: "HookForm Select", icon: FaCaretDown },
           { to: "/componentes/switcher-examples", label: "HookForm Switcher", icon: FaToggleOn },
           { to: "/componentes/file-examples", label: "HookForm File", icon: FaFile },
           { to: "/componentes/time-selector-examples", label: "Time Selector", icon: FaClock },

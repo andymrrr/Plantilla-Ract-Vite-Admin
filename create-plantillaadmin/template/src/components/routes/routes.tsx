@@ -17,7 +17,7 @@ import ComponentesIndex from "../../pages/Componentes/ComponentesIndex";
 import HookFormCheckboxExamples from "../../pages/Componentes/HookFormCheckboxExamples";
 import HookFormInputExamples from "../../pages/Componentes/HookFormInputExamples";
 import HookFormTextareaExamples from "../../pages/Componentes/HookFormTextareaExamples";
-import HookFormSelectExamples from "../../pages/Componentes/SelectFormHookExamples";
+import HookFormSelectExamples from "../../pages/Componentes/HookFormSelectExamples";
 import HookFormSwitcherExamples from "../../pages/Componentes/HookFormSwitcherExamples";
 import HookFormFileExamples from "../../pages/Componentes/HookFormFileExamples";
 import HookFormTimeSelectorExamples from "../../pages/Componentes/HookFormTimeSelectorExamples";
@@ -122,7 +122,7 @@ export const routes: RouteConfig[] = [
   },
   {
     path: '/componentes/select-examples',
-    title: 'Ejemplos de SelectFormHook | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    title: 'Ejemplos de HookFormSelect | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <HookFormSelectExamples />,
   },
   {

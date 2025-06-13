@@ -9,7 +9,8 @@ import {
   formatGroupsForReactSelect,
   findOptionByValue,
   findOptionInGroups,
-  defaultCustomFilter
+  defaultCustomFilter,
+  useDarkMode
 } from './utils';
 
 /**
@@ -36,6 +37,9 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   formatOptionLabel,
   reactSelectProps = {}
 }) => {
+  // Usar el hook personalizado para detectar el tema oscuro
+  const isDarkMode = useDarkMode();
+
   // Preparar opciones para react-select
   const formattedOptions = groups 
     ? formatGroupsForReactSelect(groups)
@@ -86,10 +90,14 @@ export const SelectField: React.FC<SelectFieldProps> = ({
             style={{ backgroundColor: optionData.color }}
           />
         )}
-        <div>
-          <div className="font-medium">{optionData.label}</div>
+        <div className="flex-1 min-w-0">
+          <div className={`font-medium truncate ${isDarkMode ? 'text-gray-100' : 'text-gray-900'}`}>
+            {optionData.label}
+          </div>
           {optionData.description && (
-            <div className="text-sm text-gray-500">{optionData.description}</div>
+            <div className={`text-sm truncate ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+              {optionData.description}
+            </div>
           )}
         </div>
       </div>
@@ -100,8 +108,11 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   const containerClasses = getContainerClasses(variant, hasError);
   const iconClasses = icon ? getIconClasses(size) : '';
 
-  // Estilos de react-select
-  const selectStyles = getReactSelectStyles(variant, size, hasError, !!icon);
+  // Estilos de react-select (se recalculan cuando cambia el tema)
+  const selectStyles = React.useMemo(() => 
+    getReactSelectStyles(variant, size, hasError, !!icon, isDarkMode),
+    [variant, size, hasError, icon, isDarkMode]
+  );
 
   return (
     <div className={containerClasses}>
@@ -129,6 +140,29 @@ export const SelectField: React.FC<SelectFieldProps> = ({
         classNamePrefix="react-select"
         menuPortalTarget={document.body}
         menuPosition="fixed"
+        theme={(theme) => ({
+          ...theme,
+          colors: {
+            ...theme.colors,
+            primary: '#3b82f6',
+            primary75: '#60a5fa',
+            primary50: '#93c5fd',
+            primary25: '#dbeafe',
+            danger: '#ef4444',
+            dangerLight: '#fecaca',
+            neutral0: isDarkMode ? '#374151' : '#ffffff',
+            neutral5: isDarkMode ? '#4b5563' : '#f9fafb',
+            neutral10: isDarkMode ? '#6b7280' : '#f3f4f6',
+            neutral20: isDarkMode ? '#9ca3af' : '#e5e7eb',
+            neutral30: isDarkMode ? '#d1d5db' : '#d1d5db',
+            neutral40: isDarkMode ? '#f3f4f6' : '#9ca3af',
+            neutral50: isDarkMode ? '#f9fafb' : '#6b7280',
+            neutral60: isDarkMode ? '#ffffff' : '#4b5563',
+            neutral70: isDarkMode ? '#ffffff' : '#374151',
+            neutral80: isDarkMode ? '#ffffff' : '#1f2937',
+            neutral90: isDarkMode ? '#ffffff' : '#111827',
+          },
+        })}
         {...reactSelectProps}
       />
     </div>

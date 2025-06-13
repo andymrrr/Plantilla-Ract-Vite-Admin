@@ -26,22 +26,95 @@ export default function HookFormCheckboxExamples() {
       <Breadcrumb pageName="Checkbox Examples" />
       
       <div className="space-y-8">
+        
+        {/* PRUEBA SIMPLE - Para verificar que funciona */}
+        <Tarjeta
+          titulo="🧪 Prueba Simple de Clics"
+          subtitulo="Verifica que los checkboxes respondan a los clics y cambien de color"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "green",
+          }}
+        >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <HookFormCheckbox
+                  label="✅ Checkbox Simple"
+                  name="testSimple"
+                  register={register}
+                  errors={errors}
+                  description="Haz clic en cualquier parte para marcar/desmarcar"
+                />
+                
+                <HookFormCheckbox
+                  label="🔄 Switch Test"
+                  name="testSwitch"
+                  register={register}
+                  errors={errors}
+                  variant="switch"
+                  color="blue"
+                  description="Prueba el switch"
+                />
+              </div>
+              
+              <div className="space-y-4">
+                <HookFormCheckbox
+                  label="🎯 Button Test"
+                  name="testButton"
+                  register={register}
+                  errors={errors}
+                  variant="button"
+                  color="green"
+                  description="Prueba el botón"
+                />
+                
+                <HookFormCheckbox
+                  label="📋 Card Test"
+                  name="testCard"
+                  register={register}
+                  errors={errors}
+                  variant="card"
+                  color="purple"
+                  description="Prueba la tarjeta"
+                />
+              </div>
+            </div>
+            
+            <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Valores en tiempo real:</h4>
+              <pre className="text-sm text-gray-600 dark:text-gray-300 overflow-auto max-h-40">
+                {JSON.stringify(watchedValues, null, 2)}
+              </pre>
+            </div>
+            
+            <div className="flex justify-center pt-4">
+              <button
+                type="submit"
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                Probar Submit
+              </button>
+            </div>
+          </form>
+        </Tarjeta>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           
-          {/* SECCIÓN 1: VARIANTES Y COLORES */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-            
-            {/* Diferentes Variantes */}
-            <Tarjeta
-              titulo="Diferentes Variantes"
-              subtitulo="8 estilos visuales diferentes para checkboxes"
-              variante="defecto"
-              lineaHeader={{
-                mostrar: true,
-                grosor: "2px",
-                color: "blue",
-              }}
-            >
+          {/* SECCIÓN 1: VARIANTES */}
+          <Tarjeta
+            titulo="🎨 Diferentes Variantes"
+            subtitulo="8 estilos visuales diferentes para checkboxes"
+            variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: "2px",
+              color: "blue",
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <HookFormCheckbox
                   label="Default - Estilo tradicional"
@@ -65,6 +138,15 @@ export default function HookFormCheckboxExamples() {
                   variant="circle"
                 />
                 <HookFormCheckbox
+                  label="Minimal - Estilo minimalista"
+                  name="variantMinimal"
+                  register={register}
+                  errors={errors}
+                  variant="minimal"
+                />
+              </div>
+              <div className="space-y-4">
+                <HookFormCheckbox
                   label="Switch - Toggle moderno"
                   name="variantSwitch"
                   register={register}
@@ -86,13 +168,6 @@ export default function HookFormCheckboxExamples() {
                   variant="card"
                 />
                 <HookFormCheckbox
-                  label="Minimal - Estilo minimalista"
-                  name="variantMinimal"
-                  register={register}
-                  errors={errors}
-                  variant="minimal"
-                />
-                <HookFormCheckbox
                   label="Modern - Con animaciones"
                   name="variantModern"
                   register={register}
@@ -100,88 +175,94 @@ export default function HookFormCheckboxExamples() {
                   variant="modern"
                 />
               </div>
-            </Tarjeta>
+            </div>
+          </Tarjeta>
 
-            {/* Diferentes Colores */}
-            <Tarjeta
-              titulo="Diferentes Colores"
-              subtitulo="8 colores disponibles para personalizar"
-              variante="defecto"
-              lineaHeader={{
-                mostrar: true,
-                grosor: "2px",
-                color: "green",
-              }}
-            >
-              <div className="space-y-4">
-                <HookFormCheckbox
-                  label="Azul - Color principal"
-                  name="colorBlue"
-                  register={register}
-                  errors={errors}
-                  color="blue"
-                />
-                <HookFormCheckbox
-                  label="Verde - Éxito y confirmación"
-                  name="colorGreen"
-                  register={register}
-                  errors={errors}
-                  color="green"
-                />
-                <HookFormCheckbox
-                  label="Púrpura - Premium y especial"
-                  name="colorPurple"
-                  register={register}
-                  errors={errors}
-                  color="purple"
-                />
-                <HookFormCheckbox
-                  label="Rojo - Importante y alertas"
-                  name="colorRed"
-                  register={register}
-                  errors={errors}
-                  color="red"
-                />
-                <HookFormCheckbox
-                  label="Amarillo - Advertencias"
-                  name="colorYellow"
-                  register={register}
-                  errors={errors}
-                  color="yellow"
-                />
-                <HookFormCheckbox
-                  label="Índigo - Profesional"
-                  name="colorIndigo"
-                  register={register}
-                  errors={errors}
-                  color="indigo"
-                />
-                <HookFormCheckbox
-                  label="Rosa - Creativo y divertido"
-                  name="colorPink"
-                  register={register}
-                  errors={errors}
-                  color="pink"
-                />
-                <HookFormCheckbox
-                  label="Gris - Neutral y discreto"
-                  name="colorGray"
-                  register={register}
-                  errors={errors}
-                  color="gray"
-                />
-              </div>
-            </Tarjeta>
+          {/* SECCIÓN 2: COLORES */}
+          <Tarjeta
+            titulo="🌈 Diferentes Colores"
+            subtitulo="8 colores disponibles para personalizar"
+            variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: "2px",
+              color: "green",
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <HookFormCheckbox
+                label="Azul"
+                name="colorBlue"
+                register={register}
+                errors={errors}
+                color="blue"
+                description="Color principal"
+              />
+              <HookFormCheckbox
+                label="Verde"
+                name="colorGreen"
+                register={register}
+                errors={errors}
+                color="green"
+                description="Éxito y confirmación"
+              />
+              <HookFormCheckbox
+                label="Púrpura"
+                name="colorPurple"
+                register={register}
+                errors={errors}
+                color="purple"
+                description="Premium y especial"
+              />
+              <HookFormCheckbox
+                label="Rojo"
+                name="colorRed"
+                register={register}
+                errors={errors}
+                color="red"
+                description="Importante y alertas"
+              />
+              <HookFormCheckbox
+                label="Amarillo"
+                name="colorYellow"
+                register={register}
+                errors={errors}
+                color="yellow"
+                description="Advertencias"
+              />
+              <HookFormCheckbox
+                label="Índigo"
+                name="colorIndigo"
+                register={register}
+                errors={errors}
+                color="indigo"
+                description="Profesional"
+              />
+              <HookFormCheckbox
+                label="Rosa"
+                name="colorPink"
+                register={register}
+                errors={errors}
+                color="pink"
+                description="Creativo y divertido"
+              />
+              <HookFormCheckbox
+                label="Gris"
+                name="colorGray"
+                register={register}
+                errors={errors}
+                color="gray"
+                description="Neutral y discreto"
+              />
+            </div>
+          </Tarjeta>
 
-          </div>
-
-          {/* SECCIÓN 2: TAMAÑOS Y POSICIONES */}
+          {/* SECCIÓN 3: TAMAÑOS Y POSICIONES */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             
-            {/* Tamaños y Posiciones */}
             <Tarjeta
-              titulo="Tamaños y Posiciones"
-              subtitulo="Diferentes tamaños y posiciones del label"
+              titulo="📏 Tamaños"
+              subtitulo="Diferentes tamaños disponibles"
               variante="defecto"
               lineaHeader={{
                 mostrar: true,
@@ -189,129 +270,136 @@ export default function HookFormCheckboxExamples() {
                 color: "blue",
               }}
             >
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-300 mb-4">
-                    Tamaños
-                  </h4>
-                  <div className="space-y-3">
-                    <HookFormCheckbox
-                      label="Pequeño (sm)"
-                      name="sizeSmall"
-                      register={register}
-                      errors={errors}
-                      size="sm"
-                    />
-                    <HookFormCheckbox
-                      label="Mediano (md)"
-                      name="sizeMedium"
-                      register={register}
-                      errors={errors}
-                      size="md"
-                    />
-                    <HookFormCheckbox
-                      label="Grande (lg)"
-                      name="sizeLarge"
-                      register={register}
-                      errors={errors}
-                      size="lg"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-300 mb-4">
-                    Posiciones del Label
-                  </h4>
-                  <div className="space-y-3">
-                    <HookFormCheckbox
-                      label="Label a la derecha"
-                      name="labelRight"
-                      register={register}
-                      errors={errors}
-                      labelPosition="right"
-                    />
-                    <HookFormCheckbox
-                      label="Label a la izquierda"
-                      name="labelLeft"
-                      register={register}
-                      errors={errors}
-                      labelPosition="left"
-                    />
-                    <HookFormCheckbox
-                      label="Label arriba"
-                      name="labelTop"
-                      register={register}
-                      errors={errors}
-                      labelPosition="top"
-                    />
-                    <HookFormCheckbox
-                      label="Label abajo"
-                      name="labelBottom"
-                      register={register}
-                      errors={errors}
-                      labelPosition="bottom"
-                    />
-                  </div>
-                </div>
+              <div className="space-y-4">
+                <HookFormCheckbox
+                  label="Pequeño (sm)"
+                  name="sizeSmall"
+                  register={register}
+                  errors={errors}
+                  size="sm"
+                  description="Tamaño compacto para espacios reducidos"
+                />
+                <HookFormCheckbox
+                  label="Mediano (md)"
+                  name="sizeMedium"
+                  register={register}
+                  errors={errors}
+                  size="md"
+                  description="Tamaño estándar recomendado"
+                />
+                <HookFormCheckbox
+                  label="Grande (lg)"
+                  name="sizeLarge"
+                  register={register}
+                  errors={errors}
+                  size="lg"
+                  description="Tamaño grande para mayor visibilidad"
+                />
               </div>
             </Tarjeta>
 
-            {/* Estados Especiales */}
             <Tarjeta
-              titulo="Estados Especiales"
-              subtitulo="Disabled, required y validaciones"
+              titulo="📍 Posiciones del Label"
+              subtitulo="Diferentes posiciones del texto"
               variante="defecto"
               lineaHeader={{
                 mostrar: true,
                 grosor: "2px",
-                color: "red",
+                color: "blue",
               }}
             >
               <div className="space-y-4">
                 <HookFormCheckbox
-                  label="Checkbox deshabilitado"
-                  name="disabled"
+                  label="Label a la derecha"
+                  name="labelRight"
                   register={register}
                   errors={errors}
-                  disabled={true}
+                  labelPosition="right"
+                  description="Posición estándar"
                 />
                 <HookFormCheckbox
-                  label="Campo requerido"
-                  name="required"
+                  label="Label a la izquierda"
+                  name="labelLeft"
                   register={register}
                   errors={errors}
-                  required={true}
+                  labelPosition="left"
+                  description="Posición invertida"
                 />
                 <HookFormCheckbox
-                  label="Con validación personalizada"
-                  name="withValidation"
+                  label="Label arriba"
+                  name="labelTop"
                   register={register}
                   errors={errors}
-                  validate={(value) => {
-                    if (!value) return "Debes aceptar para continuar";
-                    return true;
-                  }}
+                  labelPosition="top"
+                  description="Posición superior"
+                />
+                <HookFormCheckbox
+                  label="Label abajo"
+                  name="labelBottom"
+                  register={register}
+                  errors={errors}
+                  labelPosition="bottom"
+                  description="Posición inferior"
                 />
               </div>
             </Tarjeta>
 
           </div>
 
-          {/* SECCIÓN 3: ICONOS Y DESCRIPCIONES */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          {/* SECCIÓN 4: ESTADOS ESPECIALES */}
+          <Tarjeta
+            titulo="⚙️ Estados Especiales"
+            subtitulo="Disabled, required y validaciones"
+            variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: "2px",
+              color: "red",
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <HookFormCheckbox
+                label="Checkbox deshabilitado"
+                name="disabled"
+                register={register}
+                errors={errors}
+                disabled={true}
+                description="Este checkbox está deshabilitado"
+              />
+              <HookFormCheckbox
+                label="Campo requerido"
+                name="required"
+                register={register}
+                errors={errors}
+                required={true}
+                description="Este campo es obligatorio"
+              />
+              <HookFormCheckbox
+                label="Con validación personalizada"
+                name="withValidation"
+                register={register}
+                errors={errors}
+                validate={(value) => {
+                  if (!value) return "Debes aceptar para continuar";
+                  return true;
+                }}
+                description="Tiene validación personalizada"
+              />
+            </div>
+          </Tarjeta>
 
-            {/* Iconos Personalizados */}
-            <Tarjeta
-              titulo="Iconos Personalizados"
-              subtitulo="Checkboxes con iconos y elementos visuales"
-              variante="defecto"
-              lineaHeader={{
-                mostrar: true,
-                grosor: "2px",
-                color: "yellow",
-              }}
-            >
+          {/* SECCIÓN 5: ICONOS */}
+          <Tarjeta
+            titulo="🎯 Iconos Personalizados"
+            subtitulo="Checkboxes con iconos y elementos visuales"
+            variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: "2px",
+              color: "yellow",
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <HookFormCheckbox
                   label="Con ícono general"
@@ -320,6 +408,7 @@ export default function HookFormCheckboxExamples() {
                   errors={errors}
                   icon={<FaHeart />}
                   color="red"
+                  description="Ícono que aparece cuando está marcado"
                 />
                 <HookFormCheckbox
                   label="Ícono cuando marcado"
@@ -327,7 +416,10 @@ export default function HookFormCheckboxExamples() {
                   register={register}
                   errors={errors}
                   checkedIcon={<FaStar className="text-yellow-500" />}
+                  description="Ícono personalizado para estado marcado"
                 />
+              </div>
+              <div className="space-y-4">
                 <HookFormCheckbox
                   label="Íconos personalizados"
                   name="iconCustom"
@@ -335,6 +427,7 @@ export default function HookFormCheckboxExamples() {
                   errors={errors}
                   checkedIcon={<FaCheck className="text-green-500" />}
                   uncheckedIcon={<FaTimes className="text-red-500" />}
+                  description="Íconos diferentes para cada estado"
                 />
                 <HookFormCheckbox
                   label="Switch con ícono"
@@ -344,119 +437,53 @@ export default function HookFormCheckboxExamples() {
                   variant="switch"
                   icon={<FaBell />}
                   color="purple"
-                />
-              </div>
-            </Tarjeta>
-
-            {/* Descripciones y Tooltips */}
-            <Tarjeta
-              titulo="Descripciones y Tooltips"
-              subtitulo="Información adicional para los usuarios"
-              variante="defecto"
-              lineaHeader={{
-                mostrar: true,
-                grosor: "2px",
-                color: "blue",
-              }}
-            >
-              <div className="space-y-4">
-                <HookFormCheckbox
-                  label="Con descripción"
-                  name="withDescription"
-                  register={register}
-                  errors={errors}
-                  description="Esta opción habilita funcionalidades adicionales en tu cuenta"
-                />
-                <HookFormCheckbox
-                  label="Con tooltip"
-                  name="withTooltip"
-                  register={register}
-                  errors={errors}
-                  tooltipMessage="Información adicional sobre esta opción"
-                />
-                <HookFormCheckbox
-                  label="Descripción y tooltip"
-                  name="withBoth"
-                  register={register}
-                  errors={errors}
-                  description="Descripción detallada de la funcionalidad"
-                  tooltipMessage="Información adicional en el tooltip"
-                />
-              </div>
-            </Tarjeta>
-
-          </div>
-
-          {/* SECCIÓN 4: COMBINACIONES AVANZADAS */}
-          <Tarjeta
-            titulo="Combinaciones Avanzadas"
-            subtitulo="Ejemplos complejos combinando múltiples características"
-            variante="defecto"
-            lineaHeader={{
-              mostrar: true,
-              grosor: "2px",
-              color: "red",
-            }}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <HookFormCheckbox
-                  label="Switch grande con ícono"
-                  name="advancedSwitch"
-                  register={register}
-                  errors={errors}
-                  variant="switch"
-                  size="lg"
-                  color="green"
-                  icon={<FaShield />}
-                  description="Activar modo de seguridad avanzada"
-                  tooltipMessage="Esto habilitará protecciones adicionales"
-                />
-                <HookFormCheckbox
-                  label="Card moderna con validación"
-                  name="advancedCard"
-                  register={register}
-                  errors={errors}
-                  variant="card"
-                  color="purple"
-                  size="lg"
-                  icon={<FaUser />}
-                  description="Perfil premium con beneficios exclusivos"
-                  required={true}
-                />
-              </div>
-              <div className="space-y-4">
-                <HookFormCheckbox
-                  label="Button con íconos personalizados"
-                  name="advancedButton"
-                  register={register}
-                  errors={errors}
-                  variant="button"
-                  color="indigo"
-                  size="md"
-                  checkedIcon={<FaCheck />}
-                  uncheckedIcon={<FaTimes />}
-                  labelPosition="left"
-                />
-                <HookFormCheckbox
-                  label="Modern circular con tooltip"
-                  name="advancedModern"
-                  register={register}
-                  errors={errors}
-                  variant="modern"
-                  color="pink"
-                  size="lg"
-                  icon={<FaCog />}
-                  tooltipMessage="Configuración avanzada del sistema"
-                  description="Habilita opciones de configuración avanzadas"
+                  description="Switch con ícono personalizado"
                 />
               </div>
             </div>
           </Tarjeta>
 
-          {/* SECCIÓN 5: CASOS DE USO REALES */}
+          {/* SECCIÓN 6: TOOLTIPS Y DESCRIPCIONES */}
           <Tarjeta
-            titulo="Casos de Uso Reales"
+            titulo="💬 Descripciones y Tooltips"
+            subtitulo="Información adicional para los usuarios"
+            variante="defecto"
+            lineaHeader={{
+              mostrar: true,
+              grosor: "2px",
+              color: "blue",
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <HookFormCheckbox
+                label="Con descripción"
+                name="withDescription"
+                register={register}
+                errors={errors}
+                description="Esta opción habilita funcionalidades adicionales en tu cuenta"
+              />
+              <HookFormCheckbox
+                label="Con tooltip"
+                name="withTooltip"
+                register={register}
+                errors={errors}
+                tooltipMessage="Información adicional sobre esta opción"
+                description="Pasa el mouse sobre el ícono ⓘ"
+              />
+              <HookFormCheckbox
+                label="Descripción y tooltip"
+                name="withBoth"
+                register={register}
+                errors={errors}
+                description="Descripción detallada de la funcionalidad"
+                tooltipMessage="Información adicional en el tooltip"
+              />
+            </div>
+          </Tarjeta>
+
+          {/* SECCIÓN 7: CASOS DE USO REALES */}
+          <Tarjeta
+            titulo="🚀 Casos de Uso Reales"
             subtitulo="Ejemplos prácticos de configuración"
             variante="defecto"
             lineaHeader={{
@@ -467,94 +494,100 @@ export default function HookFormCheckboxExamples() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               
-              <div>
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-300 mb-4">
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
                   Configuración de Perfil
                 </h4>
-                <div className="space-y-3">
-                  <HookFormCheckbox
-                    label="Perfil público"
-                    name="publicProfile"
-                    register={register}
-                    errors={errors}
-                    variant="switch"
-                    color="blue"
-                    description="Tu perfil será visible para otros usuarios"
-                  />
-                  <HookFormCheckbox
-                    label="Mostrar email"
-                    name="showEmail"
-                    register={register}
-                    errors={errors}
-                    variant="switch"
-                    color="green"
-                    description="Tu email será visible en tu perfil público"
-                  />
-                </div>
+                <HookFormCheckbox
+                  label="Perfil público"
+                  name="publicProfile"
+                  register={register}
+                  errors={errors}
+                  variant="switch"
+                  color="blue"
+                  description="Tu perfil será visible para otros usuarios"
+                />
+                <HookFormCheckbox
+                  label="Mostrar email"
+                  name="showEmail"
+                  register={register}
+                  errors={errors}
+                  variant="switch"
+                  color="green"
+                  description="Tu email será visible en tu perfil público"
+                />
               </div>
 
-              <div>
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-300 mb-4">
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
                   Notificaciones
                 </h4>
-                <div className="space-y-3">
-                  <HookFormCheckbox
-                    label="Push"
-                    name="pushNotifications"
-                    register={register}
-                    errors={errors}
-                    variant="button"
-                    color="blue"
-                    icon={<FaBell />}
-                  />
-                  <HookFormCheckbox
-                    label="Email"
-                    name="emailNotifications"
-                    register={register}
-                    errors={errors}
-                    variant="button"
-                    color="green"
-                    icon={<FaBell />}
-                  />
-                </div>
+                <HookFormCheckbox
+                  label="Notificaciones Push"
+                  name="pushNotifications"
+                  register={register}
+                  errors={errors}
+                  variant="button"
+                  color="blue"
+                  icon={<FaBell />}
+                  description="Recibir notificaciones en el dispositivo"
+                />
+                <HookFormCheckbox
+                  label="Notificaciones Email"
+                  name="emailNotifications"
+                  register={register}
+                  errors={errors}
+                  variant="button"
+                  color="green"
+                  icon={<FaBell />}
+                  description="Recibir notificaciones por correo"
+                />
               </div>
 
-              <div>
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-300 mb-4">
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
                   Términos y Condiciones
                 </h4>
-                <div className="space-y-3">
-                  <HookFormCheckbox
-                    label="Acepto los términos y condiciones"
-                    name="acceptTerms"
-                    register={register}
-                    errors={errors}
-                    variant="modern"
-                    color="blue"
-                    size="lg"
-                    required={true}
-                    description="He leído y acepto los términos y condiciones del servicio"
-                  />
-                  <HookFormCheckbox
-                    label="Suscribirse al newsletter"
-                    name="newsletter"
-                    register={register}
-                    errors={errors}
-                    variant="switch"
-                    color="purple"
-                    description="Recibir actualizaciones y noticias por email (opcional)"
-                  />
-                </div>
+                <HookFormCheckbox
+                  label="Acepto los términos y condiciones"
+                  name="acceptTerms"
+                  register={register}
+                  errors={errors}
+                  variant="modern"
+                  color="blue"
+                  size="lg"
+                  required={true}
+                  description="He leído y acepto los términos y condiciones del servicio"
+                />
+                <HookFormCheckbox
+                  label="Suscribirse al newsletter"
+                  name="newsletter"
+                  register={register}
+                  errors={errors}
+                  variant="switch"
+                  color="purple"
+                  description="Recibir actualizaciones y noticias por email (opcional)"
+                />
               </div>
               
             </div>
           </Tarjeta>
 
+          {/* BOTÓN DE ENVÍO */}
+          <div className="flex justify-center pt-6">
+            <button
+              type="submit"
+              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-lg text-lg"
+            >
+              Guardar Configuración
+            </button>
+          </div>
+
         </form>
 
         {/* VISTA PREVIA DE VALORES - Separada del formulario */}
         <Tarjeta
-          titulo="Vista Previa de Valores"
+          titulo="📊 Vista Previa de Valores"
           subtitulo="Valores seleccionados en tiempo real"
           variante="defecto"
           lineaHeader={{
@@ -563,22 +596,10 @@ export default function HookFormCheckboxExamples() {
             color: "gray",
           }}
         >
-          <div className="space-y-4">
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-              <pre className="text-sm text-gray-600 dark:text-gray-300 overflow-auto max-h-96">
-                {JSON.stringify(watchedValues, null, 2)}
-              </pre>
-            </div>
-            
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={handleSubmit(onSubmit)}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-lg"
-              >
-                Guardar Configuración
-              </button>
-            </div>
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+            <pre className="text-sm text-gray-600 dark:text-gray-300 overflow-auto max-h-96 whitespace-pre-wrap">
+              {JSON.stringify(watchedValues, null, 2)}
+            </pre>
           </div>
         </Tarjeta>
 

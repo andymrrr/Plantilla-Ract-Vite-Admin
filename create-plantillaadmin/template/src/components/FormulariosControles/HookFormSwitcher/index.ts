@@ -1,15 +1,44 @@
 // Componente principal
 export { default as HookFormSwitcher } from './HookFormSwitcher';
 
-// Subcomponentes
-export { default as SwitcherLabel } from './SwitcherLabel';
+// Componentes individuales
 export { default as SwitcherField } from './SwitcherField';
+export { default as SwitcherLabel } from './SwitcherLabel';
+export { default as LoadingSpinner } from './LoadingSpinner';
 
 // Reutilizamos ErrorMessage del HookFormInput
 export { ErrorMessage } from '../HookFormInput';
 
 // Tipos
-export type * from './types';
+export type {
+  SwitcherFieldProps,
+  SwitcherLabelProps,
+  SwitcherFieldOnlyProps,
+  LoadingSpinnerProps,
+  ErrorMessageProps,
+  SwitcherVariant,
+  SwitcherSize,
+  SwitcherColor,
+  ColSpanType,
+  PatternValidation,
+  SwitcherValidationProps,
+  BaseSwitcherProps
+} from './types';
 
 // Utilidades
-export * from './utils'; 
+export {
+  getColSpanClass,
+  buildRegisterOptions,
+  getSwitcherSizeClasses,
+  getSwitcherColorClasses,
+  getSwitcherVariantClasses,
+  getSwitcherIconClasses,
+  getLabelSizeClasses,
+  getEnhancedSwitcherClasses,
+  getSwitcherInputClasses,
+  getLoadingSpinnerClasses,
+  getStateTextClasses,
+  // Utilidades legacy
+  getSwitcherBackgroundClasses,
+  getSwitcherToggleClasses
+} from './utils'; 

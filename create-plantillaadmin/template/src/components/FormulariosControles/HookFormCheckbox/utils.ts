@@ -18,7 +18,7 @@ export const getCheckboxContainerClasses = (
   const variantClasses = getVariantClasses(variant);
   const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer';
 
-  return `${baseClasses} ${sizeClasses} ${colorClasses} ${variantClasses} ${disabledClasses}`.trim();
+  return `${baseClasses} ${sizeClasses} ${variantClasses} ${colorClasses} ${disabledClasses}`.trim();
 };
 
 /**
@@ -57,54 +57,69 @@ export const getSizeClasses = (size: CheckboxSize, variant?: CheckboxVariant): s
  * Obtiene las clases CSS para los colores del checkbox
  */
 export const getColorClasses = (color: CheckboxColor, variant: CheckboxVariant): string => {
+  // Para la variante minimal, usar estilos especiales con fondo transparente
+  if (variant === 'minimal') {
+    const minimalColors = {
+      blue: 'border-gray-400 dark:border-gray-500 bg-transparent peer-checked:bg-blue-600 peer-checked:border-blue-600 peer-focus:ring-2 peer-focus:ring-blue-500 peer-focus:ring-opacity-50',
+      green: 'border-gray-400 dark:border-gray-500 bg-transparent peer-checked:bg-green-600 peer-checked:border-green-600 peer-focus:ring-2 peer-focus:ring-green-500 peer-focus:ring-opacity-50',
+      purple: 'border-gray-400 dark:border-gray-500 bg-transparent peer-checked:bg-purple-600 peer-checked:border-purple-600 peer-focus:ring-2 peer-focus:ring-purple-500 peer-focus:ring-opacity-50',
+      red: 'border-gray-400 dark:border-gray-500 bg-transparent peer-checked:bg-red-600 peer-checked:border-red-600 peer-focus:ring-2 peer-focus:ring-red-500 peer-focus:ring-opacity-50',
+      yellow: 'border-gray-400 dark:border-gray-500 bg-transparent peer-checked:bg-yellow-500 peer-checked:border-yellow-500 peer-focus:ring-2 peer-focus:ring-yellow-500 peer-focus:ring-opacity-50',
+      indigo: 'border-gray-400 dark:border-gray-500 bg-transparent peer-checked:bg-indigo-600 peer-checked:border-indigo-600 peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-opacity-50',
+      pink: 'border-gray-400 dark:border-gray-500 bg-transparent peer-checked:bg-pink-600 peer-checked:border-pink-600 peer-focus:ring-2 peer-focus:ring-pink-500 peer-focus:ring-opacity-50',
+      gray: 'border-gray-400 dark:border-gray-500 bg-transparent peer-checked:bg-gray-600 peer-checked:border-gray-600 peer-focus:ring-2 peer-focus:ring-gray-500 peer-focus:ring-opacity-50'
+    };
+    return minimalColors[color];
+  }
+
   const colors = {
     blue: {
-      default: 'peer-checked:bg-blue-600 peer-checked:border-blue-600',
-      switch: 'peer-checked:bg-blue-600',
-      button: 'peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600',
-      card: 'peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:shadow-blue-100'
+      default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:bg-blue-600 peer-checked:border-blue-600 peer-focus:ring-2 peer-focus:ring-blue-500 peer-focus:ring-opacity-50',
+      switch: 'peer-checked:bg-blue-600 peer-focus:ring-2 peer-focus:ring-blue-500 peer-focus:ring-opacity-50',
+      button: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 peer-focus:ring-2 peer-focus:ring-blue-500 peer-focus:ring-opacity-50',
+      card: 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/20 peer-checked:shadow-blue-100 peer-focus:ring-2 peer-focus:ring-blue-500 peer-focus:ring-opacity-50'
     },
     green: {
-      default: 'peer-checked:bg-green-600 peer-checked:border-green-600',
-      switch: 'peer-checked:bg-green-600',
-      button: 'peer-checked:bg-green-600 peer-checked:text-white peer-checked:border-green-600',
-      card: 'peer-checked:border-green-500 peer-checked:bg-green-50 peer-checked:shadow-green-100'
+      default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:bg-green-600 peer-checked:border-green-600 peer-focus:ring-2 peer-focus:ring-green-500 peer-focus:ring-opacity-50',
+      switch: 'peer-checked:bg-green-600 peer-focus:ring-2 peer-focus:ring-green-500 peer-focus:ring-opacity-50',
+      button: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 peer-checked:bg-green-600 peer-checked:text-white peer-checked:border-green-600 peer-focus:ring-2 peer-focus:ring-green-500 peer-focus:ring-opacity-50',
+      card: 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:border-green-500 peer-checked:bg-green-50 dark:peer-checked:bg-green-900/20 peer-checked:shadow-green-100 peer-focus:ring-2 peer-focus:ring-green-500 peer-focus:ring-opacity-50'
     },
     purple: {
-      default: 'peer-checked:bg-purple-600 peer-checked:border-purple-600',
-      switch: 'peer-checked:bg-purple-600',
-      button: 'peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600',
-      card: 'peer-checked:border-purple-500 peer-checked:bg-purple-50 peer-checked:shadow-purple-100'
+      default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:bg-purple-600 peer-checked:border-purple-600 peer-focus:ring-2 peer-focus:ring-purple-500 peer-focus:ring-opacity-50',
+      switch: 'peer-checked:bg-purple-600 peer-focus:ring-2 peer-focus:ring-purple-500 peer-focus:ring-opacity-50',
+      button: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 peer-focus:ring-2 peer-focus:ring-purple-500 peer-focus:ring-opacity-50',
+      card: 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:border-purple-500 peer-checked:bg-purple-50 dark:peer-checked:bg-purple-900/20 peer-checked:shadow-purple-100 peer-focus:ring-2 peer-focus:ring-purple-500 peer-focus:ring-opacity-50'
     },
     red: {
-      default: 'peer-checked:bg-red-600 peer-checked:border-red-600',
-      switch: 'peer-checked:bg-red-600',
-      button: 'peer-checked:bg-red-600 peer-checked:text-white peer-checked:border-red-600',
-      card: 'peer-checked:border-red-500 peer-checked:bg-red-50 peer-checked:shadow-red-100'
+      default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:bg-red-600 peer-checked:border-red-600 peer-focus:ring-2 peer-focus:ring-red-500 peer-focus:ring-opacity-50',
+      switch: 'peer-checked:bg-red-600 peer-focus:ring-2 peer-focus:ring-red-500 peer-focus:ring-opacity-50',
+      button: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 peer-checked:bg-red-600 peer-checked:text-white peer-checked:border-red-600 peer-focus:ring-2 peer-focus:ring-red-500 peer-focus:ring-opacity-50',
+      card: 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:border-red-500 peer-checked:bg-red-50 dark:peer-checked:bg-red-900/20 peer-checked:shadow-red-100 peer-focus:ring-2 peer-focus:ring-red-500 peer-focus:ring-opacity-50'
     },
     yellow: {
-      default: 'peer-checked:bg-yellow-500 peer-checked:border-yellow-500',
-      switch: 'peer-checked:bg-yellow-500',
-      button: 'peer-checked:bg-yellow-500 peer-checked:text-white peer-checked:border-yellow-500',
-      card: 'peer-checked:border-yellow-500 peer-checked:bg-yellow-50 peer-checked:shadow-yellow-100'
+      default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:bg-yellow-500 peer-checked:border-yellow-500 peer-focus:ring-2 peer-focus:ring-yellow-500 peer-focus:ring-opacity-50',
+      switch: 'peer-checked:bg-yellow-500 peer-focus:ring-2 peer-focus:ring-yellow-500 peer-focus:ring-opacity-50',
+      button: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 peer-checked:bg-yellow-500 peer-checked:text-white peer-checked:border-yellow-500 peer-focus:ring-2 peer-focus:ring-yellow-500 peer-focus:ring-opacity-50',
+      card: 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 dark:peer-checked:bg-yellow-900/20 peer-checked:shadow-yellow-100 peer-focus:ring-2 peer-focus:ring-yellow-500 peer-focus:ring-opacity-50'
     },
     indigo: {
-      default: 'peer-checked:bg-indigo-600 peer-checked:border-indigo-600',
-      switch: 'peer-checked:bg-indigo-600',
-      button: 'peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600',
-      card: 'peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:shadow-indigo-100'
+      default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:bg-indigo-600 peer-checked:border-indigo-600 peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-opacity-50',
+      switch: 'peer-checked:bg-indigo-600 peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-opacity-50',
+      button: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-opacity-50',
+      card: 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:border-indigo-500 peer-checked:bg-indigo-50 dark:peer-checked:bg-indigo-900/20 peer-checked:shadow-indigo-100 peer-focus:ring-2 peer-focus:ring-indigo-500 peer-focus:ring-opacity-50'
     },
     pink: {
-      default: 'peer-checked:bg-pink-600 peer-checked:border-pink-600',
-      switch: 'peer-checked:bg-pink-600',
-      button: 'peer-checked:bg-pink-600 peer-checked:text-white peer-checked:border-pink-600',
-      card: 'peer-checked:border-pink-500 peer-checked:bg-pink-50 peer-checked:shadow-pink-100'
+      default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:bg-pink-600 peer-checked:border-pink-600 peer-focus:ring-2 peer-focus:ring-pink-500 peer-focus:ring-opacity-50',
+      switch: 'peer-checked:bg-pink-600 peer-focus:ring-2 peer-focus:ring-pink-500 peer-focus:ring-opacity-50',
+      button: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 peer-checked:bg-pink-600 peer-checked:text-white peer-checked:border-pink-600 peer-focus:ring-2 peer-focus:ring-pink-500 peer-focus:ring-opacity-50',
+      card: 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:border-pink-500 peer-checked:bg-pink-50 dark:peer-checked:bg-pink-900/20 peer-checked:shadow-pink-100 peer-focus:ring-2 peer-focus:ring-pink-500 peer-focus:ring-opacity-50'
     },
     gray: {
-      default: 'peer-checked:bg-gray-600 peer-checked:border-gray-600',
-      switch: 'peer-checked:bg-gray-600',
-      button: 'peer-checked:bg-gray-600 peer-checked:text-white peer-checked:border-gray-600',
-      card: 'peer-checked:border-gray-500 peer-checked:bg-gray-50 peer-checked:shadow-gray-100'
+      default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:bg-gray-600 peer-checked:border-gray-600 peer-focus:ring-2 peer-focus:ring-gray-500 peer-focus:ring-opacity-50',
+      switch: 'peer-checked:bg-gray-600 peer-focus:ring-2 peer-focus:ring-gray-500 peer-focus:ring-opacity-50',
+      button: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 peer-checked:bg-gray-600 peer-checked:text-white peer-checked:border-gray-600 peer-focus:ring-2 peer-focus:ring-gray-500 peer-focus:ring-opacity-50',
+      card: 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 peer-checked:border-gray-500 peer-checked:bg-gray-50 dark:peer-checked:bg-gray-700/50 peer-checked:shadow-gray-100 peer-focus:ring-2 peer-focus:ring-gray-500 peer-focus:ring-opacity-50'
     }
   };
 
@@ -117,14 +132,14 @@ export const getColorClasses = (color: CheckboxColor, variant: CheckboxVariant):
  */
 export const getVariantClasses = (variant: CheckboxVariant): string => {
   const variants = {
-    default: 'border-2 border-gray-300 bg-white rounded shrink-0',
-    rounded: 'border-2 border-gray-300 bg-white rounded-md shrink-0',
-    circle: 'border-2 border-gray-300 bg-white rounded-full shrink-0',
-    switch: 'bg-gray-300 rounded-full relative shrink-0',
-    button: 'border-2 border-gray-300 bg-white rounded-lg font-medium text-gray-700 hover:bg-gray-50 whitespace-nowrap',
-    card: 'border-2 border-gray-200 bg-white rounded-lg hover:shadow-md w-full',
-    minimal: 'border border-gray-400 bg-transparent rounded-sm shrink-0',
-    modern: 'border-2 border-gray-300 bg-white rounded-lg shadow-sm hover:shadow-md transform hover:scale-105 shrink-0'
+    default: 'border-2 rounded shrink-0',
+    rounded: 'border-2 rounded-md shrink-0',
+    circle: 'border-2 rounded-full shrink-0',
+    switch: 'bg-gray-300 dark:bg-gray-600 rounded-full relative shrink-0',
+    button: 'border-2 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap',
+    card: 'border-2 rounded-lg hover:shadow-md w-full',
+    minimal: 'border rounded-sm shrink-0',
+    modern: 'border-2 rounded-lg shadow-sm hover:shadow-md transform hover:scale-105 shrink-0'
   };
   return variants[variant];
 };
@@ -197,7 +212,9 @@ export const getLabelClasses = (
     bottom: 'mt-2 block'
   };
 
-  const disabledClasses = disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 cursor-pointer';
+  const disabledClasses = disabled 
+    ? 'text-gray-400 dark:text-gray-500' 
+    : 'text-gray-700 dark:text-gray-300';
 
   return `${baseClasses} ${sizeClasses[size]} ${positionClasses[position]} ${disabledClasses}`.trim();
 };
@@ -211,7 +228,7 @@ export const getDescriptionClasses = (size: CheckboxSize): string => {
     md: 'text-sm',
     lg: 'text-base'
   };
-  return `text-gray-500 ${sizeClasses[size]} mt-1 leading-relaxed`;
+  return `text-gray-500 dark:text-gray-400 ${sizeClasses[size]} mt-1 leading-relaxed`;
 };
 
 /**
@@ -224,7 +241,7 @@ export const getMainContainerClasses = (labelPosition: LabelPosition): string =>
     top: 'flex flex-col items-start',
     bottom: 'flex flex-col items-start'
   };
-  return `cursor-pointer select-none ${positionClasses[labelPosition]}`;
+  return `cursor-pointer select-none transition-colors duration-200 ${positionClasses[labelPosition]}`;
 };
 
 /**

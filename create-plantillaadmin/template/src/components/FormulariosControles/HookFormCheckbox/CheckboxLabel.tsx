@@ -21,12 +21,11 @@ export const CheckboxLabel: React.FC<CheckboxLabelProps> = ({
   return (
     <div className={`${labelPosition === 'top' || labelPosition === 'bottom' ? 'w-full' : 'flex-1 min-w-0'}`}>
       <div className="flex items-start gap-1">
-        <label
-          htmlFor={name}
+        <span
           className={`${labelClasses} leading-tight`}
         >
           {label}
-        </label>
+        </span>
         {tooltipMessage && (
           <Tooltip message={tooltipMessage}>
             <span className="text-blue-500 cursor-pointer text-sm hover:text-blue-600 transition-colors shrink-0 mt-0.5">

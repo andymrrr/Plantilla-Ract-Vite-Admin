@@ -65,8 +65,8 @@ export const CheckboxField: React.FC<CheckboxFieldOnlyProps> = ({
                 {icon}
               </div>
             )}
-            <div className="font-medium text-gray-900">Opción</div>
-            <div className="text-sm text-gray-500 mt-1">Seleccionar esta opción</div>
+            <div className="font-medium text-gray-900 dark:text-gray-100">Opción</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Seleccionar esta opción</div>
           </div>
         </div>
       );
@@ -119,7 +119,12 @@ export const CheckboxField: React.FC<CheckboxFieldOnlyProps> = ({
         }}
         ref={ref}
       />
-      {renderCheckboxContent()}
+      <label 
+        htmlFor={name} 
+        className={`block ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+      >
+        {renderCheckboxContent()}
+      </label>
     </div>
   );
 };
