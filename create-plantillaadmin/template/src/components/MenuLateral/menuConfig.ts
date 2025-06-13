@@ -27,6 +27,7 @@ import {
   FaClock,
   FaSearch,
   FaHome,
+  FaCogs,
 } from "react-icons/fa";
 
 export interface MenuLink {
@@ -84,7 +85,6 @@ export const menuConfig: MenuSection[] = [
           { to: "/forms/form-layout", label: "Form Layout", icon: FaLayerGroup },
           { to: "/forms/form-step-by-step", label: "Step by Step", icon: FaStepForward },
           { to: "/forms/dynamic-form", label: "Dynamic Fields", icon: FaPlus },
-          { to: "/forms/dynamic-form-hook", label: "Dynamic Hook Form", icon: FaCode },
           { to: "/forms/formulario-completo", label: "Formulario Completo", icon: FaWpforms },
         ],
       },
@@ -103,6 +103,7 @@ export const menuConfig: MenuSection[] = [
           { to: "/componentes/file-examples", label: "HookForm File", icon: FaFile },
           { to: "/componentes/time-selector-examples", label: "Time Selector", icon: FaClock },
           { to: "/componentes/select-busqueda-examples", label: "Select Búsqueda", icon: FaSearch },
+          { to: "/componentes/dinamico-examples", label: "HookForm Dinámico", icon: FaCogs },
         ],
       },
       {

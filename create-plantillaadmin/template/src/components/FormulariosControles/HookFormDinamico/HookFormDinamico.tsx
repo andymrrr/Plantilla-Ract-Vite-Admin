@@ -71,6 +71,7 @@ const HookFormDinamico: React.FC<HookFormDinamicoProps> = ({
       nombre: '',
       valor: configuracion.tipo === 'checkbox' ? 'false' : '',
       tipo: configuracion.tipo,
+      configuracion: configuracion, // Guardar la configuración completa
       ...(configuracion.tipo === 'checkbox' && { activo: false })
     };
 
@@ -111,7 +112,8 @@ const HookFormDinamico: React.FC<HookFormDinamicoProps> = ({
         {camposActuales.length > 0 ? (
           <div className="space-y-4">
             {camposActuales.map((campo: CampoFormularioMejorado, index: number) => {
-              const tipoConfigurado = tiposCamposPermitidos.find(config => config.tipo === campo.tipo);
+              // Usar la configuración guardada en el campo, o buscar por tipo como fallback
+              const tipoConfigurado = campo.configuracion || tiposCamposPermitidos.find(config => config.tipo === campo.tipo);
               if (!tipoConfigurado) return null;
 
               return (

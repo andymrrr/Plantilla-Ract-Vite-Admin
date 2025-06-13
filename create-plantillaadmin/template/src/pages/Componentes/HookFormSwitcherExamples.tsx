@@ -19,7 +19,7 @@ import {
   FaTimes
 } from 'react-icons/fa'
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb"
-import Tarjeta from "../../components/UI/Tarjeta"
+import Tarjeta from "../../components/UI/Tarjeta/Tarjeta"
 import { Contenedor } from "../../components/UI/Contenedor"
 
 interface FormValues {

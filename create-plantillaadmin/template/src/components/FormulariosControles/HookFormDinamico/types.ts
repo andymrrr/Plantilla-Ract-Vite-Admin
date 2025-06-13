@@ -33,6 +33,7 @@ export interface CampoFormularioMejorado {
   valor: string;
   tipo: TipoCampoHook;
   activo?: boolean; // Para checkboxes
+  configuracion?: ConfiguracionCampoHook; // Guardar la configuración completa
 }
 
 // Estructura de datos del formulario por pestaña

@@ -6,7 +6,6 @@ import FormElements from "../../pages/Form/FormElements";
 import FormLayout from "../../pages/Form/FormLayout";
 import FormStepByStep from "../../pages/Form/FormStepByStep";
 import DynamicFormExample from "../../pages/Form/DynamicFormExample";
-import DynamicFormHookExample from "../../pages/Form/DynamicFormHookExample";
 import FormularioCompleto from "../../pages/Form/FormularioCompleto";
 import Graficas from "../../pages/Graficas/Graficas";
 import Profile from "../../pages/Profile";
@@ -23,6 +22,7 @@ import HookFormSwitcherExamples from "../../pages/Componentes/HookFormSwitcherEx
 import HookFormFileExamples from "../../pages/Componentes/HookFormFileExamples";
 import HookFormTimeSelectorExamples from "../../pages/Componentes/HookFormTimeSelectorExamples";
 import HookFormSelectBusquedaExamples from "../../pages/Componentes/SelectBusquedaFormHookExamples";
+import HookFormDinamicoExamples from "../../pages/Componentes/HookFormDinamicoExamples";
 import { RouteConfig } from "./RouteConfig";
 
 export const routes: RouteConfig[] = [
@@ -60,11 +60,6 @@ export const routes: RouteConfig[] = [
     path: '/forms/dynamic-form',
     title: 'Formularios Dinámicos | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <DynamicFormExample />,
-  },
-  {
-    path: '/forms/dynamic-form-hook',
-    title: 'Formularios Dinámicos Hook Form | TailAdmin - Tailwind CSS Admin Dashboard Template',
-    element: <DynamicFormHookExample />,
   },
   {
     path: '/forms/formulario-completo',
@@ -150,5 +145,10 @@ export const routes: RouteConfig[] = [
     path: '/componentes/select-busqueda-examples',
     title: 'Ejemplos de SelectBusquedaFormHook | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <HookFormSelectBusquedaExamples />,
+  },
+  {
+    path: '/componentes/dinamico-examples',
+    title: 'Ejemplos de HookFormDinamico | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    element: <HookFormDinamicoExamples />,
   },
 ];

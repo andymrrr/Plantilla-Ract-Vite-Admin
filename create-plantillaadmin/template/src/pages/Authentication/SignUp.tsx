@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
-import Tarjeta from '../../components/UI/Tarjeta';
+import Tarjeta from '../../components/UI/Tarjeta/Tarjeta';
 
 const SignUp: React.FC = () => {
   return (

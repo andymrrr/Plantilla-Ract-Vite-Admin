@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { Contenedor } from '../../components/UI/Contenedor';
-import Tarjeta from '../../components/UI/Tarjeta';
+import Tarjeta from '../../components/UI/Tarjeta/Tarjeta';
 import DynamicFieldForm, { 
   DatosPestaña, 
   ConfiguracionCampo 
@@ -68,23 +68,15 @@ const DynamicFormExample = () => {
     <Contenedor>
       <Breadcrumb pageName="Formularios Dinámicos" />
       
-      {/* Nota sobre la versión Hook Form */}
-      <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-blue-700 dark:text-blue-300">
-              💡 Nueva Versión Disponible
-            </h3>
-            <p className="text-sm text-blue-600 dark:text-blue-400 mt-1">
-              Ahora disponible: DynamicFieldForm integrado con React Hook Form para mejor validación y rendimiento.
-            </p>
-          </div>
-          <a
-            href="/forms/dynamic-form-hook"
-            className="inline-flex items-center gap-2 rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
-          >
-            Ver Hook Form →
-          </a>
+      {/* Información sobre nueva versión */}
+      <div className="mb-6 flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <div>
+          <h3 className="text-lg font-semibold text-blue-700 dark:text-blue-300">
+            💡 Componente DynamicFieldForm
+          </h3>
+          <p className="text-sm text-blue-600 dark:text-blue-400 mt-1">
+            Formulario dinámico con campos personalizables y validación integrada.
+          </p>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb"
-import Tarjeta from "../../components/UI/Tarjeta"
+import Tarjeta from "../../components/UI/Tarjeta/Tarjeta"
 import { Contenedor } from "../../components/UI/Contenedor"
 
 // Importar TODOS los componentes HookForm

@@ -8,7 +8,7 @@ import {
   GraficoRadar,
 } from "../../components/Charts";
 import { Contenedor } from "../../components/UI/Contenedor";
-import Tarjeta from "../../components/UI/Tarjeta";
+import Tarjeta from "../../components/UI/Tarjeta/Tarjeta";
 
 const Graficas: React.FC = () => {
   const dataBarras = [

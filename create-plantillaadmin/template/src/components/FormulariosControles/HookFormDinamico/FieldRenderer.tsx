@@ -88,6 +88,11 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
         );
 
       case 'select':
+        const opcionesMapeadas = configuracion.opciones?.map(opcion => ({ 
+          value: opcion.valor, 
+          label: opcion.etiqueta 
+        })) || [];
+        
         return (
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-4">
@@ -105,11 +110,11 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
               <HookFormSelect
                 label="Valor"
                 name={valorFieldName}
-                options={configuracion.opciones?.map(opcion => ({ value: opcion, label: opcion })) || []}
+                options={opcionesMapeadas}
                 register={register}
                 errors={errors}
                 selectedValue={watch(valorFieldName) || ''}
-                onChange={(valor: string) => setValue(valorFieldName, valor)}
+                onChange={(valor: string | string[]) => setValue(valorFieldName, valor)}
                 colSpan="12"
               />
             </div>

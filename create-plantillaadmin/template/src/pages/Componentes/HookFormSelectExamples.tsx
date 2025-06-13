@@ -1,30 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { HookFormSelect } from '../../components/FormulariosControles/HookFormSelect';
 import { 
-  FaUser, 
-  FaGlobe, 
-  FaBuilding, 
   FaMapMarkerAlt,
   FaFlag,
-  FaUsers,
-  FaGraduationCap,
-  FaHeart,
   FaStar,
-  FaTag,
   FaCode,
-  FaPalette,
-  FaMusic,
-  FaGamepad,
-  FaBook,
-  FaCar,
-  FaPlane,
-  FaHome,
-  FaShoppingCart,
   FaSearch,
   FaPlus
 } from 'react-icons/fa';
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
-import Tarjeta from "../../components/UI/Tarjeta";
+import Tarjeta from "../../components/UI/Tarjeta/Tarjeta";
 import { Contenedor } from "../../components/UI/Contenedor";
 
 interface FormValues {
@@ -68,35 +53,6 @@ export default function HookFormSelectExamples() {
     { value: 'nuxt', label: 'Nuxt.js', color: '#00DC82', badge: 'SSR' }
   ];
 
-  const categoriasGroups = [
-    {
-      label: 'Desarrollo',
-      icon: <FaCode />,
-      options: [
-        { value: 'frontend', label: 'Frontend', icon: <FaPalette /> },
-        { value: 'backend', label: 'Backend', icon: <FaCode /> },
-        { value: 'fullstack', label: 'Full Stack', icon: <FaUsers /> }
-      ]
-    },
-    {
-      label: 'Entretenimiento',
-      icon: <FaGamepad />,
-      options: [
-        { value: 'musica', label: 'Música', icon: <FaMusic /> },
-        { value: 'juegos', label: 'Videojuegos', icon: <FaGamepad /> },
-        { value: 'libros', label: 'Libros', icon: <FaBook /> }
-      ]
-    },
-    {
-      label: 'Transporte',
-      icon: <FaCar />,
-      options: [
-        { value: 'coche', label: 'Coche', icon: <FaCar /> },
-        { value: 'avion', label: 'Avión', icon: <FaPlane /> },
-        { value: 'casa', label: 'Casa', icon: <FaHome /> }
-      ]
-    }
-  ];
 
   return (
     <Contenedor>

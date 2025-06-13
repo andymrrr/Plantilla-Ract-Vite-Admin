@@ -9,11 +9,7 @@ import {
   formatSelectedText
 } from './utils';
 import LoadingSpinner from './LoadingSpinner';
-import ClearButton from './ClearButton';
 
-/**
- * Componente avanzado para renderizar el campo select con múltiples variantes
- */
 export const SelectField: React.FC<SelectFieldProps> = ({
   name,
   options = [],
