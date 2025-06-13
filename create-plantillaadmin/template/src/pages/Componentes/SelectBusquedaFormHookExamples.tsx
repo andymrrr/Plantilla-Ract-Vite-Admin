@@ -2,6 +2,9 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { HookFormSelectBusqueda } from '../../components/FormulariosControles/HookFormSelectBusqueda'
 import { FaUser, FaGlobe, FaBuilding, FaCity, FaBook, FaTag } from 'react-icons/fa'
+import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb"
+import Tarjeta from "../../components/UI/Tarjeta"
+import { Contenedor } from "../../components/UI/Contenedor"
 
 interface FormValues {
   [key: string]: string
@@ -173,62 +176,355 @@ export default function HookFormSelectBusquedaExamples() {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Ejemplos de HookFormSelectBusqueda
-        </h1>
+    <Contenedor>
+      <Breadcrumb pageName="Select con Búsqueda - Ejemplos" />
+      
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-          
-          {/* Sección 1: Selects con búsqueda básicos */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              1. Selects con Búsqueda Básicos
-            </h2>
-            <div className="grid grid-cols-12 gap-4">
-              <HookFormSelectBusqueda
-                label="País"
-                name="paisBasico"
-                options={opcionesPaises}
-                control={control}
-                errors={errors}
-                selectedValue={pais}
-                onChange={(value) => setPais(handleValueChange(value))}
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Ciudad"
-                name="ciudadBasica"
-                options={opcionesCiudades}
-                control={control}
-                errors={errors}
-                selectedValue={ciudad}
-                onChange={(value) => setCiudad(handleValueChange(value))}
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Usuario"
-                name="usuarioBasico"
-                options={opcionesUsuarios}
-                control={control}
-                errors={errors}
-                selectedValue={usuario}
-                onChange={(value) => setUsuario(handleValueChange(value))}
-                colSpan="12"
-              />
-            </div>
+        {/* Sección 1: Selects con búsqueda básicos */}
+        <Tarjeta
+          titulo="🔍 Selects con Búsqueda Básicos"
+          subtitulo="Funcionalidad básica de búsqueda y selección"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "blue",
+          }}
+        >
+          <div className="grid grid-cols-12 gap-4">
+            <HookFormSelectBusqueda
+              label="País"
+              name="paisBasico"
+              options={opcionesPaises}
+              control={control}
+              errors={errors}
+              selectedValue={pais}
+              onChange={(value) => setPais(handleValueChange(value))}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Ciudad"
+              name="ciudadBasica"
+              options={opcionesCiudades}
+              control={control}
+              errors={errors}
+              selectedValue={ciudad}
+              onChange={(value) => setCiudad(handleValueChange(value))}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Usuario"
+              name="usuarioBasico"
+              options={opcionesUsuarios}
+              control={control}
+              errors={errors}
+              selectedValue={usuario}
+              onChange={(value) => setUsuario(handleValueChange(value))}
+              colSpan="12"
+            />
           </div>
+        </Tarjeta>
 
-          {/* Sección 2: Selects con iconos */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              2. Selects con Iconos
-            </h2>
+        {/* Sección 2: Selects con iconos */}
+        <Tarjeta
+          titulo="🎨 Selects con Iconos"
+          subtitulo="Mejora visual con iconos representativos"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "green",
+          }}
+        >
+          <div className="grid grid-cols-12 gap-4">
+            <HookFormSelectBusqueda
+              label="Empleado"
+              name="empleado"
+              options={opcionesUsuarios}
+              control={control}
+              errors={errors}
+              icon={<FaUser />}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Ubicación"
+              name="ubicacion"
+              options={opcionesCiudades}
+              control={control}
+              errors={errors}
+              icon={<FaCity />}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Región"
+              name="region"
+              options={opcionesPaises}
+              control={control}
+              errors={errors}
+              icon={<FaGlobe />}
+              colSpan="4"
+            />
+            <HookFormSelectBusqueda
+              label="Categoría"
+              name="categoriaIcono"
+              options={opcionesCategorias}
+              control={control}
+              errors={errors}
+              icon={<FaTag />}
+              colSpan="4"
+            />
+            <HookFormSelectBusqueda
+              label="Libro"
+              name="libroIcono"
+              options={opcionesLibros}
+              control={control}
+              errors={errors}
+              icon={<FaBook />}
+              colSpan="4"
+            />
+          </div>
+        </Tarjeta>
+
+        {/* Sección 3: Diferentes variantes */}
+        <Tarjeta
+          titulo="🎭 Diferentes Variantes Visuales"
+          subtitulo="4 estilos visuales para diferentes contextos"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "yellow",
+          }}
+        >
+          <div className="grid grid-cols-12 gap-4">
+            <HookFormSelectBusqueda
+              label="Variante Básica"
+              name="variantBasic"
+              options={opcionesPaises}
+              control={control}
+              errors={errors}
+              variant="basic"
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Variante Moderna"
+              name="variantModern"
+              options={opcionesCiudades}
+              control={control}
+              errors={errors}
+              variant="modern"
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Variante con Icono"
+              name="variantIcon"
+              options={opcionesUsuarios}
+              control={control}
+              errors={errors}
+              variant="icon"
+              icon={<FaUser />}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Variante Compacta"
+              name="variantCompact"
+              options={opcionesCategorias}
+              control={control}
+              errors={errors}
+              variant="compact"
+              colSpan="6"
+            />
+          </div>
+        </Tarjeta>
+
+        {/* Sección 4: Diferentes tamaños */}
+        <Tarjeta
+          titulo="📏 Diferentes Tamaños"
+          subtitulo="Tamaños adaptables según el contexto de uso"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "red",
+          }}
+        >
+          <div className="grid grid-cols-12 gap-4">
+            <HookFormSelectBusqueda
+              label="Tamaño Pequeño (sm)"
+              name="sizeSmall"
+              options={opcionesPaises}
+              control={control}
+              errors={errors}
+              size="sm"
+              colSpan="4"
+            />
+            <HookFormSelectBusqueda
+              label="Tamaño Mediano (md)"
+              name="sizeMedium"
+              options={opcionesCiudades}
+              control={control}
+              errors={errors}
+              size="md"
+              colSpan="4"
+            />
+            <HookFormSelectBusqueda
+              label="Tamaño Grande (lg)"
+              name="sizeLarge"
+              options={opcionesUsuarios}
+              control={control}
+              errors={errors}
+              size="lg"
+              colSpan="4"
+            />
+          </div>
+        </Tarjeta>
+
+        {/* Sección 5: Diferentes tamaños de columna */}
+        <Tarjeta
+          titulo="📐 Diferentes Anchos de Columna"
+          subtitulo="Sistema de grid flexible para layouts responsivos"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "gray",
+          }}
+        >
+          <div className="grid grid-cols-12 gap-4">
+            <HookFormSelectBusqueda
+              label="Ancho Completo (12) - Seleccionar producto con descripción detallada"
+              name="productoCompleto"
+              options={opcionesProductos}
+              control={control}
+              errors={errors}
+              selectedValue={producto}
+              onChange={(value) => setProducto(handleValueChange(value))}
+              colSpan="12"
+            />
+            <HookFormSelectBusqueda
+              label="Medio Ancho (6)"
+              name="medioAncho1"
+              options={opcionesPaises}
+              control={control}
+              errors={errors}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Medio Ancho (6)"
+              name="medioAncho2"
+              options={opcionesCategorias}
+              control={control}
+              errors={errors}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Un Tercio (4)"
+              name="tercio1"
+              options={opcionesCiudades}
+              control={control}
+              errors={errors}
+              colSpan="4"
+            />
+            <HookFormSelectBusqueda
+              label="Un Tercio (4)"
+              name="tercio2"
+              options={opcionesUsuarios}
+              control={control}
+              errors={errors}
+              colSpan="4"
+            />
+            <HookFormSelectBusqueda
+              label="Un Tercio (4)"
+              name="tercio3"
+              options={opcionesLibros}
+              control={control}
+              errors={errors}
+              colSpan="4"
+            />
+          </div>
+        </Tarjeta>
+
+        {/* Sección 6: Funcionalidades avanzadas */}
+        <Tarjeta
+          titulo="⚡ Funcionalidades Avanzadas"
+          subtitulo="Características especiales y configuraciones avanzadas"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "blue",
+          }}
+        >
+          <div className="grid grid-cols-12 gap-4">
+            <HookFormSelectBusqueda
+              label="Selección Múltiple"
+              name="multiSelect"
+              options={opcionesPaises}
+              control={control}
+              errors={errors}
+              isMulti={true}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="No Limpiable"
+              name="notClearable"
+              options={opcionesCiudades}
+              control={control}
+              errors={errors}
+              isClearable={false}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Sin Búsqueda"
+              name="notSearchable"
+              options={opcionesUsuarios}
+              control={control}
+              errors={errors}
+              isSearchable={false}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Deshabilitado"
+              name="disabled"
+              options={opcionesProductos}
+              control={control}
+              errors={errors}
+              disabled={true}
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Con Tooltip"
+              name="withTooltip"
+              options={opcionesCategorias}
+              control={control}
+              errors={errors}
+              tooltipMessage="Este es un tooltip informativo que explica el propósito de este campo"
+              colSpan="12"
+            />
+          </div>
+        </Tarjeta>
+
+        {/* Sección 7: Casos de uso reales */}
+        <Tarjeta
+          titulo="🏢 Casos de Uso Reales"
+          subtitulo="Ejemplos prácticos para diferentes industrias y contextos"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "green",
+          }}
+        >
+          {/* Gestión de empleados */}
+          <div className="mb-6">
+            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-3">
+              👥 Gestión de Empleados
+            </h3>
             <div className="grid grid-cols-12 gap-4">
               <HookFormSelectBusqueda
-                label="Empleado"
-                name="empleado"
+                label="Supervisor Directo"
+                name="supervisorDirecto"
                 options={opcionesUsuarios}
                 control={control}
                 errors={errors}
@@ -236,8 +532,17 @@ export default function HookFormSelectBusquedaExamples() {
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                label="Ubicación"
-                name="ubicacion"
+                label="Departamento"
+                name="departamento"
+                options={opcionesCategorias}
+                control={control}
+                errors={errors}
+                icon={<FaBuilding />}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Ubicación de Trabajo"
+                name="ubicacionTrabajo"
                 options={opcionesCiudades}
                 control={control}
                 errors={errors}
@@ -245,438 +550,185 @@ export default function HookFormSelectBusquedaExamples() {
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                label="Región"
-                name="region"
-                options={opcionesPaises}
+                label="Mentor Asignado"
+                name="mentorAsignado"
+                options={opcionesUsuarios}
                 control={control}
                 errors={errors}
-                icon={<FaGlobe />}
+                icon={<FaUser />}
+                colSpan="6"
+              />
+            </div>
+          </div>
+
+          {/* Gestión de proyectos */}
+          <div className="mb-6">
+            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-3">
+              📋 Gestión de Proyectos
+            </h3>
+            <div className="grid grid-cols-12 gap-4">
+              <HookFormSelectBusqueda
+                label="Líder del Proyecto"
+                name="liderProyecto"
+                options={opcionesUsuarios}
+                control={control}
+                errors={errors}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Cliente Principal"
+                name="clientePrincipal"
+                options={opcionesUsuarios}
+                control={control}
+                errors={errors}
+                colSpan="6"
+              />
+              <HookFormSelectBusqueda
+                label="Tecnología Principal"
+                name="tecnologiaPrincipal"
+                options={[
+                  { value: 'react', label: 'React.js - Frontend Framework' },
+                  { value: 'vue', label: 'Vue.js - Progressive Framework' },
+                  { value: 'angular', label: 'Angular - Full Framework' },
+                  { value: 'nodejs', label: 'Node.js - Backend Runtime' },
+                  { value: 'python', label: 'Python - Versatile Language' },
+                  { value: 'java', label: 'Java - Enterprise Language' },
+                  { value: 'csharp', label: 'C# - Microsoft Stack' },
+                  { value: 'php', label: 'PHP - Web Development' },
+                ]}
+                control={control}
+                errors={errors}
+                colSpan="12"
+              />
+            </div>
+          </div>
+
+          {/* Gestión de inventario */}
+          <div className="mb-6">
+            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-3">
+              📦 Gestión de Inventario
+            </h3>
+            <div className="grid grid-cols-12 gap-4">
+              <HookFormSelectBusqueda
+                label="Producto"
+                name="productoInventario"
+                options={opcionesProductos}
+                control={control}
+                errors={errors}
+                colSpan="8"
+              />
+              <HookFormSelectBusqueda
+                label="Proveedor"
+                name="proveedor"
+                options={[
+                  { value: 'tech_solutions', label: 'Tech Solutions S.A. - Equipos Informáticos' },
+                  { value: 'office_supplies', label: 'Office Supplies Ltd. - Material de Oficina' },
+                  { value: 'global_electronics', label: 'Global Electronics - Componentes' },
+                  { value: 'premium_furniture', label: 'Premium Furniture - Mobiliario' },
+                  { value: 'smart_devices', label: 'Smart Devices Inc. - Dispositivos Inteligentes' },
+                ]}
+                control={control}
+                errors={errors}
                 colSpan="4"
               />
               <HookFormSelectBusqueda
-                label="Categoría"
-                name="categoriaIcono"
-                options={opcionesCategorias}
+                label="Almacén de Destino"
+                name="almacenDestino"
+                options={opcionesCiudades}
                 control={control}
                 errors={errors}
-                icon={<FaTag />}
-                colSpan="4"
+                colSpan="6"
               />
               <HookFormSelectBusqueda
-                label="Libro"
-                name="libroIcono"
+                label="Responsable de Almacén"
+                name="responsableAlmacen"
+                options={opcionesUsuarios}
+                control={control}
+                errors={errors}
+                colSpan="6"
+              />
+            </div>
+          </div>
+
+          {/* Gestión académica */}
+          <div>
+            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-3">
+              🎓 Gestión Académica
+            </h3>
+            <div className="grid grid-cols-12 gap-4">
+              <HookFormSelectBusqueda
+                label="Libro de Texto"
+                name="libroTexto"
                 options={opcionesLibros}
                 control={control}
                 errors={errors}
                 icon={<FaBook />}
-                colSpan="4"
-              />
-            </div>
-          </div>
-
-          {/* Sección 3: Diferentes variantes */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              3. Diferentes Variantes Visuales
-            </h2>
-            <div className="grid grid-cols-12 gap-4">
-              <HookFormSelectBusqueda
-                label="Variante Básica"
-                name="variantBasic"
-                options={opcionesPaises}
-                control={control}
-                errors={errors}
-                variant="basic"
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                label="Variante Moderna"
-                name="variantModern"
-                options={opcionesCiudades}
-                control={control}
-                errors={errors}
-                variant="modern"
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Variante con Icono"
-                name="variantIcon"
+                label="Instructor"
+                name="instructor"
                 options={opcionesUsuarios}
                 control={control}
                 errors={errors}
-                variant="icon"
                 icon={<FaUser />}
                 colSpan="6"
               />
               <HookFormSelectBusqueda
-                label="Variante Compacta"
-                name="variantCompact"
+                label="Área de Estudio"
+                name="areaEstudio"
                 options={opcionesCategorias}
                 control={control}
                 errors={errors}
-                variant="compact"
-                colSpan="6"
-              />
-            </div>
-          </div>
-
-          {/* Sección 4: Diferentes tamaños */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              4. Diferentes Tamaños
-            </h2>
-            <div className="grid grid-cols-12 gap-4">
-              <HookFormSelectBusqueda
-                label="Tamaño Pequeño (sm)"
-                name="sizeSmall"
-                options={opcionesPaises}
-                control={control}
-                errors={errors}
-                size="sm"
-                colSpan="4"
-              />
-              <HookFormSelectBusqueda
-                label="Tamaño Mediano (md)"
-                name="sizeMedium"
-                options={opcionesCiudades}
-                control={control}
-                errors={errors}
-                size="md"
-                colSpan="4"
-              />
-              <HookFormSelectBusqueda
-                label="Tamaño Grande (lg)"
-                name="sizeLarge"
-                options={opcionesUsuarios}
-                control={control}
-                errors={errors}
-                size="lg"
-                colSpan="4"
-              />
-            </div>
-          </div>
-
-          {/* Sección 5: Diferentes tamaños de columna */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              5. Diferentes Tamaños de Columna
-            </h2>
-            <div className="grid grid-cols-12 gap-4">
-              <HookFormSelectBusqueda
-                label="Ancho Completo (12) - Seleccionar producto con descripción detallada"
-                name="productoCompleto"
-                options={opcionesProductos}
-                control={control}
-                errors={errors}
-                selectedValue={producto}
-                onChange={(value) => setProducto(handleValueChange(value))}
-                colSpan="12"
-              />
-              <HookFormSelectBusqueda
-                label="Medio Ancho (6)"
-                name="medioAncho1"
-                options={opcionesPaises}
-                control={control}
-                errors={errors}
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Medio Ancho (6)"
-                name="medioAncho2"
-                options={opcionesCategorias}
-                control={control}
-                errors={errors}
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Un Tercio (4)"
-                name="tercio1"
-                options={opcionesCiudades}
-                control={control}
-                errors={errors}
-                colSpan="4"
-              />
-              <HookFormSelectBusqueda
-                label="Un Tercio (4)"
-                name="tercio2"
-                options={opcionesUsuarios}
-                control={control}
-                errors={errors}
-                colSpan="4"
-              />
-              <HookFormSelectBusqueda
-                label="Un Tercio (4)"
-                name="tercio3"
-                options={opcionesLibros}
-                control={control}
-                errors={errors}
-                colSpan="4"
-              />
-            </div>
-          </div>
-
-          {/* Sección 6: Funcionalidades avanzadas */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              6. Funcionalidades Avanzadas
-            </h2>
-            <div className="grid grid-cols-12 gap-4">
-              <HookFormSelectBusqueda
-                label="Selección Múltiple"
-                name="multiSelect"
-                options={opcionesPaises}
-                control={control}
-                errors={errors}
-                isMulti={true}
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="No Limpiable"
-                name="notClearable"
-                options={opcionesCiudades}
-                control={control}
-                errors={errors}
-                isClearable={false}
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Sin Búsqueda"
-                name="notSearchable"
-                options={opcionesUsuarios}
-                control={control}
-                errors={errors}
-                isSearchable={false}
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Deshabilitado"
-                name="disabled"
-                options={opcionesProductos}
-                control={control}
-                errors={errors}
-                disabled={true}
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Con Tooltip"
-                name="withTooltip"
-                options={opcionesCategorias}
-                control={control}
-                errors={errors}
-                tooltipMessage="Este es un tooltip informativo que explica el propósito de este campo"
                 colSpan="12"
               />
             </div>
           </div>
+        </Tarjeta>
 
-          {/* Sección 7: Casos de uso reales */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              7. Casos de Uso Reales
-            </h2>
-            
-            {/* Gestión de empleados */}
-            <div className="mb-6">
-              <h3 className="text-lg font-medium text-gray-700 mb-3">
-                Gestión de Empleados
-              </h3>
-              <div className="grid grid-cols-12 gap-4">
-                <HookFormSelectBusqueda
-                  label="Supervisor Directo"
-                  name="supervisorDirecto"
-                  options={opcionesUsuarios}
-                  control={control}
-                  errors={errors}
-                  icon={<FaUser />}
-                  colSpan="6"
-                />
-                <HookFormSelectBusqueda
-                  label="Departamento"
-                  name="departamento"
-                  options={opcionesCategorias}
-                  control={control}
-                  errors={errors}
-                  icon={<FaBuilding />}
-                  colSpan="6"
-                />
-                <HookFormSelectBusqueda
-                  label="Ubicación de Trabajo"
-                  name="ubicacionTrabajo"
-                  options={opcionesCiudades}
-                  control={control}
-                  errors={errors}
-                  icon={<FaCity />}
-                  colSpan="6"
-                />
-                <HookFormSelectBusqueda
-                  label="Mentor Asignado"
-                  name="mentorAsignado"
-                  options={opcionesUsuarios}
-                  control={control}
-                  errors={errors}
-                  icon={<FaUser />}
-                  colSpan="6"
-                />
-              </div>
-            </div>
-
-            {/* Gestión de proyectos */}
-            <div className="mb-6">
-              <h3 className="text-lg font-medium text-gray-700 mb-3">
-                Gestión de Proyectos
-              </h3>
-              <div className="grid grid-cols-12 gap-4">
-                <HookFormSelectBusqueda
-                  label="Líder del Proyecto"
-                  name="liderProyecto"
-                  options={opcionesUsuarios}
-                  control={control}
-                  errors={errors}
-                  colSpan="6"
-                />
-                <HookFormSelectBusqueda
-                  label="Cliente Principal"
-                  name="clientePrincipal"
-                  options={opcionesUsuarios}
-                  control={control}
-                  errors={errors}
-                  colSpan="6"
-                />
-                <HookFormSelectBusqueda
-                  label="Tecnología Principal"
-                  name="tecnologiaPrincipal"
-                  options={[
-                    { value: 'react', label: 'React.js - Frontend Framework' },
-                    { value: 'vue', label: 'Vue.js - Progressive Framework' },
-                    { value: 'angular', label: 'Angular - Full Framework' },
-                    { value: 'nodejs', label: 'Node.js - Backend Runtime' },
-                    { value: 'python', label: 'Python - Versatile Language' },
-                    { value: 'java', label: 'Java - Enterprise Language' },
-                    { value: 'csharp', label: 'C# - Microsoft Stack' },
-                    { value: 'php', label: 'PHP - Web Development' },
-                  ]}
-                  control={control}
-                  errors={errors}
-                  colSpan="12"
-                />
-              </div>
-            </div>
-
-            {/* Gestión de inventario */}
-            <div className="mb-6">
-              <h3 className="text-lg font-medium text-gray-700 mb-3">
-                Gestión de Inventario
-              </h3>
-              <div className="grid grid-cols-12 gap-4">
-                <HookFormSelectBusqueda
-                  label="Producto"
-                  name="productoInventario"
-                  options={opcionesProductos}
-                  control={control}
-                  errors={errors}
-                  colSpan="8"
-                />
-                <HookFormSelectBusqueda
-                  label="Proveedor"
-                  name="proveedor"
-                  options={[
-                    { value: 'tech_solutions', label: 'Tech Solutions S.A. - Equipos Informáticos' },
-                    { value: 'office_supplies', label: 'Office Supplies Ltd. - Material de Oficina' },
-                    { value: 'global_electronics', label: 'Global Electronics - Componentes' },
-                    { value: 'premium_furniture', label: 'Premium Furniture - Mobiliario' },
-                    { value: 'smart_devices', label: 'Smart Devices Inc. - Dispositivos Inteligentes' },
-                  ]}
-                  control={control}
-                  errors={errors}
-                  colSpan="4"
-                />
-                <HookFormSelectBusqueda
-                  label="Almacén de Destino"
-                  name="almacenDestino"
-                  options={opcionesCiudades}
-                  control={control}
-                  errors={errors}
-                  colSpan="6"
-                />
-                <HookFormSelectBusqueda
-                  label="Responsable de Almacén"
-                  name="responsableAlmacen"
-                  options={opcionesUsuarios}
-                  control={control}
-                  errors={errors}
-                  colSpan="6"
-                />
-              </div>
-            </div>
-
-            {/* Gestión académica */}
-            <div>
-              <h3 className="text-lg font-medium text-gray-700 mb-3">
-                Gestión Académica
-              </h3>
-              <div className="grid grid-cols-12 gap-4">
-                <HookFormSelectBusqueda
-                  label="Libro de Texto"
-                  name="libroTexto"
-                  options={opcionesLibros}
-                  control={control}
-                  errors={errors}
-                  icon={<FaBook />}
-                  colSpan="6"
-                />
-                <HookFormSelectBusqueda
-                  label="Instructor"
-                  name="instructor"
-                  options={opcionesUsuarios}
-                  control={control}
-                  errors={errors}
-                  icon={<FaUser />}
-                  colSpan="6"
-                />
-                <HookFormSelectBusqueda
-                  label="Área de Estudio"
-                  name="areaEstudio"
-                  options={opcionesCategorias}
-                  control={control}
-                  errors={errors}
-                  colSpan="12"
-                />
-              </div>
-            </div>
+        {/* Sección 8: Validaciones */}
+        <Tarjeta
+          titulo="✅ Campos con Validaciones"
+          subtitulo="Validaciones requeridas y personalizadas"
+          variante="defecto"
+          lineaHeader={{
+            mostrar: true,
+            grosor: "2px",
+            color: "red",
+          }}
+        >
+          <div className="grid grid-cols-12 gap-4">
+            <HookFormSelectBusqueda
+              label="Campo Requerido"
+              name="campoRequerido"
+              options={opcionesPaises}
+              control={control}
+              errors={errors}
+              required="Este campo es obligatorio"
+              colSpan="6"
+            />
+            <HookFormSelectBusqueda
+              label="Validación Personalizada"
+              name="validacionPersonalizada"
+              options={opcionesUsuarios}
+              control={control}
+              errors={errors}
+              validate={(value) => {
+                if (!value) return "Debes seleccionar un usuario";
+                if (value === 'juan_perez') return "Juan Pérez no está disponible";
+                return true;
+              }}
+              colSpan="6"
+            />
           </div>
+        </Tarjeta>
 
-          {/* Sección 8: Validaciones */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              8. Campos con Validaciones
-            </h2>
-            <div className="grid grid-cols-12 gap-4">
-              <HookFormSelectBusqueda
-                label="Campo Requerido"
-                name="campoRequerido"
-                options={opcionesPaises}
-                control={control}
-                errors={errors}
-                required="Este campo es obligatorio"
-                colSpan="6"
-              />
-              <HookFormSelectBusqueda
-                label="Validación Personalizada"
-                name="validacionPersonalizada"
-                options={opcionesUsuarios}
-                control={control}
-                errors={errors}
-                validate={(value) => {
-                  if (!value) return "Debes seleccionar un usuario";
-                  if (value === 'juan_perez') return "Juan Pérez no está disponible";
-                  return true;
-                }}
-                colSpan="6"
-              />
-            </div>
-          </div>
-
-          {/* Botón de envío */}
+        {/* Botón de envío */}
+        <Tarjeta
+          titulo="📤 Envío del Formulario"
+          subtitulo="Botón para procesar todos los datos del formulario"
+          variante="defecto"
+        >
           <div className="flex justify-end">
             <button
               type="submit"
@@ -685,22 +737,33 @@ export default function HookFormSelectBusquedaExamples() {
               Enviar Formulario
             </button>
           </div>
-        </form>
+        </Tarjeta>
+      </form>
 
-        {/* Sección 9: Usando register en lugar de control */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4 text-gray-800">
-            9. Usando register (Alternativa a control)
-          </h3>
-          <p className="text-gray-600 mb-4">
-            El componente también soporta el uso de <code className="bg-gray-100 px-2 py-1 rounded">register</code> en lugar de <code className="bg-gray-100 px-2 py-1 rounded">control</code> 
-            para mayor flexibilidad en diferentes casos de uso.
-          </p>
-
-          <RegisterExampleForm />
+      {/* Sección 9: Usando register en lugar de control */}
+      <Tarjeta
+        titulo="🔧 Usando register (Alternativa a control)"
+        subtitulo="Ejemplo de implementación con register para mayor flexibilidad"
+        variante="defecto"
+        lineaHeader={{
+          mostrar: true,
+          grosor: "2px",
+          color: "blue",
+        }}
+      >
+        <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">💡 Cómo usar con register:</h4>
+          <div className="text-sm text-blue-600 dark:text-blue-400 space-y-1">
+            <p>• Pasa <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">register</code> en lugar de <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">control</code></p>
+            <p>• El componente detectará automáticamente que usar</p>
+            <p>• Los valores se capturan igual que con cualquier input tradicional</p>
+            <p>• Funciona con validaciones y manejo de errores</p>
+          </div>
         </div>
-      </div>
-    </div>
+
+        <RegisterExampleForm />
+      </Tarjeta>
+    </Contenedor>
   )
 }
 
@@ -732,16 +795,6 @@ const RegisterExampleForm: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="font-semibold text-blue-800 mb-2">💡 Cómo usar con register:</h4>
-        <div className="text-sm text-blue-700 space-y-1">
-          <p>• Pasa <code className="bg-blue-100 px-1 rounded">register</code> en lugar de <code className="bg-blue-100 px-1 rounded">control</code></p>
-          <p>• El componente detectará automáticamente que usar</p>
-          <p>• Los valores se capturan igual que con cualquier input tradicional</p>
-          <p>• Funciona con validaciones y manejo de errores</p>
-        </div>
-      </div>
-
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Ejemplo básico con register */}
@@ -805,9 +858,9 @@ const RegisterExampleForm: React.FC = () => {
         </div>
 
         {/* Vista previa de valores */}
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
           <h4 className="font-semibold mb-2">Valores actuales (register):</h4>
-          <pre className="text-sm text-gray-700 bg-white p-3 rounded border overflow-auto">
+          <pre className="text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 p-3 rounded border overflow-auto">
             {JSON.stringify(watchedValues, null, 2)}
           </pre>
         </div>
