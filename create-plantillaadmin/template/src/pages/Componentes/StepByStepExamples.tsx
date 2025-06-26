@@ -17,14 +17,14 @@ import {
 } from 'react-icons/fa';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { Contenedor } from '../../components/UI/Contenedor';
-import Tarjeta from '../../components/UI/Tarjeta/Tarjeta';
 import StepByStep from '../../components/UI/StepByStep';
 import { Paso, TemaStepByStep, TamanoStepByStep, VarianteStepByStep } from '../../components/UI/StepByStep/types';
-import { HookFormInput } from '../../components/FormulariosControles/HookFormInput';
-import { HookFormTextarea } from '../../components/FormulariosControles/HookFormTextTarea';
-import { HookFormSelect } from '../../components/FormulariosControles/HookFormSelect';
-import { HookFormCheckbox } from '../../components/FormulariosControles/HookFormCheckbox';
-import { HookFormSwitcher } from '../../components/FormulariosControles/HookFormSwitcher';
+import HookFormInput from '../../components/FormulariosControles/HookFormInput/HookFormInput';
+import HookFormTextarea from '../../components/FormulariosControles/HookFormTextTarea/HookFormTextarea';
+import HookFormSelect from '../../components/FormulariosControles/HookFormSelect/HookFormSelect';
+import HookFormCheckbox from '../../components/FormulariosControles/HookFormCheckbox/HookFormCheckbox';
+import HookFormSwitcher from '../../components/FormulariosControles/HookFormSwitcher/HookFormSwitcher';
+import Tarjeta from '../../components/UI/Tarjeta/Tarjeta';
 
 // Interfaces para formularios
 interface FormularioRegistro {

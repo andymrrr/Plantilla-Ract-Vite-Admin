@@ -1,18 +1,18 @@
-import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb"
 import { Tarjeta } from '../../components/UI/Tarjeta'
 import { Contenedor } from "../../components/UI/Contenedor"
 
 // Importar TODOS los componentes HookForm
-import { HookFormInput } from '../../components/FormulariosControles/HookFormInput'
-import { HookFormTextarea } from '../../components/FormulariosControles/HookFormTextTarea'
-import { HookFormSelect } from '../../components/FormulariosControles/HookFormSelect'
-import { HookFormSelectBusqueda } from '../../components/FormulariosControles/HookFormSelectBusqueda'
-import { HookFormCheckbox } from '../../components/FormulariosControles/HookFormCheckbox'
-import { HookFormSwitcher } from '../../components/FormulariosControles/HookFormSwitcher'
-import { HookFormTimeSelector } from '../../components/FormulariosControles/HookFormTimeSelector'
-import HookFormFile from '../../components/FormulariosControles/HookFormFile'
+import HookFormInput from '../../components/FormulariosControles/HookFormInput/HookFormInput'
+import HookFormTextarea from '../../components/FormulariosControles/HookFormTextTarea/HookFormTextarea'
+import HookFormSelect from '../../components/FormulariosControles/HookFormSelect/HookFormSelect'
+import HookFormSelectBusqueda from '../../components/FormulariosControles/HookFormSelectBusqueda/HookFormSelectBusqueda'
+import HookFormCheckbox from '../../components/FormulariosControles/HookFormCheckbox/HookFormCheckbox'
+import HookFormSwitcher from '../../components/FormulariosControles/HookFormSwitcher/HookFormSwitcher'
+import HookFormTimeSelector from '../../components/FormulariosControles/HookFormTimeSelector/HookFormTimeSelector'
+import HookFormFile from '../../components/FormulariosControles/HookFormFile/HookFormFile'
 import HookFormDinamico from '../../components/FormulariosControles/HookFormDinamico'
 
 // Configuración para HookFormDinamico

@@ -4,7 +4,7 @@ import { FieldRendererProps } from './types';
 import HookFormInput from '../HookFormInput/HookFormInput';
 import HookFormCheckbox from '../HookFormCheckbox/HookFormCheckbox';
 import HookFormTextarea from '../HookFormTextTarea/HookFormTextarea';
-import { HookFormSelect as SelectFormHook } from '../HookFormSelect/HookFormSelect';
+import HookFormSelect from '../HookFormSelect/HookFormSelect';
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
   // campo,
@@ -102,7 +102,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
               />
             </div>
             <div className="col-span-6">
-              <SelectFormHook
+              <HookFormSelect
                 label="Valor"
                 name={valorFieldName}
                 options={configuracion.opciones?.map(opcion => ({ 

@@ -3,7 +3,7 @@ import { UseFormRegister, FieldErrors, FieldValues, Path, Control } from 'react-
 
 export type ColSpanType = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
 
-export type SelectVariant = 'default' | 'modern' | 'outlined' | 'filled' | 'minimal' | 'floating';
+export type SelectVariant = 'default' | 'modern' | 'outlined' | 'filled' | 'minimal' | 'floating' | 'basic';
 
 export type SelectSize = 'sm' | 'md' | 'lg';
 
@@ -57,6 +57,7 @@ export interface HookFormSelectProps<T extends FieldValues>
   placeholder?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  icon?: React.ReactNode;
   colSpan?: ColSpanType;
   tooltipMessage?: string;
   variant?: SelectVariant;

@@ -157,4 +157,78 @@ export const menuConfig: MenuSection[] = [
       },
     ],
   },
+  {
+    title: "DESARROLLO",
+    items: [
+      {
+        id: "api-docs",
+        to: "/api-docs",
+        icon: FaCode,
+        label: "API Documentation",
+        type: "link",
+      },
+      {
+        id: "testing",
+        to: "/testing",
+        icon: FaPlay,
+        label: "Testing Tools",
+        type: "link",
+      },
+      {
+        id: "debug",
+        to: "/debug",
+        icon: FaCogs,
+        label: "Debug Console",
+        type: "link",
+      },
+      {
+        id: "logs",
+        to: "/logs",
+        icon: FaFile,
+        label: "System Logs",
+        type: "link",
+      },
+    ],
+  },
+  {
+    title: "ADMINISTRACIÓN",
+    items: [
+      {
+        id: "users",
+        icon: FaUser,
+        label: "Gestión Usuarios",
+        type: "accordion",
+        links: [
+          { to: "/admin/users", label: "Lista Usuarios", icon: FaUser },
+          { to: "/admin/users/create", label: "Crear Usuario", icon: FaUserPlus },
+          { to: "/admin/users/roles", label: "Roles y Permisos", icon: FaKey },
+        ],
+      },
+      {
+        id: "system",
+        icon: FaCogs,
+        label: "Sistema",
+        type: "accordion",
+        links: [
+          { to: "/admin/system/config", label: "Configuración", icon: FaCog },
+          { to: "/admin/system/backup", label: "Respaldos", icon: FaFile },
+          { to: "/admin/system/monitoring", label: "Monitoreo", icon: FaChartBar },
+        ],
+      },
+      {
+        id: "reports",
+        to: "/reports",
+        icon: FaChartBar,
+        label: "Reportes",
+        type: "link",
+      },
+      {
+        id: "analytics",
+        to: "/analytics",
+        icon: FaChartBar,
+        label: "Analytics",
+        type: "link",
+      },
+    ],
+  },
 ]; 

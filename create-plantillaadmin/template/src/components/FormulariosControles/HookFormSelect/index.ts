@@ -1,6 +1,5 @@
 // Componente principal
 export { default } from './HookFormSelect';
-export { default as HookFormSelect } from './HookFormSelect';
 
 // Subcomponentes
 export { default as SelectLabel } from './SelectLabel';

@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { HookFormSelect } from '../../components/FormulariosControles/HookFormSelect';
+import HookFormSelect from '../../components/FormulariosControles/HookFormSelect/HookFormSelect';
 import { 
   FaMapMarkerAlt,
   FaFlag,

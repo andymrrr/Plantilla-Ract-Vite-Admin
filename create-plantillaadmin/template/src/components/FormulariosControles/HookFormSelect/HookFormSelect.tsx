@@ -22,6 +22,7 @@ const HookFormSelect = <T extends FieldValues>({
   placeholder = 'Selecciona una opción...',
   leftIcon,
   rightIcon,
+  icon, // Alias para leftIcon
   colSpan = '6',
   tooltipMessage,
   variant = 'default',
@@ -55,6 +56,9 @@ const HookFormSelect = <T extends FieldValues>({
   validate,
   pattern
 }: HookFormSelectProps<T>) => {
+  
+  // Usar icon como alias de leftIcon si no se proporciona leftIcon
+  const finalLeftIcon = leftIcon || icon;
   
   // Obtener clase CSS para el grid
   const colSpanClass = getColSpanClass(colSpan);
@@ -112,7 +116,7 @@ const HookFormSelect = <T extends FieldValues>({
               selectedValue={field.value}
               onChange={field.onChange}
               placeholder={placeholder}
-              leftIcon={leftIcon}
+              leftIcon={finalLeftIcon}
               rightIcon={rightIcon}
               variant={variant}
               size={size}
@@ -142,9 +146,9 @@ const HookFormSelect = <T extends FieldValues>({
         // Método tradicional con register (para selects simples)
         <div className="relative">
           {/* Icono izquierdo */}
-          {leftIcon && (
+          {finalLeftIcon && (
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10">
-              {leftIcon}
+              {finalLeftIcon}
             </div>
           )}
           
@@ -155,7 +159,7 @@ const HookFormSelect = <T extends FieldValues>({
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
                 : 'border-gray-300 dark:border-gray-600'
             } ${
-              leftIcon ? 'pl-10' : ''
+              finalLeftIcon ? 'pl-10' : ''
             } ${
               rightIcon || clearable ? 'pr-10' : ''
             } ${
