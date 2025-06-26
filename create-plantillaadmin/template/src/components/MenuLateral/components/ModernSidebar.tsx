@@ -305,7 +305,7 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
                                           flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200
                                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
                                           ${isActive 
-                                            ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' 
+                                            ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 border-r-2 border-blue-500 font-semibold' 
                                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'
                                           }
                                         `}
@@ -314,13 +314,26 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
                                             setSidebarOpen(false);
                                           }
                                         }}
-                                      >
-                                        {LinkIconComponent && (
-                                          <span className="flex-shrink-0 w-4 h-4 mr-2">
-                                            <LinkIconComponent />
-                                          </span>
+                                                                              >
+                                        {({ isActive }) => (
+                                          <>
+                                            {LinkIconComponent && (
+                                              <span className={`flex-shrink-0 w-4 h-4 mr-2 ${
+                                                isActive 
+                                                  ? 'text-blue-600 dark:text-blue-300' 
+                                                  : 'text-current'
+                                              }`}>
+                                                <LinkIconComponent />
+                                              </span>
+                                            )}
+                                            <span className="truncate">{link.label}</span>
+                                            {isActive && (
+                                              <span className="ml-auto text-xs text-blue-600 dark:text-blue-300">
+                                                ●
+                                              </span>
+                                            )}
+                                          </>
                                         )}
-                                        <span className="truncate">{link.label}</span>
                                       </NavLink>
                                     </li>
                                   );
@@ -385,47 +398,42 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
                                       <NavLink
                                         key={linkIndex}
                                         to={link.to}
-                                        style={{
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          padding: '12px 20px',
-                                          color: colorMode === 'dark' ? '#d1d5db' : '#374151',
-                                          textDecoration: 'none',
-                                          fontSize: '14px',
-                                          fontWeight: '500',
-                                          transition: 'all 0.2s ease',
-                                          borderLeft: '3px solid transparent'
-                                        }}
-                                        onMouseEnter={(e) => {
-                                          const target = e.currentTarget as HTMLElement;
-                                          target.style.backgroundColor = colorMode === 'dark' ? '#374151' : '#f1f5f9';
-                                          target.style.borderLeftColor = colorMode === 'dark' ? '#60a5fa' : '#3b82f6';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                          const target = e.currentTarget as HTMLElement;
-                                          target.style.backgroundColor = 'transparent';
-                                          target.style.borderLeftColor = 'transparent';
-                                        }}
+                                        className={({ isActive }) => 
+                                          `flex items-center px-5 py-3 text-sm font-medium transition-all duration-200 border-l-3 ${
+                                            isActive 
+                                              ? `${colorMode === 'dark' ? 'bg-blue-900/50 text-blue-300 border-l-blue-400' : 'bg-blue-50 text-blue-700 border-l-blue-500'} font-semibold`
+                                              : `${colorMode === 'dark' ? 'text-gray-300 border-l-transparent hover:bg-gray-700 hover:text-white' : 'text-gray-700 border-l-transparent hover:bg-gray-100 hover:text-gray-900'}`
+                                          }`
+                                        }
                                         onClick={() => {
                                           setActiveAccordionPopup(null);
                                           if (window.innerWidth <= 768) {
                                             setSidebarOpen(false);
                                           }
                                         }}
-                                      >
-                                        {LinkIconComponent && (
-                                          <span style={{ 
-                                            marginRight: '12px',
-                                            fontSize: '16px',
-                                            color: colorMode === 'dark' ? '#9ca3af' : '#6b7280',
-                                            display: 'flex',
-                                            alignItems: 'center'
-                                          }}>
-                                            <LinkIconComponent />
-                                          </span>
-                                        )}
-                                        {link.label}
-                                      </NavLink>
+                                                                              >
+                                          {({ isActive }) => (
+                                            <>
+                                              {LinkIconComponent && (
+                                                <span className={`mr-3 text-base flex items-center ${
+                                                  isActive 
+                                                    ? colorMode === 'dark' ? 'text-blue-300' : 'text-blue-600'
+                                                    : colorMode === 'dark' ? 'text-gray-400' : 'text-gray-500'
+                                                }`}>
+                                                  <LinkIconComponent />
+                                                </span>
+                                              )}
+                                              <span className="truncate">{link.label}</span>
+                                              {isActive && (
+                                                <span className={`ml-auto text-xs ${
+                                                  colorMode === 'dark' ? 'text-blue-300' : 'text-blue-600'
+                                                }`}>
+                                                  ●
+                                                </span>
+                                              )}
+                                            </>
+                                          )}
+                                        </NavLink>
                                     );
                                   })}
                                 </div>
