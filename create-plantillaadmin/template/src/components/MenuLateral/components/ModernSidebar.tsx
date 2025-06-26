@@ -18,6 +18,7 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
   const [searchQuery, setSearchQuery] = React.useState('');
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   const [activeAccordionPopup, setActiveAccordionPopup] = React.useState<string | null>(null);
+  const popupTimeoutRef = useRef<number | null>(null);
 
   // Cargar tema desde localStorage al montar
   useEffect(() => {
@@ -67,6 +68,15 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
     return () => document.removeEventListener('keydown', handleEscape);
   }, [setSidebarOpen]);
 
+  // Limpiar timeout al desmontar
+  useEffect(() => {
+    return () => {
+      if (popupTimeoutRef.current) {
+        clearTimeout(popupTimeoutRef.current);
+      }
+    };
+  }, []);
+
   // Filtrar menú por búsqueda
   const filteredMenu = React.useMemo(() => {
     if (!searchQuery) return menuConfig;
@@ -102,7 +112,7 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
 
   const isSectionExpanded = (itemId: string) => expandedSections.has(itemId);
 
-  // Simplificar la gestión del accordion
+  // Gestión mejorada del accordion con delays
   const handleAccordionInteraction = (itemId: string, hasLinks: boolean) => {
     if (sidebarOpen) {
       // Comportamiento normal cuando está expandido
@@ -115,6 +125,37 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
         setActiveAccordionPopup(activeAccordionPopup === itemId ? null : itemId);
       }
     }
+  };
+
+  const handleMouseEnterAccordion = (itemId: string, hasLinks: boolean) => {
+    if (!sidebarOpen && hasLinks) {
+      // Limpiar cualquier timeout pendiente
+      if (popupTimeoutRef.current) {
+        clearTimeout(popupTimeoutRef.current);
+      }
+      setActiveAccordionPopup(itemId);
+    }
+  };
+
+  const handleMouseLeaveAccordion = (itemId: string, hasLinks: boolean) => {
+    if (!sidebarOpen && hasLinks) {
+      // Delay antes de cerrar para permitir mover al popup
+      popupTimeoutRef.current = window.setTimeout(() => {
+        setActiveAccordionPopup(null);
+      }, 300);
+    }
+  };
+
+  const handleMouseEnterPopup = () => {
+    // Cancelar el cierre del popup
+    if (popupTimeoutRef.current) {
+      clearTimeout(popupTimeoutRef.current);
+    }
+  };
+
+  const handleMouseLeavePopup = () => {
+    // Cerrar inmediatamente al salir del popup
+    setActiveAccordionPopup(null);
   };
 
   return (
@@ -217,8 +258,8 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
                             {/* Botón del accordion */}
                                                           <button
                               onClick={() => handleAccordionInteraction(item.id, hasLinks || false)}
-                              onMouseEnter={() => !sidebarOpen && hasLinks && setActiveAccordionPopup(item.id)}
-                              onMouseLeave={() => !sidebarOpen && hasLinks && setActiveAccordionPopup(null)}
+                              onMouseEnter={() => handleMouseEnterAccordion(item.id, hasLinks || false)}
+                              onMouseLeave={() => handleMouseLeaveAccordion(item.id, hasLinks || false)}
                               className={`
                                 w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200
                                 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800
@@ -287,64 +328,133 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
                               </ul>
                             )}
 
-                            {/* Popup para sidebar colapsado - VERSIÓN SUPER VISIBLE */}
+                            {/* Popup para sidebar colapsado - DISEÑO ELEGANTE */}
                             {!sidebarOpen && hasLinks && isPopupOpen && (
                               <div 
                                 style={{
                                   position: 'fixed',
-                                  left: '90px',
-                                  top: '200px',
-                                  zIndex: 99999,
-                                  backgroundColor: 'red',
-                                  border: '3px solid black',
-                                  borderRadius: '8px',
-                                  padding: '20px',
-                                  minWidth: '300px',
-                                  maxHeight: '400px',
-                                  overflow: 'auto',
-                                  boxShadow: '0 0 20px rgba(0,0,0,0.8)'
+                                  left: '85px',
+                                  top: `${160 + (itemIndex * 48)}px`,
+                                  zIndex: 9999,
+                                  backgroundColor: colorMode === 'dark' ? '#1f2937' : '#ffffff',
+                                  border: `1px solid ${colorMode === 'dark' ? '#374151' : '#e5e7eb'}`,
+                                  borderRadius: '12px',
+                                  minWidth: '260px',
+                                  maxWidth: '320px',
+                                  boxShadow: colorMode === 'dark' 
+                                    ? '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 10px 20px -5px rgba(0, 0, 0, 0.4)'
+                                    : '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)',
+                                  overflow: 'hidden'
                                 }}
-                                onMouseEnter={() => setActiveAccordionPopup(item.id)}
-                                onMouseLeave={() => setActiveAccordionPopup(null)}
+                                onMouseEnter={handleMouseEnterPopup}
+                                onMouseLeave={handleMouseLeavePopup}
                               >
+                                {/* Header elegante */}
                                 <div style={{
-                                  color: 'white',
-                                  fontSize: '16px',
-                                  fontWeight: 'bold',
-                                  marginBottom: '15px',
-                                  textAlign: 'center'
+                                  padding: '16px 20px 12px',
+                                  backgroundColor: colorMode === 'dark' ? '#374151' : '#f8fafc',
+                                  borderBottom: `1px solid ${colorMode === 'dark' ? '#4b5563' : '#e2e8f0'}`,
+                                  display: 'flex',
+                                  alignItems: 'center'
                                 }}>
-                                  🚀 {item.label} - POPUP FUNCIONANDO! 🚀
+                                  {IconComponent && (
+                                    <span style={{ 
+                                      marginRight: '12px', 
+                                      color: colorMode === 'dark' ? '#60a5fa' : '#3b82f6',
+                                      fontSize: '18px',
+                                      display: 'flex',
+                                      alignItems: 'center'
+                                    }}>
+                                      <IconComponent />
+                                    </span>
+                                  )}
+                                  <span style={{
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    color: colorMode === 'dark' ? '#f9fafb' : '#1f2937'
+                                  }}>
+                                    {item.label}
+                                  </span>
                                 </div>
                                 
-                                {item.links?.map((link, linkIndex) => (
-                                  <div key={linkIndex} style={{
-                                    backgroundColor: 'white',
-                                    margin: '8px 0',
-                                    padding: '12px',
-                                    borderRadius: '6px',
-                                    border: '2px solid black'
-                                  }}>
-                                    <NavLink
-                                      to={link.to}
-                                      style={{
-                                        color: 'black',
-                                        fontSize: '14px',
-                                        fontWeight: 'bold',
-                                        textDecoration: 'none',
-                                        display: 'block'
-                                      }}
-                                      onClick={() => {
-                                        setActiveAccordionPopup(null);
-                                        if (window.innerWidth <= 768) {
-                                          setSidebarOpen(false);
-                                        }
-                                      }}
-                                    >
-                                      ▶️ {link.label}
-                                    </NavLink>
-                                  </div>
-                                ))}
+                                {/* Enlaces elegantes */}
+                                <div style={{ padding: '8px 0' }}>
+                                  {item.links?.map((link, linkIndex) => {
+                                    const LinkIconComponent = link.icon;
+                                    return (
+                                      <NavLink
+                                        key={linkIndex}
+                                        to={link.to}
+                                        style={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          padding: '12px 20px',
+                                          color: colorMode === 'dark' ? '#d1d5db' : '#374151',
+                                          textDecoration: 'none',
+                                          fontSize: '14px',
+                                          fontWeight: '500',
+                                          transition: 'all 0.2s ease',
+                                          borderLeft: '3px solid transparent'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          const target = e.currentTarget as HTMLElement;
+                                          target.style.backgroundColor = colorMode === 'dark' ? '#374151' : '#f1f5f9';
+                                          target.style.borderLeftColor = colorMode === 'dark' ? '#60a5fa' : '#3b82f6';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          const target = e.currentTarget as HTMLElement;
+                                          target.style.backgroundColor = 'transparent';
+                                          target.style.borderLeftColor = 'transparent';
+                                        }}
+                                        onClick={() => {
+                                          setActiveAccordionPopup(null);
+                                          if (window.innerWidth <= 768) {
+                                            setSidebarOpen(false);
+                                          }
+                                        }}
+                                      >
+                                        {LinkIconComponent && (
+                                          <span style={{ 
+                                            marginRight: '12px',
+                                            fontSize: '16px',
+                                            color: colorMode === 'dark' ? '#9ca3af' : '#6b7280',
+                                            display: 'flex',
+                                            alignItems: 'center'
+                                          }}>
+                                            <LinkIconComponent />
+                                          </span>
+                                        )}
+                                        {link.label}
+                                      </NavLink>
+                                    );
+                                  })}
+                                </div>
+
+                                {/* Flecha indicadora elegante */}
+                                <div 
+                                  style={{
+                                    position: 'absolute',
+                                    right: '100%',
+                                    top: '24px',
+                                    width: 0,
+                                    height: 0,
+                                    borderTop: '8px solid transparent',
+                                    borderBottom: '8px solid transparent',
+                                    borderRight: `8px solid ${colorMode === 'dark' ? '#1f2937' : '#ffffff'}`
+                                  }}
+                                />
+                                <div 
+                                  style={{
+                                    position: 'absolute',
+                                    right: '100%',
+                                    top: '25px',
+                                    width: 0,
+                                    height: 0,
+                                    borderTop: '7px solid transparent',
+                                    borderBottom: '7px solid transparent',
+                                    borderRight: `7px solid ${colorMode === 'dark' ? '#374151' : '#e5e7eb'}`
+                                  }}
+                                />
                               </div>
                             )}
 
