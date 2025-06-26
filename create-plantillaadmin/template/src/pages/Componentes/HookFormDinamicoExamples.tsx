@@ -24,7 +24,7 @@ import {
   FaCode, FaDatabase, FaKey, FaCloud, FaServer, FaCog, 
   FaPlay, FaStop, FaRedo, FaDownload, FaUpload,
   FaCheckCircle, FaExclamationTriangle, FaInfoCircle,
-  FaUser, FaBuilding, FaShoppingCart, FaCogs, FaMapMarkerAlt
+  FaUser, FaShoppingCart
 } from 'react-icons/fa'
 
 // ============================================================================

@@ -1,32 +1,19 @@
 import Tooltip from '../../UI/Tooltip';
 import { TextareaLabelProps } from './types';
-import { getLabelSizeClasses } from './utils';
 
 /**
- * Componente para renderizar el label del textarea con tooltip opcional y tamaños
+ * Componente para renderizar el label del textarea con tooltip opcional
  */
-export const TextareaLabel: React.FC<TextareaLabelProps> = ({ 
-  label, 
-  tooltipMessage, 
-  size = 'md',
-  required = false 
-}) => {
-  const sizeClasses = getLabelSizeClasses(size);
-  
+export const TextareaLabel: React.FC<TextareaLabelProps> = ({ label, tooltipMessage }) => {
   return (
-    <label className={`mb-2.5 block font-medium text-gray-900 dark:text-gray-100 ${sizeClasses}`}>
-      {label}
-      {required && (
-        <span className="text-red-500 ml-1">*</span>
-      )}
+    <div className="flex items-center gap-1 mb-2.5">
+      <label className="block text-black dark:text-white">{label}</label>
       {tooltipMessage && (
         <Tooltip message={tooltipMessage}>
-          <span className="text-blue-500 cursor-pointer text-sm hover:text-blue-600 transition-colors ml-2">
-            ⓘ
-          </span>
+          <span className="text-blue-500 cursor-pointer text-sm">ⓘ</span>
         </Tooltip>
       )}
-    </label>
+    </div>
   );
 };
 

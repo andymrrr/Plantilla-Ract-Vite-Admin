@@ -16,12 +16,17 @@ export interface FileFieldProps<T extends FieldValues> extends BaseFileProps<T> 
   multiple?: boolean;
   colSpan?: ColSpanType;
   className?: string;
+  enableDragDrop?: boolean;
+  dropAreaText?: string;
+  dropAreaHoverText?: string;
+  maxFileSize?: number;
+  showFileInfo?: boolean;
+  onFileSelect?: (files: FileList | null) => void;
 }
 
 export interface FileLabelProps {
   label: string | React.ReactNode;
   tooltipMessage?: string;
-  htmlFor?: string;
 }
 
 export interface FileFieldOnlyProps {
@@ -29,4 +34,16 @@ export interface FileFieldOnlyProps {
   accept?: string;
   multiple: boolean;
   registerProps: any;
+}
+
+export interface FileDropAreaProps {
+  name: string;
+  accept?: string;
+  multiple: boolean;
+  registerProps: any;
+  dropAreaText?: string;
+  dropAreaHoverText?: string;
+  maxFileSize?: number;
+  showFileInfo?: boolean;
+  onFileSelect?: (files: FileList | null) => void;
 } 

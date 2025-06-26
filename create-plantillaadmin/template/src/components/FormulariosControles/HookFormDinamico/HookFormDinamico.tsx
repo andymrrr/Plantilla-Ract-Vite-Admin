@@ -71,7 +71,6 @@ const HookFormDinamico: React.FC<HookFormDinamicoProps> = ({
       nombre: '',
       valor: configuracion.tipo === 'checkbox' ? 'false' : '',
       tipo: configuracion.tipo,
-      configuracion: configuracion, // Guardar la configuración completa
       ...(configuracion.tipo === 'checkbox' && { activo: false })
     };
 
@@ -96,6 +95,21 @@ const HookFormDinamico: React.FC<HookFormDinamicoProps> = ({
   const fieldArrayActivo = fieldArrays[pestañaActiva];
   const camposActuales = fieldArrayActivo?.fields || [];
 
+  // DEBUG: Agregar logs para debugging
+  useEffect(() => {
+    console.log('🔧 HookFormDinamico Debug:', {
+      pestañaActiva,
+      pestañas,
+      basePath,
+      fieldArrayKeys: Object.keys(fieldArrays),
+      fieldArrayActivo: !!fieldArrayActivo,
+      camposActuales: camposActuales.length,
+      camposData: camposActuales,
+      valoresWatch: watchedValues?.[basePath],
+      fieldArrayActivoName: fieldArrayActivo ? `${basePath}.${pestañaActiva}` : 'undefined'
+    });
+  }, [pestañaActiva, camposActuales.length, watchedValues]);
+
   return (
     <div className={`w-full ${className}`}>
       {/* Navegación de Pestañas */}
@@ -112,8 +126,7 @@ const HookFormDinamico: React.FC<HookFormDinamicoProps> = ({
         {camposActuales.length > 0 ? (
           <div className="space-y-4">
             {camposActuales.map((campo: CampoFormularioMejorado, index: number) => {
-              // Usar la configuración guardada en el campo, o buscar por tipo como fallback
-              const tipoConfigurado = campo.configuracion || tiposCamposPermitidos.find(config => config.tipo === campo.tipo);
+              const tipoConfigurado = tiposCamposPermitidos.find(config => config.tipo === campo.tipo);
               if (!tipoConfigurado) return null;
 
               return (

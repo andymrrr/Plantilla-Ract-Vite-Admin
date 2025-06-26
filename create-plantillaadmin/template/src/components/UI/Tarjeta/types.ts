@@ -1,63 +1,57 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
-// Tipos base
+export type TarjetaColor =
+  | 'gray' | 'blue' | 'red' | 'green' | 'yellow'
+  | 'purple' | 'orange' | 'pink' | 'indigo' | 'teal' | 'cyan';
+
 export type TarjetaVariante = 'defecto' | 'primario' | 'secundario';
-export type TarjetaTamano = 4 | 6 | 12;
-export type LineaGrosor = '1px' | '2px' | '4px';
-export type LineaColor = 'gray' | 'blue' | 'red' | 'green' | 'yellow';
 
-// Configuración de líneas
-export interface LineaConfig {
+export interface TarjetaLinea {
   mostrar?: boolean;
-  grosor?: LineaGrosor;
-  color?: LineaColor;
+  grosor?: '1px' | '2px' | '4px';
+  color?: TarjetaColor;
   className?: string;
 }
 
-// Props del componente principal Tarjeta
 export interface TarjetaProps {
-  children: React.ReactNode;
-  titulo?: string | React.ReactNode;
+  children: ReactNode;
+  titulo?: string | ReactNode;
   subtitulo?: string;
   claseHeader?: string;
   claseCuerpo?: string;
   claseFooter?: string;
-  piePagina?: React.ReactNode;
+  piePagina?: ReactNode;
   sinRelleno?: boolean;
   conBorde?: boolean;
   variante?: TarjetaVariante;
-  lineaHeader?: LineaConfig;
-  lineaFooter?: LineaConfig;
-  lineaDivisora?: LineaConfig;
-  tamano?: TarjetaTamano;
+  lineaHeader?: TarjetaLinea;
+  lineaFooter?: TarjetaLinea;
+  lineaDivisora?: TarjetaLinea;
+  tamano?: 4 | 6 | 12;
 }
 
-// Props para TarjetaHeader
 export interface TarjetaHeaderProps {
-  titulo?: string | React.ReactNode;
+  titulo?: string | ReactNode;
   subtitulo?: string;
-  className?: string;
-  lineaHeader?: LineaConfig;
+  claseHeader?: string;
+  lineaHeader?: TarjetaLinea;
 }
 
-// Props para TarjetaBody
 export interface TarjetaBodyProps {
-  children: React.ReactNode;
-  className?: string;
+  children: ReactNode;
+  claseCuerpo?: string;
   sinRelleno?: boolean;
-  lineaDivisora?: LineaConfig;
+  lineaDivisora?: TarjetaLinea;
 }
 
-// Props para TarjetaFooter
 export interface TarjetaFooterProps {
-  children: React.ReactNode;
-  className?: string;
-  lineaFooter?: LineaConfig;
+  piePagina?: ReactNode;
+  claseFooter?: string;
+  lineaFooter?: TarjetaLinea;
 }
 
-// Props para LineaDivisora
-export interface LineaDivisoraProps {
-  grosor?: LineaGrosor;
-  color?: LineaColor;
+export interface TarjetaDividerProps {
+  grosor?: '1px' | '2px' | '4px';
+  color?: TarjetaColor;
   className?: string;
 } 

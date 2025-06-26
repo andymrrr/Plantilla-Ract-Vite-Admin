@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { HookFormFile } from '../../components/FormulariosControles/HookFormFile'
+import HookFormFile from '../../components/FormulariosControles/HookFormFile'
 
 interface FormValues {
   [key: string]: FileList

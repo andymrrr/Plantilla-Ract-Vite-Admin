@@ -1,13 +1,13 @@
 import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { FieldRendererProps } from './types';
-import { HookFormInput } from '../HookFormInput';
-import { HookFormCheckbox } from '../HookFormCheckbox';
-import { HookFormTextarea } from '../HookFormTextTarea';
-import { HookFormSelect } from '../HookFormSelect';
+import HookFormInput from '../HookFormInput/HookFormInput';
+import HookFormCheckbox from '../HookFormCheckbox/HookFormCheckbox';
+import HookFormTextarea from '../HookFormTextTarea/HookFormTextarea';
+import { HookFormSelect as SelectFormHook } from '../HookFormSelect/HookFormSelect';
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
-  campo,
+  // campo,
   configuracion,
   index,
   basePath,
@@ -88,11 +88,6 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
         );
 
       case 'select':
-        const opcionesMapeadas = configuracion.opciones?.map(opcion => ({ 
-          value: opcion.valor, 
-          label: opcion.etiqueta 
-        })) || [];
-        
         return (
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-4">
@@ -107,14 +102,17 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
               />
             </div>
             <div className="col-span-6">
-              <HookFormSelect
+              <SelectFormHook
                 label="Valor"
                 name={valorFieldName}
-                options={opcionesMapeadas}
+                options={configuracion.opciones?.map(opcion => ({ 
+                  value: opcion.valor, 
+                  label: opcion.etiqueta 
+                })) || []}
                 register={register}
                 errors={errors}
                 selectedValue={watch(valorFieldName) || ''}
-                onChange={(valor: string | string[]) => setValue(valorFieldName, valor)}
+                onChange={(valor) => setValue(valorFieldName, valor)}
                 colSpan="12"
               />
             </div>

@@ -1,47 +1,20 @@
 import { InputFieldOnlyProps } from './types';
-import { getEnhancedInputClasses, getIconContainerClasses } from './utils';
+import { getInputClasses } from './utils';
 
 /**
- * Componente para renderizar el campo de input con estilos dinámicos e iconos
+ * Componente para renderizar el campo de input con estilos dinámicos
  */
 export const InputField: React.FC<InputFieldOnlyProps> = ({
   type,
   placeholder,
   disabled,
   hasError,
-  registerProps,
-  leftIcon,
-  rightIcon,
-  variant = 'default',
-  size = 'md',
-  color = 'blue'
+  registerProps
 }) => {
-  const hasLeftIcon = !!leftIcon;
-  const hasRightIcon = !!rightIcon;
-  
-  const inputClasses = getEnhancedInputClasses(
-    variant,
-    size,
-    color,
-    hasError,
-    disabled,
-    hasLeftIcon,
-    hasRightIcon
-  );
-
-  const leftIconClasses = getIconContainerClasses(size, 'left');
-  const rightIconClasses = getIconContainerClasses(size, 'right');
+  const inputClasses = getInputClasses(hasError, disabled);
 
   return (
     <div className="relative">
-      {/* Ícono izquierdo */}
-      {leftIcon && (
-        <div className={leftIconClasses}>
-          {leftIcon}
-        </div>
-      )}
-      
-      {/* Input field */}
       <input
         type={type}
         placeholder={placeholder}
@@ -49,13 +22,6 @@ export const InputField: React.FC<InputFieldOnlyProps> = ({
         className={inputClasses}
         {...registerProps}
       />
-      
-      {/* Ícono derecho */}
-      {rightIcon && (
-        <div className={rightIconClasses}>
-          {rightIcon}
-        </div>
-      )}
     </div>
   );
 };

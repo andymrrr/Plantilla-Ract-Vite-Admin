@@ -1,13 +1,10 @@
 import React from 'react';
 import { TarjetaProps } from './types';
-import { obtenerClasesVariante, obtenerClasesTamano } from './utils';
-import TarjetaHeader from './TarjetaHeader';
-import TarjetaBody from './TarjetaBody';
-import TarjetaFooter from './TarjetaFooter';
+import { combinarClases } from './utils';
+import TarjetaHeader from './components/TarjetaHeader';
+import TarjetaBody from './components/TarjetaBody';
+import TarjetaFooter from './components/TarjetaFooter';
 
-/**
- * Componente Tarjeta - Contenedor principal modular
- */
 const Tarjeta: React.FC<TarjetaProps> = ({
   children,
   titulo,
@@ -24,44 +21,58 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   lineaDivisora,
   tamano = 12,
 }) => {
-  const clasesTamano = obtenerClasesTamano(tamano);
-  const clasesVariante = obtenerClasesVariante(variante);
+  const obtenerClasesVariante = () => {
+    switch (variante) {
+      case 'primario':
+        return 'bg-primary border-primary text-white';
+      case 'secundario':
+        return 'bg-gray-2 border-gray-2 dark:bg-meta-4';
+      default:
+        return 'bg-white dark:bg-boxdark';
+    }
+  };
+  const obtenerClasesTamaño = (tam: 4 | 6 | 12) => {
+    switch (tam) {
+      case 4:
+        return 'col-span-12 md:col-span-6 xl:col-span-4';
+      case 6:
+        return 'col-span-12 md:col-span-6 xl:col-span-6';
+      case 12:
+        return 'col-span-12 md:col-span-12 xl:col-span-12';
+      default:
+        return 'col-span-12 md:col-span-6 xl:col-span-6';
+    }
+  };
+  const clasesTamano = obtenerClasesTamaño(tamano);
 
   return (
     <div
-      className={`
-        rounded-lg 
-        ${conBorde ? 'border-2 border-stroke dark:border-strokedark' : ''} 
-        ${clasesVariante}
-        shadow-default 
-        ${claseFooter}
-        ${clasesTamano} 
-      `}
+      className={combinarClases(
+        'rounded-lg shadow-default',
+        conBorde ? 'border-2 border-stroke dark:border-strokedark' : '',
+        obtenerClasesVariante(),
+        claseFooter,
+        clasesTamano
+      )}
     >
-      {/* Encabezado */}
       <TarjetaHeader
         titulo={titulo}
         subtitulo={subtitulo}
-        className={claseHeader}
+        claseHeader={claseHeader}
         lineaHeader={lineaHeader}
       />
-
-      {/* Cuerpo */}
       <TarjetaBody
-        className={claseCuerpo}
+        claseCuerpo={claseCuerpo}
         sinRelleno={sinRelleno}
         lineaDivisora={lineaDivisora}
       >
         {children}
       </TarjetaBody>
-
-      {/* Pie de página */}
       <TarjetaFooter
-        className=""
+        piePagina={piePagina}
+        claseFooter={claseFooter}
         lineaFooter={lineaFooter}
-      >
-        {piePagina}
-      </TarjetaFooter>
+      />
     </div>
   );
 };

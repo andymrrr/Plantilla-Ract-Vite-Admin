@@ -1,5 +1,4 @@
 import { ColSpanType, SelectVariant, SelectSize, SelectOption, SelectGroup } from './types';
-import React from 'react';
 
 /**
  * Mapeo de colSpan a clases CSS de Tailwind
@@ -24,53 +23,20 @@ export const getColSpanClass = (colSpan: ColSpanType): string => {
 };
 
 /**
- * Hook personalizado para detectar el tema oscuro
- */
-export const useDarkMode = () => {
-  const [isDarkMode, setIsDarkMode] = React.useState(() => {
-    if (typeof window !== 'undefined') {
-      return document.documentElement.classList.contains('dark');
-    }
-    return false;
-  });
-
-  React.useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          setIsDarkMode(document.documentElement.classList.contains('dark'));
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  return isDarkMode;
-};
-
-/**
  * Obtiene las clases CSS del contenedor según la variante
  */
 export const getContainerClasses = (variant: SelectVariant, hasError: boolean): string => {
-  const baseClasses = 'relative bg-white dark:bg-gray-800';
+  const baseClasses = 'relative bg-white dark:bg-form-input';
   
   switch (variant) {
     case 'basic':
       return `${baseClasses} ${hasError ? 'border-red-500' : ''}`;
     case 'modern':
-      return `${baseClasses} rounded-lg shadow-sm border ${hasError ? 'border-red-500' : 'border-gray-200 dark:border-gray-600'}`;
+      return `${baseClasses} rounded-lg shadow-sm border ${hasError ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'}`;
     case 'icon':
       return `${baseClasses} border rounded-md ${hasError ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`;
     case 'compact':
-      return `${baseClasses} border rounded ${hasError ? 'border-red-500' : 'border-gray-200 dark:border-gray-600'}`;
+      return `${baseClasses} border rounded ${hasError ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'}`;
     default:
       return baseClasses;
   }
@@ -119,170 +85,77 @@ export const getReactSelectStyles = (
   variant: SelectVariant, 
   size: SelectSize, 
   hasError: boolean,
-  hasIcon: boolean,
-  isDarkMode?: boolean
-) => {
-  // Si no se proporciona isDarkMode, detectarlo
-  const darkMode = isDarkMode ?? (typeof window !== 'undefined' && document.documentElement.classList.contains('dark'));
-  
-  return {
-    control: (provided: any, state: any) => {
-      const baseStyles = {
-        ...provided,
-        minHeight: getSizeHeight(size),
-        borderRadius: getVariantBorderRadius(variant),
-        borderColor: hasError 
-          ? '#ef4444' 
-          : state.isFocused 
-            ? '#3b82f6' 
-            : getVariantBorderColor(variant, darkMode),
-        boxShadow: state.isFocused 
-          ? getVariantFocusBoxShadow(variant) 
-          : 'none',
-        '&:hover': {
-          borderColor: hasError ? '#ef4444' : darkMode ? '#6b7280' : '#9ca3af',
-        },
-        paddingLeft: hasIcon ? getIconPaddingValue(size) : '12px',
-        backgroundColor: darkMode ? '#374151' : '#ffffff',
-        cursor: 'pointer',
-      };
-
-      return baseStyles;
-    },
-    
-    placeholder: (provided: any) => ({
+  hasIcon: boolean
+) => ({
+  control: (provided: any, state: any) => {
+    const baseStyles = {
       ...provided,
-      color: darkMode ? '#9ca3af' : '#6b7280',
-      fontSize: getSizeFontSize(size),
-    }),
-
-    singleValue: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#f9fafb' : '#111827',
-      fontSize: getSizeFontSize(size),
-    }),
-
-    multiValue: (provided: any) => ({
-      ...provided,
-      backgroundColor: darkMode ? '#4b5563' : '#e5e7eb',
-      borderRadius: '4px',
-    }),
-
-    multiValueLabel: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#f9fafb' : '#374151',
-      fontSize: getSizeFontSize(size),
-    }),
-
-    multiValueRemove: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#d1d5db' : '#6b7280',
-      '&:hover': {
-        backgroundColor: darkMode ? '#ef4444' : '#fca5a5',
-        color: darkMode ? '#ffffff' : '#991b1b',
-      },
-    }),
-
-    menu: (provided: any) => ({
-      ...provided,
-      backgroundColor: darkMode ? '#374151' : '#ffffff',
+      minHeight: getSizeHeight(size),
       borderRadius: getVariantBorderRadius(variant),
-      boxShadow: darkMode 
-        ? '0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.2)'
-        : '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
-      border: darkMode ? '1px solid #4b5563' : '1px solid #e5e7eb',
-      zIndex: 50,
-    }),
-
-    menuList: (provided: any) => ({
-      ...provided,
-      padding: '4px',
-    }),
-
-    option: (provided: any, state: any) => ({
-      ...provided,
-      backgroundColor: state.isSelected 
-        ? '#3b82f6' 
+      borderColor: hasError 
+        ? '#ef4444' 
         : state.isFocused 
-          ? darkMode ? '#4b5563' : '#eff6ff'
-          : 'transparent',
-      color: state.isSelected 
-        ? '#ffffff' 
-        : darkMode ? '#f9fafb' : '#111827',
-      fontSize: getSizeFontSize(size),
-      padding: getSizeOptionPadding(size),
-      cursor: 'pointer',
-      borderRadius: '4px',
-      margin: '2px 0',
-      '&:active': {
-        backgroundColor: state.isSelected ? '#2563eb' : darkMode ? '#6b7280' : '#dbeafe',
-      },
-    }),
-
-    input: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#f9fafb' : '#111827',
-      fontSize: getSizeFontSize(size),
-    }),
-
-    indicatorSeparator: (provided: any) => ({
-      ...provided,
-      backgroundColor: darkMode ? '#6b7280' : '#d1d5db',
-    }),
-
-    dropdownIndicator: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#9ca3af' : '#6b7280',
+          ? '#3b82f6' 
+          : getVariantBorderColor(variant),
+      boxShadow: state.isFocused 
+        ? getVariantFocusBoxShadow(variant) 
+        : 'none',
       '&:hover': {
-        color: darkMode ? '#d1d5db' : '#374151',
+        borderColor: hasError ? '#ef4444' : '#6b7280',
       },
-    }),
+      paddingLeft: hasIcon ? getIconPaddingValue(size) : '12px',
+    };
 
-    clearIndicator: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#9ca3af' : '#6b7280',
-      '&:hover': {
-        color: darkMode ? '#ef4444' : '#dc2626',
-      },
-    }),
+    return {
+      ...baseStyles,
+      backgroundColor: 'transparent',
+    };
+  },
+  
+  placeholder: (provided: any) => ({
+    ...provided,
+    color: '#9ca3af',
+    fontSize: getSizeFontSize(size),
+  }),
 
-    noOptionsMessage: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#9ca3af' : '#6b7280',
-      fontSize: getSizeFontSize(size),
-      padding: getSizeOptionPadding(size),
-    }),
+  singleValue: (provided: any) => ({
+    ...provided,
+    color: 'inherit',
+    fontSize: getSizeFontSize(size),
+  }),
 
-    loadingMessage: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#9ca3af' : '#6b7280',
-      fontSize: getSizeFontSize(size),
-      padding: getSizeOptionPadding(size),
-    }),
+  menu: (provided: any) => ({
+    ...provided,
+    borderRadius: getVariantBorderRadius(variant),
+    boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+    zIndex: 50,
+  }),
 
-    group: (provided: any) => ({
-      ...provided,
-      paddingTop: '8px',
-      paddingBottom: '8px',
-    }),
+  option: (provided: any, state: any) => ({
+    ...provided,
+    backgroundColor: state.isSelected 
+      ? '#3b82f6' 
+      : state.isFocused 
+        ? '#eff6ff' 
+        : 'transparent',
+    color: state.isSelected ? 'white' : 'inherit',
+    fontSize: getSizeFontSize(size),
+    padding: getSizeOptionPadding(size),
+  }),
 
-    groupHeading: (provided: any) => ({
-      ...provided,
-      color: darkMode ? '#d1d5db' : '#374151',
-      fontSize: '12px',
-      fontWeight: '600',
-      textTransform: 'uppercase',
-      letterSpacing: '0.05em',
-      padding: '8px 12px 4px 12px',
-      margin: '0',
-    }),
-  };
-};
+  multiValue: (provided: any) => ({
+    ...provided,
+    backgroundColor: '#e5e7eb',
+    borderRadius: '4px',
+  }),
 
-/**
- * Obtiene la altura mínima según el tamaño
- */
-export const getSizeHeight = (size: SelectSize): string => {
+  multiValueLabel: (provided: any) => ({
+    ...provided,
+    fontSize: getSizeFontSize(size),
+  }),
+});
+
+const getSizeHeight = (size: SelectSize): string => {
   switch (size) {
     case 'sm': return '32px';
     case 'md': return '40px';
@@ -291,10 +164,7 @@ export const getSizeHeight = (size: SelectSize): string => {
   }
 };
 
-/**
- * Obtiene el tamaño de fuente según el tamaño
- */
-export const getSizeFontSize = (size: SelectSize): string => {
+const getSizeFontSize = (size: SelectSize): string => {
   switch (size) {
     case 'sm': return '14px';
     case 'md': return '16px';
@@ -303,21 +173,15 @@ export const getSizeFontSize = (size: SelectSize): string => {
   }
 };
 
-/**
- * Obtiene el padding de las opciones según el tamaño
- */
-export const getSizeOptionPadding = (size: SelectSize): string => {
+const getSizeOptionPadding = (size: SelectSize): string => {
   switch (size) {
     case 'sm': return '6px 12px';
-    case 'md': return '8px 12px';
-    case 'lg': return '10px 16px';
-    default: return '8px 12px';
+    case 'md': return '8px 16px';
+    case 'lg': return '10px 20px';
+    default: return '8px 16px';
   }
 };
 
-/**
- * Obtiene el valor de padding para el icono según el tamaño
- */
 const getIconPaddingValue = (size: SelectSize): string => {
   switch (size) {
     case 'sm': return '32px';
@@ -327,42 +191,23 @@ const getIconPaddingValue = (size: SelectSize): string => {
   }
 };
 
-/**
- * Obtiene el border radius según la variante
- */
 const getVariantBorderRadius = (variant: SelectVariant): string => {
   switch (variant) {
     case 'modern': return '8px';
-    case 'icon': return '6px';
     case 'compact': return '4px';
-    default: return '4px';
+    default: return '6px';
   }
 };
 
-/**
- * Obtiene el color del borde según la variante y tema
- */
-const getVariantBorderColor = (variant: SelectVariant, isDarkMode: boolean): string => {
-  if (isDarkMode) {
-    switch (variant) {
-      case 'modern': return '#4b5563';
-      case 'icon': return '#6b7280';
-      case 'compact': return '#4b5563';
-      default: return '#6b7280';
-    }
-  } else {
-    switch (variant) {
-      case 'modern': return '#e5e7eb';
-      case 'icon': return '#d1d5db';
-      case 'compact': return '#e5e7eb';
-      default: return '#d1d5db';
-    }
+const getVariantBorderColor = (variant: SelectVariant): string => {
+  switch (variant) {
+    case 'modern': return '#e5e7eb';
+    case 'icon': return '#d1d5db';
+    case 'compact': return '#e5e7eb';
+    default: return '#d1d5db';
   }
 };
 
-/**
- * Obtiene la sombra de enfoque según la variante
- */
 const getVariantFocusBoxShadow = (variant: SelectVariant): string => {
   switch (variant) {
     case 'modern': return '0 0 0 3px rgb(59 130 246 / 0.1)';
@@ -396,43 +241,42 @@ export const defaultCustomFilter = (option: any, inputValue: string): boolean =>
 };
 
 /**
- * Encuentra una opción por valor
+ * Formatea opciones para react-select
  */
-export const findOptionByValue = (options: any[], value: string): any | null => {
-  return options.find(option => option.value === value) || null;
+export const formatOptionsForReactSelect = (options: SelectOption[]): SelectOption[] => {
+  return options.map(option => ({
+    value: option.value,
+    label: option.label,
+    isDisabled: option.isDisabled,
+    color: option.color,
+    description: option.description
+  }));
 };
 
 /**
- * Encuentra una opción en grupos por valor
+ * Formatea grupos para react-select
  */
-export const findOptionInGroups = (groups: any[], value: string): any | null => {
+export const formatGroupsForReactSelect = (groups: SelectGroup[]): SelectGroup[] => {
+  return groups.map(group => ({
+    label: group.label,
+    options: formatOptionsForReactSelect(group.options)
+  }));
+};
+
+/**
+ * Busca una opción por valor
+ */
+export const findOptionByValue = (options: SelectOption[], value: string): SelectOption | undefined => {
+  return options.find(option => option.value === value);
+};
+
+/**
+ * Busca una opción en grupos
+ */
+export const findOptionInGroups = (groups: SelectGroup[], value: string): SelectOption | undefined => {
   for (const group of groups) {
     const option = findOptionByValue(group.options, value);
     if (option) return option;
   }
-  return null;
-};
-
-/**
- * Formatea opciones para react-select
- */
-export const formatOptionsForReactSelect = (options: any[]) => {
-  return options.map((option) => ({
-    value: option.value,
-    label: option.label,
-    data: option,
-    color: option.color,
-    description: option.description,
-    disabled: option.disabled || false
-  }));
-};
-
-/**
- * Formatea grupos de opciones para react-select
- */
-export const formatGroupsForReactSelect = (groups: any[]) => {
-  return groups.map((group) => ({
-    label: group.label,
-    options: formatOptionsForReactSelect(group.options)
-  }));
+  return undefined;
 }; 

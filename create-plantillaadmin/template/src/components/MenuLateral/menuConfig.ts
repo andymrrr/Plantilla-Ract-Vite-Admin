@@ -142,6 +142,7 @@ export const menuConfig: MenuSection[] = [
         links: [
           { to: "/ui/alerts", label: "Alerts", icon: FaExclamationTriangle },
           { to: "/ui/buttons", label: "Buttons", icon: FaPlay },
+          { to: "/ui/tooltips", label: "Tooltips", icon: FaCode },
         ],
       },
       {

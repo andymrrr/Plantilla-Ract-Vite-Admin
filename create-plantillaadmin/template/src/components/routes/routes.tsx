@@ -5,7 +5,6 @@ import ECommerce from "../../pages/Dashboard/ECommerce";
 import FormElements from "../../pages/Form/FormElements";
 import FormLayout from "../../pages/Form/FormLayout";
 import FormStepByStep from "../../pages/Form/FormStepByStep";
-import DynamicFormExample from "../../pages/Form/DynamicFormExample";
 import FormularioCompleto from "../../pages/Form/FormularioCompleto";
 import Graficas from "../../pages/Graficas/Graficas";
 import Profile from "../../pages/Profile";
@@ -13,6 +12,7 @@ import Settings from "../../pages/Settings";
 import Tables from "../../pages/Tables";
 import Alerts from "../../pages/UiElements/Alerts";
 import Buttons from "../../pages/UiElements/Buttons";
+import TooltipExamples from "../../pages/UiElements/TooltipExamples";
 import ComponentesIndex from "../../pages/Componentes/ComponentesIndex";
 import HookFormCheckboxExamples from "../../pages/Componentes/HookFormCheckboxExamples";
 import HookFormInputExamples from "../../pages/Componentes/HookFormInputExamples";
@@ -58,11 +58,7 @@ export const routes: RouteConfig[] = [
     title: 'Formulario Step by Step | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <FormStepByStep />,
   },
-  {
-    path: '/forms/dynamic-form',
-    title: 'Formularios Dinámicos | TailAdmin - Tailwind CSS Admin Dashboard Template',
-    element: <DynamicFormExample />,
-  },
+
   {
     path: '/forms/formulario-completo',
     title: 'Formulario Completo - Todos los Componentes | TailAdmin - Tailwind CSS Admin Dashboard Template',
@@ -92,6 +88,11 @@ export const routes: RouteConfig[] = [
     path: '/ui/buttons',
     title: 'Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <Buttons />,
+  },
+  {
+    path: '/ui/tooltips',
+    title: 'Tooltips | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    element: <TooltipExamples />,
   },
   {
     path: '/auth/signin',

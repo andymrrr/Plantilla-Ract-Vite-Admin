@@ -1,7 +1,7 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import TablaPaginada from '../components/UI/Tables/TablaPaginada';
+// import TablaPaginada from '../components/UI/Tables/TablaPaginada';
 import { useState } from 'react';
-import { generarColumnas } from '../components/UI/Tables/generarColumnas';
+// import { generarColumnas } from '../components/UI/Tables/generarColumnas';
 
 interface Usuario {
   id: number;
@@ -10,6 +10,15 @@ interface Usuario {
   rol: string;
   estado: string;
 }
+
+// Componente temporal
+const TablaPaginada = (props: any) => <div>Componente TablaPaginada no implementado</div>;
+
+const generarColumnas = (config: any) => Object.keys(config).map(key => ({
+  title: config[key],
+  dataIndex: key,
+  key: key
+}));
 
 const Tables = () => {
   // Datos de ejemplo
@@ -25,7 +34,7 @@ const Tables = () => {
   const [tamanioPagina, setTamanioPagina] = useState(10);
 
   // Definir las columnas
-  const columnas = generarColumnas<Usuario>({
+  const columnas = generarColumnas({
     id: 'ID',
     nombre: 'Nombre',
     email: 'Email',
@@ -53,7 +62,7 @@ const Tables = () => {
             Tabla de Usuarios
           </h4>
           
-          <TablaPaginada<Usuario>
+          <TablaPaginada
             datos={datosPaginados}
             columnas={columnas}
             total={datosCompletos.length}

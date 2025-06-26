@@ -4,10 +4,6 @@ import { ConfiguracionCampoHook, FormularioTabData } from './types';
  * Configuraciones predefinidas para diferentes casos de uso de HookFormDinamico
  */
 
-// =============================================================================
-// CONFIGURACIONES DE CAMPOS COMUNES
-// =============================================================================
-
 /**
  * Configuración básica para campos de texto clave-valor
  */
@@ -45,10 +41,6 @@ export const CAMPO_CONFIGURACION_GENERAL: ConfiguracionCampoHook = {
     required: false,
     minLength: { value: 1, message: 'Mínimo 1 caracter' }
 };
-
-// =============================================================================
-// PLANTILLAS PREDEFINIDAS PARA APIS
-// =============================================================================
 
 /**
  * Plantilla para APIs REST estándar
@@ -119,10 +111,6 @@ export const PLANTILLA_DATABASE_CONFIG: FormularioTabData = {
     ]
 };
 
-// =============================================================================
-// CONJUNTOS DE CONFIGURACIONES POR CONTEXTO
-// =============================================================================
-
 /**
  * Configuraciones para formularios de API
  */
@@ -177,10 +165,6 @@ export const CONFIGURACIONES_CLAVE_VALOR = {
         minCampos: 1
     }
 } as const;
-
-// =============================================================================
-// FACTORY FUNCTIONS - FUNCIONES DE CREACIÓN
-// =============================================================================
 
 /**
  * Crea una configuración personalizada para HookFormDinamico

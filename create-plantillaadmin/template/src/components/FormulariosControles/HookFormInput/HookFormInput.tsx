@@ -18,14 +18,7 @@ const HookFormInput = <T extends FieldValues>({
   pattern,
   minLength,
   maxLength,
-  colSpan = '6',
-  leftIcon,
-  rightIcon,
-  variant = 'default',
-  size = 'md',
-  color = 'blue',
-  description,
-  helperText
+  colSpan = '6'
 }: InputFieldProps<T>) => {
   // Construir opciones de validación para react-hook-form
   const registerOptions = buildRegisterOptions({ required, pattern, minLength, maxLength });
@@ -39,16 +32,11 @@ const HookFormInput = <T extends FieldValues>({
   // Props para el registro del campo
   const registerProps = register(name, registerOptions);
 
-  // Determinar si el campo es requerido
-  const isRequired = !!required;
-
   return (
     <div className={colSpanClass}>
       <InputLabel 
         label={label} 
-        tooltipMessage={tooltipMessage}
-        size={size}
-        required={isRequired}
+        tooltipMessage={tooltipMessage} 
       />
       
       <InputField
@@ -57,19 +45,7 @@ const HookFormInput = <T extends FieldValues>({
         disabled={disabled}
         hasError={hasError}
         registerProps={registerProps}
-        leftIcon={leftIcon}
-        rightIcon={rightIcon}
-        variant={variant}
-        size={size}
-        color={color}
       />
-      
-      {/* Descripción o texto de ayuda */}
-      {(description || helperText) && !hasError && (
-        <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400">
-          {description || helperText}
-        </p>
-      )}
       
       <ErrorMessage 
         name={name} 
