@@ -277,7 +277,6 @@ export default function FormularioCompleto() {
               name="nombre"
               register={register}
               errors={errors}
-              leftIcon={<FaUser />}
               placeholder="Tu nombre"
               variant="modern"
               color="blue"

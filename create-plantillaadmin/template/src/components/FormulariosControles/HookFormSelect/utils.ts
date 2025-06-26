@@ -1,8 +1,6 @@
-import { ColSpanType, SelectVariant, SelectSize, SelectOption, SelectGroup } from './types';
+import { ColSpanType, SelectVariant, SelectSize, SelectColor, SelectOption, SelectGroup, SelectValidationProps } from './types';
 
-/**
- * Mapeo de colSpan a clases CSS de Tailwind
- */
+
 export const getColSpanClass = (colSpan: ColSpanType): string => {
   const colSpanClassMap: Record<ColSpanType, string> = {
     '1': 'col-span-1',
@@ -23,249 +21,290 @@ export const getColSpanClass = (colSpan: ColSpanType): string => {
 };
 
 /**
- * Obtiene las clases CSS del contenedor según la variante
+ * Construye las opciones de registro para react-hook-form
  */
-export const getContainerClasses = (variant: SelectVariant, hasError: boolean): string => {
-  const baseClasses = 'relative bg-white dark:bg-form-input';
-  const errorBorder = hasError ? 'border-red-500 ring-red-500' : '';
+export const buildRegisterOptions = (validations: SelectValidationProps) => {
+  const { required, pattern, validate } = validations;
   
-  switch (variant) {
-    case 'basic':
-      return `${baseClasses} ${errorBorder}`;
-    
-    case 'modern':
-      return `${baseClasses} rounded-lg shadow-sm border-2 transition-all duration-200 ${
-        hasError 
-          ? 'border-red-500 ring-2 ring-red-500/20' 
-          : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20'
-      }`;
-    
-    case 'outlined':
-      return `${baseClasses} border-2 rounded-md transition-colors ${
-        hasError 
-          ? 'border-red-500' 
-          : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 focus-within:border-blue-500'
-      }`;
-    
-    case 'filled':
-      return `${baseClasses} rounded-lg transition-colors ${
-        hasError 
-          ? 'bg-red-50 dark:bg-red-900/20 border border-red-500' 
-          : 'bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'
-      }`;
-    
-    case 'minimal':
-      return `${baseClasses} border-b-2 transition-colors ${
-        hasError 
-          ? 'border-red-500' 
-          : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 focus-within:border-blue-500'
-      }`;
-    
-    default:
-      return baseClasses;
-  }
+  return {
+    ...(required && { required: typeof required === 'string' ? required : 'Este campo es requerido' }),
+    ...(pattern && { pattern }),
+    ...(validate && { validate }),
+  };
 };
 
 /**
- * Obtiene las clases CSS del select según la variante, tamaño y estado
+ * Obtiene las clases CSS para el tamaño del select
  */
-export const getSelectClasses = (
-  variant: SelectVariant, 
-  size: SelectSize, 
-  hasError: boolean,
-  hasIcon: boolean,
-  hasClearButton: boolean,
-  isSelected: boolean
-): string => {
-  const baseClasses = 'w-full appearance-none bg-transparent outline-none transition-colors';
-  
-  // Clases de tamaño
-  const sizeClasses = getSizeClasses(size);
-  
-  // Clases de padding
-  const paddingClasses = getPaddingClasses(size, hasIcon, hasClearButton);
-  
-  // Clases de variante
-  const variantClasses = getSelectVariantClasses(variant);
-  
-  // Clases de estado
-  const stateClasses = getSelectStateClasses(hasError, isSelected);
-  
-  return `${baseClasses} ${sizeClasses} ${paddingClasses} ${variantClasses} ${stateClasses}`;
+export const getSelectSizeClasses = (size: SelectSize): string => {
+  const sizeClasses = {
+    sm: 'py-2 px-3 text-sm',
+    md: 'py-3 px-4 text-base',
+    lg: 'py-4 px-5 text-lg'
+  };
+  return sizeClasses[size];
 };
 
 /**
- * Obtiene las clases de tamaño para el select
+ * Obtiene las clases CSS para el color del select
  */
-const getSizeClasses = (size: SelectSize): string => {
-  switch (size) {
-    case 'sm':
-      return 'text-sm';
-    case 'md':
-      return 'text-base';
-    case 'lg':
-      return 'text-lg';
-    default:
-      return 'text-base';
-  }
-};
-
-/**
- * Obtiene las clases de padding según el tamaño y elementos adicionales
- */
-const getPaddingClasses = (size: SelectSize, hasIcon: boolean, hasClearButton: boolean): string => {
-  const basePadding = {
-    'sm': 'py-2',
-    'md': 'py-3',
-    'lg': 'py-4'
-  }[size];
-
-  const leftPadding = hasIcon ? {
-    'sm': 'pl-8',
-    'md': 'pl-10',
-    'lg': 'pl-12'
-  }[size] : {
-    'sm': 'pl-3',
-    'md': 'pl-4',
-    'lg': 'pl-5'
-  }[size];
-
-  const rightPadding = hasClearButton ? {
-    'sm': 'pr-16',
-    'md': 'pr-20',
-    'lg': 'pr-24'
-  }[size] : {
-    'sm': 'pr-8',
-    'md': 'pr-10',
-    'lg': 'pr-12'
-  }[size];
-
-  return `${basePadding} ${leftPadding} ${rightPadding}`;
-};
-
-/**
- * Obtiene las clases específicas de la variante
- */
-const getSelectVariantClasses = (variant: SelectVariant): string => {
-  switch (variant) {
-    case 'modern':
-      return 'rounded-lg';
-    case 'outlined':
-      return 'rounded-md';
-    case 'filled':
-      return 'rounded-lg';
-    case 'minimal':
-      return 'rounded-none';
-    default:
-      return 'rounded border';
-  }
-};
-
-/**
- * Obtiene las clases de estado
- */
-const getSelectStateClasses = (hasError: boolean, isSelected: boolean): string => {
+export const getSelectColorClasses = (color: SelectColor, hasError: boolean): string => {
   if (hasError) {
-    return 'text-red-700 dark:text-red-300';
+    return 'border-red-500 focus:border-red-500 focus:ring-red-500/20';
+  }
+
+  const colorClasses = {
+    blue: 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500/20',
+    green: 'border-gray-300 dark:border-gray-600 focus:border-green-500 focus:ring-green-500/20',
+    purple: 'border-gray-300 dark:border-gray-600 focus:border-purple-500 focus:ring-purple-500/20',
+    red: 'border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20',
+    yellow: 'border-gray-300 dark:border-gray-600 focus:border-yellow-500 focus:ring-yellow-500/20',
+    indigo: 'border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-500/20',
+    pink: 'border-gray-300 dark:border-gray-600 focus:border-pink-500 focus:ring-pink-500/20',
+    gray: 'border-gray-300 dark:border-gray-600 focus:border-gray-500 focus:ring-gray-500/20'
+  };
+  return colorClasses[color];
+};
+
+/**
+ * Obtiene las clases CSS para la variante del select
+ */
+export const getSelectVariantClasses = (variant: SelectVariant): string => {
+  const variantClasses = {
+    default: 'border-[1.5px] rounded-lg bg-white dark:bg-gray-800',
+    modern: 'border-2 rounded-xl bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow',
+    outlined: 'border-2 rounded-lg bg-transparent',
+    filled: 'border-0 rounded-lg bg-gray-100 dark:bg-gray-800',
+    minimal: 'border-0 border-b-2 rounded-none bg-transparent',
+    floating: 'border-[1.5px] rounded-lg bg-white dark:bg-gray-800 relative'
+  };
+  return variantClasses[variant];
+};
+
+/**
+ * Obtiene las clases CSS para el contenedor de iconos
+ */
+export const getIconContainerClasses = (size: SelectSize, position: 'left' | 'right'): string => {
+  const sizeClasses = {
+    sm: 'w-8 h-8',
+    md: 'w-10 h-10',
+    lg: 'w-12 h-12'
+  };
+  
+  const positionClasses = position === 'left' ? 'left-0 pl-3' : 'right-0 pr-3';
+  
+  return `absolute top-1/2 transform -translate-y-1/2 ${positionClasses} ${sizeClasses[size]} flex items-center justify-center text-gray-400 dark:text-gray-500 pointer-events-none z-10`;
+};
+
+/**
+ * Obtiene las clases CSS para el select con iconos
+ */
+export const getSelectWithIconClasses = (hasLeftIcon: boolean, hasRightIcon: boolean, size: SelectSize): string => {
+  const paddingClasses = {
+    sm: {
+      left: hasLeftIcon ? 'pl-10' : 'pl-3',
+      right: hasRightIcon ? 'pr-10' : 'pr-8'
+    },
+    md: {
+      left: hasLeftIcon ? 'pl-12' : 'pl-4',
+      right: hasRightIcon ? 'pr-12' : 'pr-10'
+    },
+    lg: {
+      left: hasLeftIcon ? 'pl-14' : 'pl-5',
+      right: hasRightIcon ? 'pr-14' : 'pr-12'
+    }
+  };
+  
+  return `${paddingClasses[size].left} ${paddingClasses[size].right}`;
+};
+
+/**
+ * Obtiene las clases CSS para el label según el tamaño
+ */
+export const getLabelSizeClasses = (size: SelectSize): string => {
+  const sizeClasses = {
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg'
+  };
+  return sizeClasses[size];
+};
+
+/**
+ * Obtiene las clases CSS para las tags de selección múltiple
+ */
+export const getMultiSelectTagClasses = (color: SelectColor, size: SelectSize): string => {
+  const baseClasses = 'inline-flex items-center gap-1 rounded-full font-medium transition-colors';
+  
+  const sizeClasses = {
+    sm: 'px-2 py-1 text-xs',
+    md: 'px-3 py-1 text-sm',
+    lg: 'px-4 py-2 text-base'
+  };
+  
+  const colorClasses = {
+    blue: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+    green: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+    purple: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+    red: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+    yellow: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+    indigo: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
+    pink: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
+    gray: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+  };
+  
+  return `${baseClasses} ${sizeClasses[size]} ${colorClasses[color]}`;
+};
+
+/**
+ * Obtiene las clases CSS para las opciones del dropdown
+ */
+export const getOptionClasses = (
+  isSelected: boolean,
+  isHighlighted: boolean,
+  color: SelectColor,
+  size: SelectSize,
+  disabled?: boolean
+): string => {
+  const baseClasses = 'flex items-center gap-3 cursor-pointer transition-colors';
+  
+  const sizeClasses = {
+    sm: 'px-3 py-2 text-sm',
+    md: 'px-4 py-3 text-base',
+    lg: 'px-5 py-4 text-lg'
+  };
+  
+  if (disabled) {
+    return `${baseClasses} ${sizeClasses[size]} text-gray-400 cursor-not-allowed opacity-50`;
   }
   
   if (isSelected) {
-    return 'text-gray-900 dark:text-white';
+    const selectedColorClasses = {
+      blue: 'bg-blue-50 text-blue-900 dark:bg-blue-900/50 dark:text-blue-100',
+      green: 'bg-green-50 text-green-900 dark:bg-green-900/50 dark:text-green-100',
+      purple: 'bg-purple-50 text-purple-900 dark:bg-purple-900/50 dark:text-purple-100',
+      red: 'bg-red-50 text-red-900 dark:bg-red-900/50 dark:text-red-100',
+      yellow: 'bg-yellow-50 text-yellow-900 dark:bg-yellow-900/50 dark:text-yellow-100',
+      indigo: 'bg-indigo-50 text-indigo-900 dark:bg-indigo-900/50 dark:text-indigo-100',
+      pink: 'bg-pink-50 text-pink-900 dark:bg-pink-900/50 dark:text-pink-100',
+      gray: 'bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-gray-100'
+    };
+    return `${baseClasses} ${sizeClasses[size]} ${selectedColorClasses[color]}`;
   }
   
-  return 'text-gray-500 dark:text-gray-400';
-};
-
-/**
- * Obtiene las clases CSS del icono según el tamaño
- */
-export const getIconClasses = (size: SelectSize, variant: SelectVariant): string => {
-  const baseClasses = 'absolute top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none z-10';
+  if (isHighlighted) {
+    return `${baseClasses} ${sizeClasses[size]} bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-100`;
+  }
   
-  const sizeClasses = {
-    'sm': 'left-2 text-sm',
-    'md': 'left-3 text-base',
-    'lg': 'left-4 text-lg'
-  }[size];
-
-  return `${baseClasses} ${sizeClasses}`;
+  return `${baseClasses} ${sizeClasses[size]} text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700`;
 };
 
 /**
- * Obtiene las clases CSS del icono dropdown según el tamaño
+ * Obtiene las clases CSS para el dropdown
  */
-export const getDropdownIconClasses = (size: SelectSize): string => {
-  const baseClasses = 'absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none z-10 transition-transform';
+export const getDropdownClasses = (variant: SelectVariant, maxHeight?: number): string => {
+  const baseClasses = 'absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg overflow-auto';
   
-  const sizeClasses = {
-    'sm': 'right-2 text-sm',
-    'md': 'right-3 text-base',
-    'lg': 'right-4 text-lg'
-  }[size];
-
-  return `${baseClasses} ${sizeClasses}`;
-};
-
-/**
- * Obtiene las clases CSS del botón clear según el tamaño
- */
-export const getClearButtonClasses = (size: SelectSize): string => {
-  const baseClasses = 'absolute top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 cursor-pointer z-20 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-700';
+  const variantClasses = {
+    default: 'rounded-lg',
+    modern: 'rounded-xl shadow-xl',
+    outlined: 'rounded-lg',
+    filled: 'rounded-lg',
+    minimal: 'rounded-lg',
+    floating: 'rounded-lg shadow-2xl'
+  };
   
-  const sizeClasses = {
-    'sm': 'right-6 p-1 text-xs',
-    'md': 'right-8 p-1.5 text-sm',
-    'lg': 'right-10 p-2 text-base'
-  }[size];
-
-  return `${baseClasses} ${sizeClasses}`;
-};
-
-/**
- * Obtiene las clases CSS del spinner de carga
- */
-export const getLoadingSpinnerClasses = (size: SelectSize): string => {
-  const baseClasses = 'absolute top-1/2 right-3 -translate-y-1/2 animate-spin text-blue-500 z-10';
+  const heightClass = maxHeight ? `max-h-[${maxHeight}px]` : 'max-h-60';
   
-  const sizeClasses = {
-    'sm': 'right-2 w-4 h-4',
-    'md': 'right-3 w-5 h-5',
-    'lg': 'right-4 w-6 h-6'
-  }[size];
-
-  return `${baseClasses} ${sizeClasses}`;
+  return `${baseClasses} ${variantClasses[variant]} ${heightClass}`;
 };
 
 /**
- * Formatea opciones básicas para el select nativo
+ * Genera las clases CSS completas para el select mejorado
  */
-export const formatOptionsForSelect = (options: SelectOption[]): SelectOption[] => {
-  return options.map(option => ({
-    ...option,
-    disabled: option.disabled || false
-  }));
+export const getEnhancedSelectClasses = (
+  variant: SelectVariant,
+  size: SelectSize,
+  color: SelectColor,
+  hasError: boolean,
+  disabled: boolean,
+  hasLeftIcon: boolean,
+  hasRightIcon: boolean,
+  isOpen: boolean
+): string => {
+  const baseClasses = 'w-full font-medium outline-none transition-all duration-200 focus:ring-2 cursor-pointer';
+  const variantClasses = getSelectVariantClasses(variant);
+  const sizeClasses = getSelectSizeClasses(size);
+  const colorClasses = getSelectColorClasses(color, hasError);
+  const iconClasses = getSelectWithIconClasses(hasLeftIcon, hasRightIcon, size);
+  const disabledClasses = disabled ? 'cursor-not-allowed opacity-60' : '';
+  const openClasses = isOpen ? 'ring-2' : '';
+
+  return `${baseClasses} ${variantClasses} ${sizeClasses} ${colorClasses} ${iconClasses} ${disabledClasses} ${openClasses}`.trim();
 };
 
 /**
- * Formatea grupos de opciones
+ * Utilidades para manejo de selección múltiple
  */
-export const formatGroupsForSelect = (groups: SelectGroup[]) => {
+export const isValueSelected = (value: string, selectedValue: string | string[]): boolean => {
+  if (Array.isArray(selectedValue)) {
+    return selectedValue.includes(value);
+  }
+  return selectedValue === value;
+};
+
+export const toggleMultipleValue = (value: string, selectedValues: string[]): string[] => {
+  if (selectedValues.includes(value)) {
+    return selectedValues.filter(v => v !== value);
+  }
+  return [...selectedValues, value];
+};
+
+export const selectAllValues = (options: SelectOption[]): string[] => {
+  return options.filter(option => !option.disabled).map(option => option.value);
+};
+
+export const isAllSelected = (options: SelectOption[], selectedValues: string[]): boolean => {
+  const availableValues = options.filter(option => !option.disabled).map(option => option.value);
+  return availableValues.every(value => selectedValues.includes(value));
+};
+
+export const isIndeterminate = (options: SelectOption[], selectedValues: string[]): boolean => {
+  const availableValues = options.filter(option => !option.disabled).map(option => option.value);
+  const selectedCount = availableValues.filter(value => selectedValues.includes(value)).length;
+  return selectedCount > 0 && selectedCount < availableValues.length;
+};
+
+/**
+ * Utilidades para búsqueda y filtrado
+ */
+export const filterOptions = (options: SelectOption[], searchText: string): SelectOption[] => {
+  if (!searchText.trim()) return options;
+  
+  const searchLower = searchText.toLowerCase();
+  return options.filter(option => 
+    option.label.toLowerCase().includes(searchLower) ||
+    option.value.toLowerCase().includes(searchLower) ||
+    option.description?.toLowerCase().includes(searchLower)
+  );
+};
+
+export const filterGroups = (groups: SelectGroup[], searchText: string): SelectGroup[] => {
+  if (!searchText.trim()) return groups;
+  
   return groups.map(group => ({
     ...group,
-    options: formatOptionsForSelect(group.options)
-  }));
+    options: filterOptions(group.options, searchText)
+  })).filter(group => group.options.length > 0);
 };
 
 /**
- * Encuentra una opción por valor
+ * Utilidades para encontrar opciones
  */
 export const findOptionByValue = (options: SelectOption[], value: string): SelectOption | null => {
   return options.find(option => option.value === value) || null;
 };
 
-/**
- * Encuentra una opción en grupos por valor
- */
 export const findOptionInGroups = (groups: SelectGroup[], value: string): SelectOption | null => {
   for (const group of groups) {
     const option = findOptionByValue(group.options, value);
@@ -275,31 +314,94 @@ export const findOptionInGroups = (groups: SelectGroup[], value: string): Select
 };
 
 /**
- * Filtra opciones por texto de búsqueda
+ * Utilidades para formateo de texto
  */
-export const filterOptions = (options: SelectOption[], searchText: string): SelectOption[] => {
-  if (!searchText) return options;
+export const formatSelectedText = (
+  selectedValues: string[],
+  options: SelectOption[],
+  maxDisplay: number = 3
+): string => {
+  if (selectedValues.length === 0) return '';
   
-  const searchLower = searchText.toLowerCase();
-  return options.filter(option => 
-    option.label.toLowerCase().includes(searchLower) ||
-    option.value.toLowerCase().includes(searchLower) ||
-    (option.description && option.description.toLowerCase().includes(searchLower))
-  );
+  if (selectedValues.length <= maxDisplay) {
+    return selectedValues
+      .map(value => findOptionByValue(options, value)?.label || value)
+      .join(', ');
+  }
+  
+  const displayValues = selectedValues.slice(0, maxDisplay);
+  const displayText = displayValues
+    .map(value => findOptionByValue(options, value)?.label || value)
+    .join(', ');
+  
+  return `${displayText} +${selectedValues.length - maxDisplay} más`;
 };
 
 /**
- * Obtiene el height según el tamaño
+ * Utilidades legacy (mantenidas para compatibilidad)
  */
+export const getContainerClasses = (variant: SelectVariant, hasError: boolean): string => {
+  return getSelectVariantClasses(variant);
+};
+
+export const getSelectClasses = (
+  variant: SelectVariant, 
+  size: SelectSize, 
+  hasError: boolean,
+  hasIcon: boolean,
+  hasClearButton: boolean,
+  isSelected: boolean
+): string => {
+  return getEnhancedSelectClasses(variant, size, 'blue', hasError, false, hasIcon, hasClearButton, false);
+};
+
+export const getIconClasses = (size: SelectSize, variant: SelectVariant): string => {
+  return getIconContainerClasses(size, 'left');
+};
+
+export const getDropdownIconClasses = (size: SelectSize): string => {
+  return getIconContainerClasses(size, 'right');
+};
+
+export const getClearButtonClasses = (size: SelectSize): string => {
+  const sizeClasses = {
+    sm: 'right-8 w-4 h-4',
+    md: 'right-10 w-5 h-5',
+    lg: 'right-12 w-6 h-6'
+  };
+  
+  return `absolute top-1/2 -translate-y-1/2 ${sizeClasses[size]} text-gray-400 hover:text-gray-600 cursor-pointer z-20`;
+};
+
+export const getLoadingSpinnerClasses = (size: SelectSize): string => {
+  const sizeClasses = {
+    sm: 'w-4 h-4',
+    md: 'w-5 h-5',
+    lg: 'w-6 h-6'
+  };
+  
+  return `animate-spin ${sizeClasses[size]} text-gray-400`;
+};
+
+export const formatOptionsForSelect = (options: SelectOption[]): SelectOption[] => {
+  return options.map(option => ({
+    ...option,
+    label: option.label || option.value,
+  }));
+};
+
+export const formatGroupsForSelect = (groups: SelectGroup[]) => {
+  return groups.map(group => ({
+    ...group,
+    options: formatOptionsForSelect(group.options)
+  }));
+};
+
 export const getSelectHeight = (size: SelectSize): string => {
-  switch (size) {
-    case 'sm':
-      return 'h-8';
-    case 'md':
-      return 'h-10';
-    case 'lg':
-      return 'h-12';
-    default:
-      return 'h-10';
-  }
+  const heights = {
+    sm: 'h-8',
+    md: 'h-10',
+    lg: 'h-12'
+  };
+  return heights[size];
 }; 

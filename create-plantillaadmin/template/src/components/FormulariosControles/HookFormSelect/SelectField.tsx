@@ -1,77 +1,102 @@
-import React, { useState } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
+import React, { useState, useRef, useEffect } from 'react';
+import { FiChevronDown, FiX } from 'react-icons/fi';
 import { SelectFieldProps } from './types';
 import { 
-  getContainerClasses, 
-  getSelectClasses,
-  getIconClasses,
-  getDropdownIconClasses
+  getEnhancedSelectClasses,
+  getIconContainerClasses,
+  isValueSelected,
+  toggleMultipleValue,
+  formatSelectedText
 } from './utils';
 import LoadingSpinner from './LoadingSpinner';
-import ClearButton from './ClearButton';
 
-/**
- * Componente avanzado para renderizar el campo select con múltiples variantes
- */
 export const SelectField: React.FC<SelectFieldProps> = ({
   name,
   options = [],
   groups,
-  selectedValue = '',
+  multiple = false,
+  selectedValue = multiple ? [] : '',
   onChange,
   placeholder = "Selecciona una opción...",
-  icon,
-  variant = 'basic',
+  leftIcon,
+  rightIcon,
+  variant = 'default',
   size = 'md',
+  color = 'blue',
   disabled = false,
   loading = false,
   clearable = false,
   emptyMessage = "No hay opciones disponibles",
   loadingMessage = "Cargando...",
   hasError = false,
-  registerProps
+  maxSelectedDisplay = 3
 }) => {
-  const [isSelected, setIsSelected] = useState(!!selectedValue);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Manejar cambio de valor
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    if (registerProps && registerProps.onChange) {
-      registerProps.onChange(event); // Mantener RHF funcionando
-    }
-    if (onChange) {
-      onChange(value);
-    }
-    setIsSelected(!!value);
+  // Cerrar dropdown al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Manejar cambio de valor para selección simple
+  const handleSingleChange = (value: string) => {
+    onChange(value);
+    setIsOpen(false);
+  };
+
+  // Manejar cambio de valor para selección múltiple
+  const handleMultipleChange = (value: string) => {
+    const currentValues = Array.isArray(selectedValue) ? selectedValue : [];
+    const newValues = toggleMultipleValue(value, currentValues);
+    onChange(newValues);
   };
 
   // Manejar limpiar selección
-  const handleClear = () => {
-    if (onChange) onChange('');
-    setIsSelected(false);
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onChange(multiple ? [] : '');
   };
 
-  // Clases CSS
-  const containerClasses = getContainerClasses(variant, hasError);
-  const hasClearButton = clearable && selectedValue && !disabled;
-  const selectClasses = getSelectClasses(
-    variant, 
-    size, 
-    hasError, 
-    !!icon, 
-    !!hasClearButton,
-    isSelected
+  // Remover un valor específico en selección múltiple
+  const handleRemoveValue = (valueToRemove: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const currentValues = Array.isArray(selectedValue) ? selectedValue : [];
+    const newValues = currentValues.filter(v => v !== valueToRemove);
+    onChange(newValues);
+  };
+
+  // Obtener clases CSS
+  const isSelected = !!selectedValue && (Array.isArray(selectedValue) ? selectedValue.length > 0 : selectedValue !== '');
+  const selectClasses = getEnhancedSelectClasses(
+    variant,
+    size,
+    color,
+    hasError,
+    disabled,
+    !!leftIcon,
+    !!rightIcon || clearable,
+    isOpen
   );
-  const iconClasses = icon ? getIconClasses(size, variant) : '';
-  const dropdownIconClasses = getDropdownIconClasses(size);
+
+  const leftIconClasses = leftIcon ? getIconContainerClasses(size, 'left') : '';
+  const rightIconClasses = (rightIcon || clearable) ? getIconContainerClasses(size, 'right') : '';
 
   // Mostrar mensaje de carga
   if (loading) {
     return (
-      <div className={containerClasses}>
-        {icon && (
-          <div className={iconClasses}>
-            {icon}
+      <div className="relative">
+        {leftIcon && (
+          <div className={leftIconClasses}>
+            {leftIcon}
           </div>
         )}
         
@@ -79,95 +104,195 @@ export const SelectField: React.FC<SelectFieldProps> = ({
           {loadingMessage}
         </div>
         
-        <LoadingSpinner size={size} />
+        <div className={rightIconClasses}>
+          <LoadingSpinner size={size} />
+        </div>
       </div>
     );
   }
 
-  // Renderizar opciones normales
-  const renderOptions = () => {
+  // Obtener todas las opciones (incluyendo las de grupos)
+  const allOptions = groups 
+    ? groups.flatMap(group => group.options)
+    : options;
+
+  // Obtener texto a mostrar
+  const getDisplayText = () => {
+    if (multiple && Array.isArray(selectedValue)) {
+      if (selectedValue.length === 0) return placeholder;
+      return formatSelectedText(selectedValue, allOptions, maxSelectedDisplay);
+    } else {
+      if (!selectedValue) return placeholder;
+      const option = allOptions.find(opt => opt.value === selectedValue);
+      return option ? option.label : selectedValue;
+    }
+  };
+
+  // Renderizar opciones del dropdown
+  const renderDropdownOptions = () => {
     if (groups) {
       return groups.map((group) => (
-        <optgroup key={group.label} label={group.label}>
-          {group.options.map((option) => (
-            <option 
-              key={option.value} 
-              value={option.value} 
-              disabled={option.disabled}
-              className="text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800"
-            >
-              {option.label}
-            </option>
-          ))}
-        </optgroup>
+        <div key={group.label}>
+          <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-gray-700">
+            {group.label}
+          </div>
+          {group.options.map((option) => {
+            const isOptionSelected = multiple 
+              ? isValueSelected(option.value, selectedValue)
+              : selectedValue === option.value;
+            
+            return (
+              <div
+                key={option.value}
+                className={`px-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between ${
+                  isOptionSelected ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-900 dark:text-gray-100'
+                } ${option.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                onClick={() => {
+                  if (option.disabled) return;
+                  if (multiple) {
+                    handleMultipleChange(option.value);
+                  } else {
+                    handleSingleChange(option.value);
+                  }
+                }}
+              >
+                <span>{option.label}</span>
+                {multiple && isOptionSelected && (
+                  <span className="text-blue-600 dark:text-blue-400">✓</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
       ));
     }
 
-    return options.map((option) => (
-      <option 
-        key={option.value} 
-        value={option.value} 
-        disabled={option.disabled}
-        className="text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800"
-      >
-        {option.label}
-        {option.description && ` - ${option.description}`}
-      </option>
-    ));
+    return allOptions.map((option) => {
+      const isOptionSelected = multiple 
+        ? isValueSelected(option.value, selectedValue)
+        : selectedValue === option.value;
+      
+      return (
+        <div
+          key={option.value}
+          className={`px-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between ${
+            isOptionSelected ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-gray-900 dark:text-gray-100'
+          } ${option.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+          onClick={() => {
+            if (option.disabled) return;
+            if (multiple) {
+              handleMultipleChange(option.value);
+            } else {
+              handleSingleChange(option.value);
+            }
+          }}
+        >
+          <span>
+            {option.label}
+            {option.description && <span className="text-sm text-gray-500 ml-2">- {option.description}</span>}
+          </span>
+          {multiple && isOptionSelected && (
+            <span className="text-blue-600 dark:text-blue-400">✓</span>
+          )}
+        </div>
+      );
+    });
   };
 
-  // --- LÓGICA CLAVE: Si el usuario NO pasa onChange, solo usar registerProps (como RHF clásico) ---
-  const selectProps = typeof onChange === 'function'
-    ? {
-        ...registerProps,
-        value: selectedValue,
-        onChange: handleChange,
-        disabled,
-        className: selectClasses,
-        'aria-label': placeholder
-      }
-    : {
-        ...registerProps,
-        disabled,
-        className: selectClasses,
-        'aria-label': placeholder
-      };
+  // Renderizar tags para selección múltiple
+  const renderMultipleTags = () => {
+    if (!multiple || !Array.isArray(selectedValue) || selectedValue.length === 0) return null;
+
+    const maxToShow = 2;
+    const visibleValues = selectedValue.slice(0, maxToShow);
+    const remainingCount = selectedValue.length - maxToShow;
+
+    return (
+      <div className="flex flex-wrap gap-1 mt-1">
+        {visibleValues.map((value) => {
+          const option = allOptions.find(opt => opt.value === value);
+          return (
+            <span
+              key={value}
+              className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300"
+            >
+              {option ? option.label : value}
+              <button
+                type="button"
+                className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800"
+                onClick={(e) => handleRemoveValue(value, e)}
+              >
+                <FiX className="w-3 h-3" />
+              </button>
+            </span>
+          );
+        })}
+        {remainingCount > 0 && (
+          <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+            +{remainingCount} más
+          </span>
+        )}
+      </div>
+    );
+  };
+
+  const hasClearButton = clearable && isSelected && !disabled;
 
   return (
-    <div className={containerClasses}>
+    <div className="relative" ref={containerRef}>
       {/* Icono izquierdo */}
-      {icon && (
-        <div className={iconClasses}>
-          {icon}
+      {leftIcon && (
+        <div className={leftIconClasses}>
+          {leftIcon}
         </div>
       )}
       
-      {/* Select element */}
-      <select {...selectProps}>
-        {/* Opción placeholder */}
-        <option value="" disabled className="text-gray-500 dark:text-gray-400">
-          {placeholder}
-        </option>
-        
-        {/* Opciones */}
-        {options.length === 0 && !groups ? (
-          <option value="" disabled className="text-gray-500 dark:text-gray-400">
-            {emptyMessage}
-          </option>
-        ) : (
-          renderOptions()
-        )}
-      </select>
+      {/* Campo principal */}
+      <div
+        className={`${selectClasses} cursor-pointer`}
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+      >
+        <span className={`block truncate ${!isSelected ? 'text-gray-500 dark:text-gray-400' : ''}`}>
+          {getDisplayText()}
+        </span>
+      </div>
+
+      {/* Tags para selección múltiple */}
+      {renderMultipleTags()}
 
       {/* Botón clear */}
       {hasClearButton && (
-        <ClearButton onClear={handleClear} />
+        <div className={rightIconClasses}>
+          <button
+            type="button"
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            onClick={handleClear}
+          >
+            <FiX className="w-4 h-4" />
+          </button>
+        </div>
       )}
       
       {/* Icono dropdown */}
-      {!loading && (
-        <div className={dropdownIconClasses}>
-          <FiChevronDown />
+      {!hasClearButton && (
+        <div className={rightIconClasses}>
+          <FiChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        </div>
+      )}
+
+      {/* Dropdown */}
+      {isOpen && (
+        <div
+          ref={dropdownRef}
+          className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-auto"
+        >
+          {allOptions.length === 0 ? (
+            <div className="px-3 py-2 text-gray-500 dark:text-gray-400">
+              {emptyMessage}
+            </div>
+          ) : (
+            renderDropdownOptions()
+          )}
         </div>
       )}
     </div>
