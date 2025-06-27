@@ -7,12 +7,15 @@ import { SidebarSearch } from './SidebarSearch';
 import { SidebarFooter } from './SidebarFooter';
 import { MenuItemLink } from './MenuItemLink';
 import { MenuItemAccordion } from './MenuItemAccordion';
-import '../styles/ModernSidebar.css';
+// import '../styles/ModernSidebar.css'; // ⚠️ TEMPORALMENTE DESHABILITADO PARA DEBUG
 
 export const ModernSidebar: React.FC<SidebarProps> = ({
   sidebarOpen,
   setSidebarOpen
 }) => {
+  // 🔍 DEBUG: Ver el estado actual
+  console.log('🎯 ModernSidebar render:', { sidebarOpen });
+
   // Hooks personalizados
   const { colorMode, toggleTheme } = useTheme();
   const { searchQuery, setSearchQuery, filteredMenu } = useMenuSearch(menuConfig);
@@ -34,6 +37,23 @@ export const ModernSidebar: React.FC<SidebarProps> = ({
     toggleSection,
   });
 
+  // 🔍 DEBUG: Calcular clases CSS sin conflictos con CSS personalizado
+  const sidebarClasses = `
+    fixed top-0 left-0 z-50 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700
+    transition-all duration-300 ease-in-out
+    ${sidebarOpen ? 'w-64 translate-x-0' : 'w-20 translate-x-0 lg:w-20'}
+    lg:relative lg:translate-x-0
+  `.replace(/\s+/g, ' ').trim();
+  
+  console.log('📏 Sidebar classes:', sidebarClasses);
+  
+  // 🎯 Forzar el ancho con style inline para evitar conflictos CSS
+  const sidebarStyle: React.CSSProperties = {
+    width: sidebarOpen ? '256px' : '80px', // Forzar width con valores exactos
+    minWidth: sidebarOpen ? '256px' : '80px',
+    maxWidth: sidebarOpen ? '256px' : '80px'
+  };
+
   return (
     <>
       {/* Overlay para móvil */}
@@ -48,12 +68,8 @@ export const ModernSidebar: React.FC<SidebarProps> = ({
       <div
         ref={sidebarRef}
         data-sidebar
-        className={`
-          fixed top-0 left-0 z-50 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700
-          transition-all duration-300 ease-in-out
-          ${sidebarOpen ? 'w-64 translate-x-0' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-20'}
-          lg:relative lg:translate-x-0
-        `}
+        className={sidebarClasses}
+        style={sidebarStyle}
       >
         {/* Header */}
         <SidebarHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />

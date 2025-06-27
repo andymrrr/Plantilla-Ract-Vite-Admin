@@ -13,6 +13,7 @@ Un sistema de navegación lateral moderno, completamente tipado y altamente conf
 - **♿ Accesible**: Cumple con estándares de accesibilidad
 - **🎭 Animaciones Suaves**: Transiciones fluidas y profesionales
 - **🏗️ Arquitectura Modular**: Componentes separados y hooks personalizados
+- **🏢 Logo Dinámico**: Sistema de logo completamente personalizable con múltiples presets
 
 ## 📁 Estructura del Proyecto
 
@@ -37,7 +38,10 @@ MenuLateral/
 ├── styles/               # Estilos CSS
 │   └── ModernSidebar.css        # Estilos específicos del sidebar
 ├── config/               # Configuraciones
+│   ├── logoConfig.ts            # Configuración de logos con presets
+│   └── sidebarConfig.ts         # Configuración general del sidebar
 ├── examples/             # Ejemplos de uso
+│   └── LogoExamples.tsx         # Demostración de logos
 ├── menuConfig.ts         # Configuración del menú
 ├── index.tsx            # Punto de entrada principal
 └── README.md            # Esta documentación
@@ -91,6 +95,93 @@ export const menuConfig: MenuSection[] = [
     ],
   },
 ];
+```
+
+## 🏢 Sistema de Logo Dinámico
+
+El MenuLateral incluye un sistema avanzado de configuración de logos con múltiples presets predefinidos.
+
+### Configuración Rápida
+
+Cambia el preset activo en `config/logoConfig.ts`:
+
+```tsx
+// Cambiar a cualquier preset disponible
+export const ACTIVE_LOGO_CONFIG: LogoConfig = LOGO_PRESETS.corporate;
+// o LOGO_PRESETS.analytics, LOGO_PRESETS.ecommerce, etc.
+```
+
+### Presets Disponibles
+
+| Preset       | Descripción             | Tamaño | Características                 |
+| ------------ | ----------------------- | ------ | ------------------------------- |
+| `default`    | Admin Panel genérico    | lg     | Indicador online, efectos hover |
+| `corporate`  | Empresarial profesional | lg     | Sin indicador, efectos suaves   |
+| `analytics`  | Dashboard de análisis   | md     | Verde, ideal para datos         |
+| `ecommerce`  | Tienda online           | lg     | Púrpura/rosa, comercial         |
+| `education`  | Plataforma educativa    | lg     | Azul/cyan, académico            |
+| `healthcare` | Sistema de salud        | lg     | Rojo/rosa, médico               |
+| `startup`    | Startup/innovación      | lg     | Naranja/rojo, dinámico          |
+| `security`   | Panel de seguridad      | lg     | Amarillo/naranja, seguridad     |
+| `premium`    | Dashboard premium       | xl     | Dorado, lujoso                  |
+| `minimal`    | Diseño minimalista      | sm     | Sin efectos, simple             |
+
+### Configuración Personalizada
+
+```tsx
+import { createCustomLogoConfig, LOGO_PRESETS } from "./config/logoConfig";
+
+// Crear configuración personalizada basada en un preset
+export const ACTIVE_LOGO_CONFIG = createCustomLogoConfig("corporate", {
+  title: "Mi Empresa",
+  subtitle: "Dashboard",
+  imagePath: "/mi-logo.svg",
+  size: "xl",
+  showOnlineIndicator: true,
+});
+```
+
+### Configuración Completa
+
+```tsx
+export const ACTIVE_LOGO_CONFIG: LogoConfig = {
+  // Imagen del logo (opcional)
+  imagePath: "/mi-logo.svg",
+  altText: "Mi Logo",
+
+  // Icono de fallback si la imagen falla
+  fallbackIcon: FaBuilding,
+  fallbackBgGradient: {
+    from: "from-blue-500",
+    to: "to-indigo-600",
+  },
+
+  // Textos
+  title: "Mi Aplicación",
+  subtitle: "Dashboard",
+  showSubtitle: true,
+
+  // Configuración visual
+  size: "lg", // 'sm' | 'md' | 'lg' | 'xl'
+  showOnlineIndicator: true,
+  showTooltip: true,
+
+  // Animaciones
+  enableHoverEffects: true,
+  enablePulseIndicator: true,
+};
+```
+
+### Componente de Demostración
+
+Usa `LogoExamples` para probar diferentes configuraciones:
+
+```tsx
+import { LogoExamples } from "./components/MenuLateral/examples/LogoExamples";
+
+function ConfigPage() {
+  return <LogoExamples />;
+}
 ```
 
 ## 🎨 Tipos de Items de Menú
