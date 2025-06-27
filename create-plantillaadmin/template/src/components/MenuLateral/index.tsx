@@ -1,11 +1,11 @@
 import React from "react";
-import { ModernSidebar } from './components/ModernSidebar';
+import { ModernSidebar } from './components';
+import { SidebarProps } from './types';
 
-interface SidebarProps {
-  sidebarOpen: boolean;
-  setSidebarOpen: (open: boolean) => void;
-}
-
+/**
+ * Componente Sidebar principal que encapsula el ModernSidebar
+ * Actúa como punto de entrada único para el sistema de navegación lateral
+ */
 const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <ModernSidebar
@@ -16,3 +16,8 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
 };
 
 export default Sidebar;
+
+// Re-exportar componentes y tipos para uso externo
+export { ModernSidebar } from './components';
+export type { SidebarProps, MenuItem, MenuSection, MenuLink } from './types';
+export { menuConfig } from './menuConfig';

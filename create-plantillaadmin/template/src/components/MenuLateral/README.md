@@ -1,247 +1,91 @@
-# 🚀 Sidebar Moderno - Documentación
+# MenuLateral - Sidebar Moderno
 
-**¡El sidebar moderno es ahora el componente principal!** Un sidebar super tipado y altamente configurable para aplicaciones React con TypeScript.
+Un sistema de navegación lateral moderno, completamente tipado y altamente configurable para aplicaciones React con TypeScript.
 
-## ✨ Características
+## 🚀 Características Principales
 
-- **Super Tipado**: TypeScript completo con tipos estrictos y extensibles
-- **Altamente Configurable**: Temas, animaciones, comportamientos personalizables
-- **Responsive**: Adaptable a móviles, tablets y desktop
-- **Accesible**: ARIA labels, navegación por teclado, lectores de pantalla
-- **Búsqueda**: Filtrado en tiempo real con resaltado
-- **Permisos**: Control de acceso por roles y permisos
-- **Eventos**: Sistema de callbacks extensible
-- **Plugins**: Arquitectura extensible para funcionalidades adicionales
-- **Múltiples Tipos de Items**: Links, accordions, dividers, headers, custom components
+- **✨ Diseño Moderno**: Interfaz elegante con modo oscuro/claro
+- **📱 Responsive**: Adaptado para móvil, tablet y desktop
+- **🎯 Totalmente Tipado**: TypeScript con tipos estrictos
+- **🔍 Búsqueda en Tiempo Real**: Filtrado dinámico de elementos del menú
+- **🎨 Temas**: Soporte para modo claro y oscuro con persistencia
+- **📂 Accordions Inteligentes**: Comportamiento diferente según el estado del sidebar
+- **♿ Accesible**: Cumple con estándares de accesibilidad
+- **🎭 Animaciones Suaves**: Transiciones fluidas y profesionales
+- **🏗️ Arquitectura Modular**: Componentes separados y hooks personalizados
 
-## 🚀 Uso Básico (Ahora es el Principal)
-
-```tsx
-import React, { useState } from "react";
-import Sidebar from "./components/MenuLateral"; // ← Ahora importa el sidebar moderno
-
-const App: React.FC = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  return (
-    <div style={{ display: "flex" }}>
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      <main style={{ flex: 1, padding: "2rem" }}>
-        <h1>Mi Aplicación</h1>
-        <p>Contenido principal aquí...</p>
-      </main>
-    </div>
-  );
-};
-```
-
-## 🔄 Migración desde el Sidebar Original
-
-### Cambios Automáticos
-
-- **Importación**: Ahora `import Sidebar from './components/MenuLateral'` importa el sidebar moderno
-- **API**: Mantiene la misma API para facilitar la migración
-- **Compatibilidad**: El sidebar original sigue disponible como `LegacySidebar`
-
-### Si Necesitas el Sidebar Original
-
-```tsx
-import { LegacySidebar } from "./components/MenuLateral";
-
-const App = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  return (
-    <LegacySidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-  );
-};
-```
-
-## 🏗️ Arquitectura
+## 📁 Estructura del Proyecto
 
 ```
 MenuLateral/
-├── types/                    # Tipos TypeScript
-│   └── index.ts             # Definiciones de tipos
-├── hooks/                   # Hooks personalizados
-│   ├── useSidebar.ts        # Hook original
-│   └── useModernSidebar.ts  # Hook moderno
-├── components/              # Componentes del sidebar
-│   ├── ModernSidebar.tsx    # Componente principal
-│   ├── ModernSidebarHeader.tsx
-│   ├── ModernSidebarContent.tsx
-│   ├── ModernSidebarSearch.tsx
-│   ├── ModernSidebarFooter.tsx
-│   ├── ModernSidebarOverlay.tsx
-│   ├── ModernMenuSection.tsx
-│   ├── ModernMenuItem.tsx
-│   ├── ModernMenuItemLink.tsx
-│   ├── ModernMenuItemAccordion.tsx
-│   ├── ModernMenuItemDivider.tsx
-│   ├── ModernMenuItemHeader.tsx
-│   └── ModernMenuItemCustom.tsx
-├── config/                  # Configuraciones
-│   └── modernMenuConfig.ts  # Configuración moderna
-├── styles/                  # Estilos CSS
-│   └── ModernSidebar.css    # Estilos del sidebar
-├── examples/                # Ejemplos de uso
-│   └── SimpleExample.tsx
-├── index.tsx               # Exportaciones principales
-├── index.ts                # Exportaciones organizadas
-└── README.md              # Esta documentación
+├── components/           # Componentes React
+│   ├── ModernSidebar.tsx        # Componente principal
+│   ├── SidebarHeader.tsx        # Header con logo y toggle
+│   ├── SidebarSearch.tsx        # Barra de búsqueda
+│   ├── SidebarFooter.tsx        # Footer con tema y versión
+│   ├── MenuItemLink.tsx         # Items de menú tipo enlace
+│   ├── MenuItemAccordion.tsx    # Items de menú tipo acordeón
+│   └── index.ts                 # Exportaciones de componentes
+├── hooks/                # Hooks personalizados
+│   ├── useSidebarState.ts       # Estado del sidebar
+│   ├── useTheme.ts              # Gestión de temas
+│   ├── useMenuSearch.ts         # Búsqueda del menú
+│   ├── useAccordionHandlers.ts  # Handlers de acordeones
+│   └── index.ts                 # Exportaciones de hooks
+├── types/                # Definiciones de tipos
+│   └── index.ts                 # Todos los tipos TypeScript
+├── styles/               # Estilos CSS
+│   └── ModernSidebar.css        # Estilos específicos del sidebar
+├── config/               # Configuraciones
+├── examples/             # Ejemplos de uso
+├── menuConfig.ts         # Configuración del menú
+├── index.tsx            # Punto de entrada principal
+└── README.md            # Esta documentación
 ```
 
-## ⚙️ Configuración Avanzada
+## 🛠️ Uso Básico
 
-### Configuración Personalizada
+### Importación Simple
 
 ```tsx
-import {
-  modernSidebarConfig,
-  modernMenuSections,
-} from "./config/modernMenuConfig";
-import { SidebarConfig } from "./types";
+import Sidebar from "./components/MenuLateral";
 
-const customConfig: SidebarConfig = {
-  ...modernSidebarConfig,
-  id: "my-sidebar",
-  title: "Mi Aplicación",
+function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Comportamiento
-  behavior: {
-    collapsible: true,
-    defaultCollapsed: false,
-    rememberState: true,
-    autoCollapseOnMobile: true,
-    closeOnClickOutside: true,
-    closeOnEscape: true,
-    preventBodyScroll: true,
-  },
-
-  // Apariencia
-  appearance: {
-    theme: "dark",
-    width: {
-      expanded: "320px",
-      collapsed: "80px",
-    },
-    position: "left",
-    zIndex: 1000,
-    shadow: true,
-    border: true,
-  },
-
-  // Animaciones
-  animations: {
-    sidebar: { type: "slide", duration: 300, easing: "ease-in-out" },
-    items: { type: "fade", duration: 200, easing: "ease-in-out", stagger: 50 },
-    accordion: { type: "slide", duration: 250, easing: "ease-in-out" },
-  },
-
-  // Responsive
-  responsive: {
-    breakpoint: "768",
-    mobileBehavior: "overlay",
-    tabletBehavior: "overlay",
-  },
-
-  // Funcionalidades
-  features: {
-    search: true,
-    shortcuts: true,
-    breadcrumbs: true,
-    backToTop: true,
-    footer: true,
-  },
-
-  // Callbacks
-  callbacks: {
-    onItemClick: (item, context) => {
-      console.log("Item clicked:", item.label);
-      if (context.isMobile) {
-        // Cerrar sidebar en móvil
-      }
-    },
-    onSectionToggle: (section, context) => {
-      console.log("Section toggled:", section.title);
-    },
-    onSidebarToggle: (expanded, context) => {
-      console.log("Sidebar toggled:", expanded);
-    },
-    onThemeChange: (theme) => {
-      console.log("Theme changed:", theme);
-      document.documentElement.setAttribute("data-theme", theme);
-    },
-  },
-};
+  return (
+    <div className="flex">
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <main className="flex-1">{/* Tu contenido principal */}</main>
+    </div>
+  );
+}
 ```
 
-### Secciones Personalizadas
+### Configuración del Menú
+
+Edita `menuConfig.ts` para personalizar tu menú:
 
 ```tsx
-import { MenuSection } from "./types";
-import { FaHome, FaUser, FaCog } from "react-icons/fa";
-
-const customSections: MenuSection[] = [
+export const menuConfig: MenuSection[] = [
   {
-    id: "main",
     title: "MENU PRINCIPAL",
-    description: "Navegación principal",
-    order: 1,
     items: [
       {
-        id: "home",
-        type: "link",
+        id: "dashboard",
         to: "/",
-        icon: FaHome,
-        label: "Inicio",
-        variant: "primary",
-        tooltip: "Página principal",
-      },
-      {
-        id: "profile",
+        icon: FaTachometerAlt,
+        label: "Dashboard",
         type: "link",
-        to: "/profile",
-        icon: FaUser,
-        label: "Perfil",
-        badge: {
-          text: "Nuevo",
-          variant: "success",
-          count: 3,
-        },
       },
-    ],
-  },
-  {
-    id: "settings",
-    title: "CONFIGURACIÓN",
-    description: "Ajustes del sistema",
-    order: 2,
-    collapsible: true,
-    defaultOpen: true,
-    items: [
       {
-        id: "settings-accordion",
+        id: "forms",
+        icon: FaWpforms,
+        label: "Forms",
         type: "accordion",
-        icon: FaCog,
-        label: "Configuración",
-        defaultOpen: true,
         links: [
-          {
-            id: "general",
-            type: "link",
-            to: "/settings/general",
-            icon: FaCog,
-            label: "General",
-          },
-          {
-            id: "security",
-            type: "link",
-            to: "/settings/security",
-            icon: FaCog,
-            label: "Seguridad",
-          },
+          { to: "/forms/basic", label: "Basic Form", icon: FaEdit },
+          { to: "/forms/advanced", label: "Advanced Form", icon: FaCog },
         ],
       },
     ],
@@ -249,478 +93,245 @@ const customSections: MenuSection[] = [
 ];
 ```
 
-## 🎨 Tipos de Items
+## 🎨 Tipos de Items de Menú
 
-### 1. Link Item
+### 1. Enlaces Simples (`type: 'link'`)
 
 ```tsx
 {
-  id: 'dashboard',
-  type: 'link',
-  to: '/dashboard',
+  id: "dashboard",
+  to: "/dashboard",
   icon: FaTachometerAlt,
-  label: 'Dashboard',
-  variant: 'primary',
-  tooltip: 'Panel principal',
-  badge: {
-    text: 'Nuevo',
-    variant: 'success',
-    count: 5
-  },
-  external: false,
-  target: '_self',
-  exact: true
+  label: "Dashboard",
+  type: "link",
 }
 ```
 
-### 2. Accordion Item
+### 2. Acordeones (`type: 'accordion'`)
 
 ```tsx
 {
-  id: 'forms',
-  type: 'accordion',
+  id: "forms",
   icon: FaWpforms,
-  label: 'Formularios',
-  defaultOpen: true,
-  singleOpen: false,
+  label: "Forms",
+  type: "accordion",
   links: [
-    {
-      id: 'form-elements',
-      type: 'link',
-      to: '/forms/elements',
-      icon: FaEdit,
-      label: 'Elementos'
-    }
-  ]
-}
-```
-
-### 3. Divider Item
-
-```tsx
-{
-  id: 'divider-1',
-  type: 'divider',
-  label: 'Separador',
-  orientation: 'horizontal'
-}
-```
-
-### 4. Header Item
-
-```tsx
-{
-  id: 'welcome',
-  type: 'header',
-  icon: '🎉',
-  label: '¡Bienvenido!',
-  description: 'Esta es una descripción',
-  action: {
-    icon: '⭐',
-    label: 'Acción',
-    onClick: (context) => {
-      console.log('Acción ejecutada', context);
-    }
-  }
-}
-```
-
-### 5. Custom Item
-
-```tsx
-{
-  id: 'custom',
-  type: 'custom',
-  icon: '🔧',
-  label: 'Componente Personalizado',
-  component: ({ item, context, isActive, isExpanded }) => (
-    <div style={{ padding: '1rem', background: '#f0f0f0' }}>
-      <h4>Mi Componente</h4>
-      <p>Active: {isActive ? 'Sí' : 'No'}</p>
-      <p>Expanded: {isExpanded ? 'Sí' : 'No'}</p>
-    </div>
-  ),
-  props: {
-    customProp: 'valor'
-  }
-}
-```
-
-## 🎯 Temas y Estilos
-
-### Temas Predefinidos
-
-```tsx
-// Tema claro
-const lightTheme: MenuThemeConfig = {
-  name: "light",
-  colors: {
-    background: "#ffffff",
-    backgroundHover: "#f8f9fa",
-    backgroundActive: "#e9ecef",
-    text: "#212529",
-    textHover: "#495057",
-    textActive: "#000000",
-    border: "#dee2e6",
-    icon: "#6c757d",
-    iconHover: "#495057",
-    iconActive: "#000000",
-    divider: "#dee2e6",
-  },
-};
-
-// Tema oscuro
-const darkTheme: MenuThemeConfig = {
-  name: "dark",
-  colors: {
-    background: "#1a1a1a",
-    backgroundHover: "#2d2d2d",
-    backgroundActive: "#404040",
-    text: "#e5e5e5",
-    textHover: "#ffffff",
-    textActive: "#ffffff",
-    border: "#404040",
-    icon: "#a0a0a0",
-    iconHover: "#e5e5e5",
-    iconActive: "#ffffff",
-    divider: "#404040",
-  },
-};
-```
-
-### CSS Personalizado
-
-```css
-/* Variables CSS personalizadas */
-:root {
-  --sidebar-width-expanded: 320px;
-  --sidebar-width-collapsed: 80px;
-  --sidebar-bg: #ffffff;
-  --sidebar-text: #212529;
-  /* ... más variables */
-}
-
-/* Tema oscuro */
-[data-theme="dark"] {
-  --sidebar-bg: #1a1a1a;
-  --sidebar-text: #e5e5e5;
-  /* ... más variables */
+    { to: "/forms/basic", label: "Basic Form", icon: FaEdit },
+    { to: "/forms/advanced", label: "Advanced Form", icon: FaCog },
+  ],
 }
 ```
 
 ## 🔧 Hooks Personalizados
 
-### useModernSidebar
+### `useSidebarState`
 
-```tsx
-import { useModernSidebar } from "./hooks/useModernSidebar";
+Gestiona el estado completo del sidebar:
 
-const MyComponent = () => {
-  const {
-    state,
-    context,
-    toggleSidebar,
-    expandSidebar,
-    collapseSidebar,
-    setSearchQuery,
-    toggleSection,
-    setTheme,
-    isActiveItem,
-    getFilteredSections,
-  } = useModernSidebar({
-    config: modernSidebarConfig,
-    sections: modernMenuSections,
-    sidebarOpen,
-    setSidebarOpen,
-  });
+- Secciones expandidas
+- Popups de acordeones
+- Referencias DOM
+- Event listeners
 
-  return (
-    <div>
-      <button onClick={toggleSidebar}>
-        {state.expanded ? "Colapsar" : "Expandir"}
-      </button>
+### `useTheme`
 
-      <input
-        type="text"
-        placeholder="Buscar..."
-        onChange={(e) => setSearchQuery(e.target.value)}
-        value={state.searchQuery}
-      />
-    </div>
-  );
-};
-```
+Maneja el tema de la aplicación:
 
-## 🎮 Eventos y Callbacks
+- Modo claro/oscuro
+- Persistencia en localStorage
+- Aplicación automática de clases CSS
 
-### Sistema de Eventos
+### `useMenuSearch`
 
-```tsx
-const config: SidebarConfig = {
-  // ... otras configuraciones
-  callbacks: {
-    onItemClick: (item, context) => {
-      // Se ejecuta cuando se hace clic en un item
-      console.log("Item clicked:", item.label);
+Implementa la búsqueda en tiempo real:
 
-      // Cerrar sidebar en móvil
-      if (context.isMobile) {
-        setSidebarOpen(false);
-      }
+- Filtrado por texto
+- Búsqueda en enlaces anidados
+- Memorización de resultados
 
-      // Navegar programáticamente
-      if (item.type === "link") {
-        navigate(item.to);
-      }
-    },
+### `useAccordionHandlers`
 
-    onSectionToggle: (section, context) => {
-      // Se ejecuta cuando se expande/colapsa una sección
-      console.log("Section toggled:", section.title);
+Gestiona la interacción con acordeones:
 
-      // Analytics
-      analytics.track("sidebar_section_toggle", {
-        section: section.title,
-        expanded: !context.sidebarExpanded,
-      });
-    },
+- Comportamiento diferente según estado del sidebar
+- Manejo de hover para popups
+- Timeouts y limpieza
 
-    onSidebarToggle: (expanded, context) => {
-      // Se ejecuta cuando se expande/colapsa el sidebar
-      console.log("Sidebar toggled:", expanded);
+## 🎯 Componentes Especializados
 
-      // Guardar preferencia
-      localStorage.setItem("sidebar-expanded", expanded.toString());
-    },
+### `SidebarHeader`
 
-    onThemeChange: (theme) => {
-      // Se ejecuta cuando cambia el tema
-      console.log("Theme changed:", theme);
+- Logo y título de la aplicación
+- Botón toggle para expandir/colapsar
+- Responsive design
 
-      // Aplicar tema global
-      document.documentElement.setAttribute("data-theme", theme);
+### `SidebarSearch`
 
-      // Guardar preferencia
-      localStorage.setItem("theme", theme);
-    },
-  },
-};
-```
+- Input de búsqueda con icono
+- Filtrado en tiempo real
+- Accesibilidad completa
 
-## 🔐 Permisos y Roles
+### `MenuItemLink`
 
-### Control de Acceso
+- Enlaces simples de navegación
+- Estados activos
+- Tooltips en modo colapsado
 
-```tsx
-const sectionsWithPermissions: MenuSection[] = [
-  {
-    id: "admin",
-    title: "ADMINISTRACIÓN",
-    permissions: {
-      roles: ["admin", "super-admin"],
-      permissions: ["admin:read", "admin:write"],
-    },
-    items: [
-      {
-        id: "users",
-        type: "link",
-        to: "/admin/users",
-        icon: FaUsers,
-        label: "Usuarios",
-        permissions: {
-          roles: ["admin"],
-          permissions: ["users:read"],
-        },
-      },
-      {
-        id: "settings",
-        type: "link",
-        to: "/admin/settings",
-        icon: FaCog,
-        label: "Configuración",
-        permissions: {
-          roles: ["super-admin"],
-          conditions: (context) =>
-            context.isAuthenticated && context.userRole === "super-admin",
-        },
-      },
-    ],
-  },
-];
-```
+### `MenuItemAccordion`
 
-## 📱 Responsive Design
+- Acordeones con sub-enlaces
+- Popups elegantes en modo colapsado
+- Gestión completa de estados
 
-### Comportamientos por Dispositivo
+### `SidebarFooter`
 
-```tsx
-const config: SidebarConfig = {
-  // ... otras configuraciones
-  responsive: {
-    breakpoint: "768", // px
-    mobileBehavior: "overlay", // overlay | push | replace
-    tabletBehavior: "overlay", // overlay | push | replace
-  },
-};
-```
+- Toggle de tema claro/oscuro
+- Información de versión
+- Controles adicionales
 
-### Detección de Dispositivo
+## 📱 Comportamiento Responsive
 
-```tsx
-const context: MenuContext = {
-  isAuthenticated: true,
-  userRole: "admin",
-  userPermissions: ["read", "write"],
-  currentPath: "/dashboard",
-  sidebarExpanded: true,
-  isMobile: window.innerWidth < 768, // Se detecta automáticamente
-};
-```
+### Desktop (≥ 1024px)
 
-## 🎨 Animaciones
+- Sidebar siempre visible
+- Modo expandido/colapsado
+- Popups para acordeones en modo colapsado
 
-### Configuración de Animaciones
+### Tablet/Mobile (< 1024px)
 
-```tsx
-const animations = {
-  sidebar: {
-    type: "slide", // slide | fade | scale | none
-    duration: 300,
-    easing: "ease-in-out",
-    delay: 0,
-  },
-  items: {
-    type: "fade",
-    duration: 200,
-    easing: "ease-in-out",
-    stagger: 50, // ms entre cada item
-  },
-  accordion: {
-    type: "slide",
-    duration: 250,
-    easing: "ease-in-out",
-  },
-};
-```
+- Sidebar como overlay
+- Cierre automático al seleccionar
+- Backdrop oscuro
 
-## 🔌 Plugins
+## ♿ Accesibilidad
 
-### Sistema de Plugins
+- **ARIA Labels**: Todos los elementos interactivos
+- **Keyboard Navigation**: Soporte completo de teclado
+- **Screen Readers**: Compatibilidad total
+- **Focus Management**: Indicadores visuales claros
+- **Semantic HTML**: Estructura semántica correcta
 
-```tsx
-import { MenuPlugin } from "./types";
+## 🎨 Personalización de Estilos
 
-const searchPlugin: MenuPlugin = {
-  name: "search",
-  version: "1.0.0",
-  install: (config) => ({
-    ...config,
-    features: {
-      ...config.features,
-      search: true,
-    },
-  }),
-  uninstall: (config) => ({
-    ...config,
-    features: {
-      ...config.features,
-      search: false,
-    },
-  }),
-};
+### Variables CSS Personalizadas
 
-// Aplicar plugin
-const configWithSearch = searchPlugin.install(modernSidebarConfig);
-```
-
-## 🧪 Testing
-
-### Ejemplo de Test
-
-```tsx
-import { render, screen, fireEvent } from "@testing-library/react";
-import Sidebar from "./components/MenuLateral";
-
-describe("Sidebar", () => {
-  it("should render sidebar with correct items", () => {
-    const setSidebarOpen = jest.fn();
-
-    render(<Sidebar sidebarOpen={true} setSidebarOpen={setSidebarOpen} />);
-
-    expect(screen.getByText("Dashboard")).toBeInTheDocument();
-    expect(screen.getByText("Formularios")).toBeInTheDocument();
-  });
-
-  it("should close sidebar when overlay is clicked", () => {
-    const setSidebarOpen = jest.fn();
-
-    render(<Sidebar sidebarOpen={true} setSidebarOpen={setSidebarOpen} />);
-
-    const overlay = screen.getByRole("presentation");
-    fireEvent.click(overlay);
-
-    expect(setSidebarOpen).toHaveBeenCalledWith(false);
-  });
-});
-```
-
-## 📚 API Reference
-
-### Tipos Principales
-
-```tsx
-// Configuración del sidebar
-interface SidebarConfig {
-  id: string;
-  title?: string;
-  behavior: SidebarBehavior;
-  appearance: SidebarAppearance;
-  animations: SidebarAnimations;
-  responsive: SidebarResponsive;
-  features: SidebarFeatures;
-  callbacks: SidebarCallbacks;
-  customizations: SidebarCustomizations;
+```css
+.sidebar-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-// Item de menú
-type MenuItem =
-  | MenuLinkItem
-  | MenuAccordionItem
-  | MenuDividerItem
-  | MenuHeaderItem
-  | MenuCustomItem;
-
-// Contexto del menú
-interface MenuContext {
-  isAuthenticated: boolean;
-  userRole?: string;
-  userPermissions?: string[];
-  currentPath: string;
-  sidebarExpanded: boolean;
-  isMobile: boolean;
+.sidebar-scroll::-webkit-scrollbar {
+  display: none;
 }
 ```
+
+### Temas Personalizados
+
+El sistema usa Tailwind CSS con soporte para modo oscuro:
+
+```css
+/* Modo claro */
+.bg-white dark:bg-gray-900
+
+/* Modo oscuro automático */
+.text-gray-900 dark:text-white
+```
+
+## 🔧 Configuración Avanzada
+
+### Personalizar Iconos
+
+```tsx
+import { FaCustomIcon } from "react-icons/fa";
+
+const customMenuItem = {
+  id: "custom",
+  icon: FaCustomIcon,
+  label: "Custom Item",
+  type: "link" as const,
+  to: "/custom",
+};
+```
+
+### Eventos Personalizados
+
+```tsx
+const handleCustomClick = (itemId: string) => {
+  console.log(`Clicked on ${itemId}`);
+  // Tu lógica personalizada
+};
+```
+
+## 🚀 Mejores Prácticas
+
+1. **Organización**: Mantén el `menuConfig.ts` organizado por secciones lógicas
+2. **Iconos**: Usa iconos consistentes de la misma librería (react-icons)
+3. **Rutas**: Asegúrate de que todas las rutas estén definidas en tu router
+4. **Tipos**: Aprovecha los tipos TypeScript para evitar errores
+5. **Performance**: Los hooks están optimizados con `useMemo` y `useCallback`
+
+## 🔄 Migración desde Versión Legacy
+
+Si vienes de una versión anterior:
+
+1. Actualiza las importaciones:
+
+   ```tsx
+   // Antes
+   import { LegacySidebar } from "./MenuLateral/LegacySidebar";
+
+   // Ahora
+   import Sidebar from "./components/MenuLateral";
+   ```
+
+2. Actualiza la configuración del menú según el nuevo formato
+
+3. Los props principales se mantienen compatibles
+
+## 🐛 Troubleshooting
+
+### El sidebar no aparece
+
+- Verifica que las clases de Tailwind CSS estén disponibles
+- Revisa que el z-index no esté siendo sobrescrito
+
+### Los accordeones no funcionan
+
+- Asegúrate de que `type: 'accordion'` esté correctamente configurado
+- Verifica que el array `links` esté presente y no vacío
+
+### Los popups se ven mal
+
+- Revisa que el `colorMode` se esté pasando correctamente
+- Verifica que no hay conflictos de z-index
+
+### La búsqueda no funciona
+
+- Confirma que `searchQuery` se está actualizando
+- Revisa la configuración del menú para campos faltantes
+
+## 📈 Rendimiento
+
+- **Lazy Loading**: Los componentes se cargan bajo demanda
+- **Memoización**: Hooks optimizados con React.memo
+- **Event Listeners**: Limpieza automática para evitar memory leaks
+- **CSS Optimizado**: Transiciones GPU-accelerated
 
 ## 🤝 Contribución
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
+Para contribuir al proyecto:
+
+1. Fork el repositorio
+2. Crea una rama feature (`git checkout -b feature/nueva-caracteristica`)
+3. Commit tus cambios (`git commit -am 'Agregar nueva característica'`)
+4. Push a la rama (`git push origin feature/nueva-caracteristica`)
 5. Abre un Pull Request
 
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
-## 🆘 Soporte
-
-Si tienes alguna pregunta o necesitas ayuda:
-
-1. Revisa la documentación
-2. Busca en los issues existentes
-3. Crea un nuevo issue con detalles de tu problema
-
 ---
 
-¡Disfruta usando el Sidebar Moderno como componente principal! 🚀
+**Desarrollado con ❤️ para la comunidad React + TypeScript**

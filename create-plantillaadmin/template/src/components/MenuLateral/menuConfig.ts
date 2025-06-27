@@ -11,8 +11,6 @@ import {
   FaEdit,
   FaLayerGroup,
   FaStepForward,
-  FaPlus,
-  FaCode,
   FaExclamationTriangle,
   FaPlay,
   FaKey,
@@ -28,12 +26,13 @@ import {
   FaSearch,
   FaHome,
   FaCogs,
+  FaCode,
 } from "react-icons/fa";
 
 export interface MenuLink {
   to: string;
   label: string;
-  icon?: React.ElementType; // Icono opcional para links en accordions
+  icon?: React.ElementType;
 }
 
 export interface MenuItem {
@@ -52,7 +51,7 @@ export interface MenuSection {
 
 export const menuConfig: MenuSection[] = [
   {
-    title: "MENU",
+    title: "MENU PRINCIPAL",
     items: [
       {
         id: "dashboard",
@@ -84,7 +83,6 @@ export const menuConfig: MenuSection[] = [
           { to: "/forms/form-elements", label: "Form Elements", icon: FaEdit },
           { to: "/forms/form-layout", label: "Form Layout", icon: FaLayerGroup },
           { to: "/forms/form-step-by-step", label: "Step by Step", icon: FaStepForward },
-          { to: "/forms/dynamic-form", label: "Dynamic Fields", icon: FaPlus },
           { to: "/forms/formulario-completo", label: "Formulario Completo", icon: FaWpforms },
         ],
       },
@@ -104,7 +102,6 @@ export const menuConfig: MenuSection[] = [
           { to: "/componentes/time-selector-examples", label: "Time Selector", icon: FaClock },
           { to: "/componentes/select-busqueda-examples", label: "Select Búsqueda", icon: FaSearch },
           { to: "/componentes/dinamico-examples", label: "HookForm Dinámico", icon: FaCogs },
-          { to: "/componentes/tabla-paginada-examples", label: "Tabla Paginada", icon: FaTable },
           { to: "/componentes/step-by-step-examples", label: "Step by Step", icon: FaStepForward },
         ],
       },
@@ -125,13 +122,13 @@ export const menuConfig: MenuSection[] = [
     ],
   },
   {
-    title: "OTHERS",
+    title: "OTROS",
     items: [
       {
         id: "chart",
         to: "/chart",
         icon: FaChartBar,
-        label: "Chart",
+        label: "Gráficas",
         type: "link",
       },
       {
@@ -157,6 +154,4 @@ export const menuConfig: MenuSection[] = [
       },
     ],
   },
- 
- 
 ]; 
