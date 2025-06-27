@@ -29,29 +29,14 @@ import {
   FaCode,
 } from "react-icons/fa";
 
-export interface MenuLink {
-  to: string;
-  label: string;
-  icon?: React.ElementType;
-}
-
-export interface MenuItem {
-  id: string;
-  to?: string;
-  icon: React.ElementType;
-  label: string;
-  type: 'link' | 'accordion';
-  links?: MenuLink[];
-}
-
-export interface MenuSection {
-  title: string;
-  items: MenuItem[];
-}
+// ✅ USAR TIPOS CENTRALIZADOS - No duplicar interfaces
+import { MenuSection } from './core/types';
 
 export const menuConfig: MenuSection[] = [
   {
+    id: 'main-menu',
     title: "MENU PRINCIPAL",
+    order: 1,
     items: [
       {
         id: "dashboard",
@@ -91,6 +76,10 @@ export const menuConfig: MenuSection[] = [
         icon: FaPuzzlePiece,
         label: "Componentes",
         type: "accordion",
+        badge: {
+          text: "Nuevo",
+          variant: "success"
+        },
         links: [
           { to: "/componentes", label: "Biblioteca Completa", icon: FaHome },
           { to: "/componentes/input-examples", label: "HookForm Input", icon: FaKeyboard },
@@ -122,7 +111,9 @@ export const menuConfig: MenuSection[] = [
     ],
   },
   {
+    id: 'other-menu',
     title: "OTROS",
+    order: 2,
     items: [
       {
         id: "chart",
@@ -147,11 +138,30 @@ export const menuConfig: MenuSection[] = [
         icon: FaSignInAlt,
         label: "Authentication",
         type: "accordion",
+        permissions: ['auth:view'],
         links: [
-          { to: "/auth/signin", label: "Sign In", icon: FaKey },
-          { to: "/auth/signup", label: "Sign Up", icon: FaUserPlus },
+          { 
+            to: "/auth/signin", 
+            label: "Sign In", 
+            icon: FaKey,
+            permissions: ['auth:signin']
+          },
+          { 
+            to: "/auth/signup", 
+            label: "Sign Up", 
+            icon: FaUserPlus,
+            permissions: ['auth:signup']
+          },
         ],
       },
     ],
   },
-]; 
+];
+
+// Funciones helper para compatibilidad con código existente
+export const getMenuSections = () => menuConfig;
+export const getFullMenuConfig = () => ({
+  version: '1.0.0',
+  lastUpdated: new Date(),
+  sections: menuConfig
+}); 
