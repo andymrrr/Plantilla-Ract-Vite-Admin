@@ -47,6 +47,7 @@ export const ModernSidebar: React.FC<SidebarProps> = ({
       {/* Sidebar */}
       <div
         ref={sidebarRef}
+        data-sidebar
         className={`
           fixed top-0 left-0 z-50 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700
           transition-all duration-300 ease-in-out

@@ -35,11 +35,46 @@ export const MenuItemAccordion: React.FC<MenuItemAccordionProps> = ({
 }) => {
   const IconComponent = item.icon;
   const hasLinks = item.links && item.links.length > 0;
+  
+  // ✨ NUEVO: Ref para calcular posición real del elemento
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const [popupPosition, setPopupPosition] = React.useState({ top: 0, left: 85 });
+
+  // ✨ NUEVO: Calcular posición dinámica del popup
+  React.useEffect(() => {
+    if (!sidebarOpen && isPopupOpen && buttonRef.current) {
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+      const sidebar = buttonRef.current.closest('[data-sidebar]') as HTMLElement;
+      const sidebarRect = sidebar?.getBoundingClientRect();
+      
+      const newPosition = {
+        // Posición horizontal: al lado derecho del sidebar
+        left: sidebarRect ? sidebarRect.right + 8 : 85,
+        // Posición vertical: alineada con el botón que lo activa
+        top: buttonRect.top
+      };
+      
+      // Ajustar si se sale de la pantalla
+      const popupHeight = 200; // Altura estimada del popup
+      const windowHeight = window.innerHeight;
+      
+      if (newPosition.top + popupHeight > windowHeight) {
+        newPosition.top = windowHeight - popupHeight - 20;
+      }
+      
+      if (newPosition.top < 20) {
+        newPosition.top = 20;
+      }
+      
+      setPopupPosition(newPosition);
+    }
+  }, [sidebarOpen, isPopupOpen, itemIndex]);
 
   return (
     <div className="relative group" style={{ position: 'relative' }}>
       {/* Botón del accordion */}
       <button
+        ref={buttonRef} // ✨ NUEVO: Ref para cálculos de posición
         onClick={() => handleAccordionInteraction(item.id, hasLinks || false)}
         onMouseEnter={() => handleMouseEnterAccordion(item.id, hasLinks || false)}
         onMouseLeave={() => handleMouseLeaveAccordion(item.id, hasLinks || false)}
@@ -124,13 +159,13 @@ export const MenuItemAccordion: React.FC<MenuItemAccordionProps> = ({
         </ul>
       )}
 
-      {/* Popup para sidebar colapsado */}
+      {/* ✨ MEJORADO: Popup para sidebar colapsado con posicionamiento dinámico */}
       {!sidebarOpen && hasLinks && isPopupOpen && (
         <div 
           style={{
             position: 'fixed',
-            left: '85px',
-            top: `${160 + (itemIndex * 48)}px`,
+            left: `${popupPosition.left}px`, // ✨ Posición dinámica
+            top: `${popupPosition.top}px`,   // ✨ Posición dinámica
             zIndex: 9999,
             backgroundColor: colorMode === 'dark' ? '#1f2937' : '#ffffff',
             border: `1px solid ${colorMode === 'dark' ? '#374151' : '#e5e7eb'}`,
@@ -140,7 +175,8 @@ export const MenuItemAccordion: React.FC<MenuItemAccordionProps> = ({
             boxShadow: colorMode === 'dark' 
               ? '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 10px 20px -5px rgba(0, 0, 0, 0.4)'
               : '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            animation: 'fadeInScale 0.2s ease-out' // ✨ Animación suave
           }}
           onMouseEnter={handleMouseEnterPopup}
           onMouseLeave={handleMouseLeavePopup}
@@ -221,12 +257,12 @@ export const MenuItemAccordion: React.FC<MenuItemAccordionProps> = ({
             })}
           </div>
 
-          {/* Flecha indicadora elegante */}
+          {/* ✨ MEJORADO: Flecha indicadora con posición dinámica */}
           <div 
             style={{
               position: 'absolute',
               right: '100%',
-              top: '24px',
+              top: '20px', // Posición fija relativa al popup
               width: 0,
               height: 0,
               borderTop: '8px solid transparent',
@@ -238,7 +274,7 @@ export const MenuItemAccordion: React.FC<MenuItemAccordionProps> = ({
             style={{
               position: 'absolute',
               right: '100%',
-              top: '25px',
+              top: '21px',
               width: 0,
               height: 0,
               borderTop: '7px solid transparent',

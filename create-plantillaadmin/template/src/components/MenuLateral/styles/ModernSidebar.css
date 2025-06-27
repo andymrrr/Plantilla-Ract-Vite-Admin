@@ -207,13 +207,13 @@
 
 .modern-sidebar__search-input:focus {
   outline: none;
-  border-color: var(--sidebar-icon-active);
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+  border-color: var(--sidebar-text-active);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
 }
 
 .modern-sidebar__search-clear {
   position: absolute;
-  right: 0.5rem;
+  right: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1246,4 +1246,79 @@
 
 .modern-sidebar-accordion-collapsed {
   /* Mantener compatibilidad con clases existentes */
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modern-sidebar-tooltip {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.modern-sidebar-accordion-collapsed {
+  position: fixed;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  min-width: 200px;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+.dark .modern-sidebar-accordion-collapsed {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.accordion-popup {
+  position: fixed;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 
+              0 10px 20px -5px rgba(0, 0, 0, 0.1);
+  min-width: 260px;
+  max-width: 320px;
+  z-index: 9999;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95) translateY(-10px);
+  transition: all 0.2s ease-out;
+}
+
+.accordion-popup.show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+}
+
+.dark .accordion-popup {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 
+              0 10px 20px -5px rgba(0, 0, 0, 0.4);
+}
+
+.group:hover .accordion-popup {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
 } 
