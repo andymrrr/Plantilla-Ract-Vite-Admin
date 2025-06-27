@@ -7,20 +7,18 @@ import { SidebarSearch } from './SidebarSearch';
 import { SidebarFooter } from './SidebarFooter';
 import { MenuItemLink } from './MenuItemLink';
 import { MenuItemAccordion } from './MenuItemAccordion';
-// import '../styles/ModernSidebar.css'; // ⚠️ TEMPORALMENTE DESHABILITADO PARA DEBUG
 
 export const ModernSidebar: React.FC<SidebarProps> = ({
   sidebarOpen,
   setSidebarOpen
 }) => {
-  // 🔍 DEBUG: Ver el estado actual
-  console.log('🎯 ModernSidebar render:', { sidebarOpen });
+
 
   // Hooks personalizados
   const { colorMode, toggleTheme } = useTheme();
   const { searchQuery, setSearchQuery, filteredMenu } = useMenuSearch(menuConfig);
   const {
-    expandedSections,
+    
     activeAccordionPopup,
     setActiveAccordionPopup,
     popupTimeoutRef,
@@ -37,7 +35,6 @@ export const ModernSidebar: React.FC<SidebarProps> = ({
     toggleSection,
   });
 
-  // 🔍 DEBUG: Calcular clases CSS sin conflictos con CSS personalizado
   const sidebarClasses = `
     fixed top-0 left-0 z-50 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700
     transition-all duration-300 ease-in-out
@@ -45,18 +42,15 @@ export const ModernSidebar: React.FC<SidebarProps> = ({
     lg:relative lg:translate-x-0
   `.replace(/\s+/g, ' ').trim();
   
-  console.log('📏 Sidebar classes:', sidebarClasses);
   
-  // 🎯 Forzar el ancho con style inline para evitar conflictos CSS
   const sidebarStyle: React.CSSProperties = {
-    width: sidebarOpen ? '256px' : '80px', // Forzar width con valores exactos
+    width: sidebarOpen ? '256px' : '80px', 
     minWidth: sidebarOpen ? '256px' : '80px',
     maxWidth: sidebarOpen ? '256px' : '80px'
   };
 
   return (
     <>
-      {/* Overlay para móvil */}
       {sidebarOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -64,24 +58,20 @@ export const ModernSidebar: React.FC<SidebarProps> = ({
         />
       )}
 
-      {/* Sidebar */}
       <div
         ref={sidebarRef}
         data-sidebar
         className={sidebarClasses}
         style={sidebarStyle}
       >
-        {/* Header */}
         <SidebarHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        {/* Búsqueda */}
         <SidebarSearch 
           sidebarOpen={sidebarOpen} 
           searchQuery={searchQuery} 
           setSearchQuery={setSearchQuery} 
         />
 
-        {/* Navegación con scroll */}
         <nav 
           className="flex-1 overflow-y-auto overflow-x-hidden sidebar-scroll"
           style={{ 
@@ -96,14 +86,12 @@ export const ModernSidebar: React.FC<SidebarProps> = ({
           <div className="p-4">
             {filteredMenu.map((section, sectionIndex) => (
               <div key={sectionIndex} className="mb-6">
-                {/* Título de sección */}
                 {sidebarOpen && section.title && (
                   <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                     {section.title}
                   </h3>
                 )}
 
-                {/* Items */}
                 <ul className="space-y-1" role="list">
                   {section.items.map((item, itemIndex) => {
                     const isExpanded = isSectionExpanded(item.id);
@@ -138,7 +126,7 @@ export const ModernSidebar: React.FC<SidebarProps> = ({
           </div>
         </nav>
 
-        {/* Footer */}
+        
         <SidebarFooter 
           sidebarOpen={sidebarOpen} 
           colorMode={colorMode} 

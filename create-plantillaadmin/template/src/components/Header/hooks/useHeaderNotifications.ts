@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Notificacion } from '../DropdownNotificaciones/types';
 
 // Datos de ejemplo - En producción vendrían de tu API
@@ -72,72 +72,92 @@ export const useHeaderNotifications = () => {
 
   // Simular carga inicial
   useEffect(() => {
-    setCargandoNotificaciones(true);
-    setCargandoMensajes(true);
-    
-    // Simular API call
-    setTimeout(() => {
-      setCargandoNotificaciones(false);
-      setCargandoMensajes(false);
-    }, 1000);
+    const cargarDatos = async () => {
+      setCargandoNotificaciones(true);
+      setCargandoMensajes(true);
+      
+      try {
+        // Simular API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Aquí irían las llamadas reales a la API
+      } catch (error) {
+        console.error('Error cargando notificaciones:', error);
+      } finally {
+        setCargandoNotificaciones(false);
+        setCargandoMensajes(false);
+      }
+    };
+
+    cargarDatos();
   }, []);
 
-  // Funciones para notificaciones
-  const marcarNotificacionComoLeida = (id: string) => {
+  // Funciones para notificaciones - memoizadas para evitar re-renders innecesarios
+  const marcarNotificacionComoLeida = useCallback((id: string) => {
     setNotificaciones(prev => 
       prev.map(notif => 
         notif.id === id ? { ...notif, leida: true } : notif
       )
     );
-  };
+  }, []);
 
-  const marcarTodasNotificacionesComoLeidas = () => {
+  const marcarTodasNotificacionesComoLeidas = useCallback(() => {
     setNotificaciones(prev => 
       prev.map(notif => ({ ...notif, leida: true }))
     );
-  };
+  }, []);
 
-  const eliminarNotificacion = (id: string) => {
+  const eliminarNotificacion = useCallback((id: string) => {
     setNotificaciones(prev => prev.filter(notif => notif.id !== id));
-  };
+  }, []);
 
-  const manejarClickNotificacion = (notificacion: Notificacion) => {
+  const manejarClickNotificacion = useCallback((notificacion: Notificacion) => {
     console.log('Notificación clickeada:', notificacion);
     // Aquí puedes agregar navegación o lógica específica
     if (notificacion.link) {
       // window.location.href = notificacion.link;
     }
-  };
+  }, []);
 
-  // Funciones para mensajes
-  const marcarMensajeComoLeido = (id: string) => {
+  // Funciones para mensajes - memoizadas
+  const marcarMensajeComoLeido = useCallback((id: string) => {
     setMensajes(prev => 
       prev.map(mensaje => 
         mensaje.id === id ? { ...mensaje, leida: true } : mensaje
       )
     );
-  };
+  }, []);
 
-  const marcarTodosMensajesComoLeidos = () => {
+  const marcarTodosMensajesComoLeidos = useCallback(() => {
     setMensajes(prev => 
       prev.map(mensaje => ({ ...mensaje, leida: true }))
     );
-  };
+  }, []);
 
-  const eliminarMensaje = (id: string) => {
+  const eliminarMensaje = useCallback((id: string) => {
     setMensajes(prev => prev.filter(mensaje => mensaje.id !== id));
-  };
+  }, []);
 
-  const manejarClickMensaje = (mensaje: Notificacion) => {
+  const manejarClickMensaje = useCallback((mensaje: Notificacion) => {
     console.log('Mensaje clickeado:', mensaje);
     // Lógica para abrir chat o conversación
-  };
+  }, []);
 
-  // Funciones de búsqueda
-  const manejarBusqueda = (query: string) => {
+  // Funciones de búsqueda - memoizada
+  const manejarBusqueda = useCallback((query: string) => {
     console.log('Búsqueda:', query);
     // Implementar lógica de búsqueda
-  };
+  }, []);
+
+  // Estadísticas memoizadas
+  const estadisticasNotificaciones = useMemo(() => ({
+    total: notificaciones.length,
+    noLeidas: notificaciones.filter(n => !n.leida).length
+  }), [notificaciones]);
+
+  const estadisticasMensajes = useMemo(() => ({
+    total: mensajes.length,
+    noLeidos: mensajes.filter(m => !m.leida).length
+  }), [mensajes]);
 
   return {
     // Estados
@@ -146,12 +166,17 @@ export const useHeaderNotifications = () => {
     cargandoNotificaciones,
     cargandoMensajes,
     
+    // Estadísticas
+    estadisticasNotificaciones,
+    estadisticasMensajes,
+    
     // Funciones de notificaciones
     marcarNotificacionComoLeida,
     marcarTodasNotificacionesComoLeidas,
     eliminarNotificacion,
     manejarClickNotificacion,
     
+    // Funciones de mensajes
     marcarMensajeComoLeido,
     marcarTodosMensajesComoLeidos,
     eliminarMensaje,

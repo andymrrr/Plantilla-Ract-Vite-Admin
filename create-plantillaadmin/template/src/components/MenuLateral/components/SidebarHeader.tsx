@@ -18,10 +18,8 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
 
   return (
     <div className={`flex items-center ${sidebarOpen ? 'justify-between' : 'justify-center'} ${sidebarOpen ? sizeConfig.padding : 'p-2'} border-b border-gray-200 dark:border-gray-700 flex-shrink-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900`}>
-      {/* ✨ Logo Container Dinámico - Solo visible cuando está abierto */}
       {sidebarOpen && (
         <div className="flex items-center transition-all duration-300 opacity-100 scale-100">
-          {/* Logo/Icono con configuración dinámica */}
           <div className="relative flex items-center justify-center group">
             {config.imagePath && !logoError ? (
               <img 
@@ -45,14 +43,12 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
               </div>
             )}
             
-            {/* Indicador de estado online (configurable) */}
             {config.showOnlineIndicator && (
               <div className={`absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full ${
                 config.enablePulseIndicator ? 'animate-pulse' : ''
               }`} />
             )}
 
-            {/* Tooltip cuando el sidebar está colapsado */}
             {config.showTooltip && !sidebarOpen && (
               <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-4 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
                 {config.title}
@@ -61,7 +57,6 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
             )}
           </div>
 
-          {/* Texto del logo con configuración dinámica */}
           <div className="ml-4 transition-all duration-300">
             <div className={`${sizeConfig.titleSize} font-bold text-gray-900 dark:text-white leading-tight`}>
               {config.title}
@@ -75,15 +70,14 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
         </div>
       )}
 
-      {/* ✨ Botón toggle mejorado - Más prominente cuando está cerrado */}
       <button
         onClick={() => {
           setSidebarOpen(!sidebarOpen);
         }}
         className={`group rounded-xl hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-all duration-200 shadow-sm hover:shadow-md border border-transparent hover:border-gray-200 dark:hover:border-gray-600 ${
           sidebarOpen 
-            ? 'p-3' // Normal cuando está abierto
-            : 'p-4 bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-lg scale-110' // Más grande y destacado cuando está cerrado
+            ? 'p-3' 
+            : 'p-4 bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-lg scale-110' 
         }`}
         aria-label={sidebarOpen ? 'Colapsar menú' : 'Abrir menú'}
       >
@@ -96,10 +90,10 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
           ) : (
             <>
               <FaBars 
-                size={28} // Más grande cuando está cerrado
+                size={28} 
                 className={config.enableHoverEffects ? "transform group-hover:scale-110 transition-transform duration-200" : ""} 
               />
-              {/* Tooltip cuando está cerrado */}
+              
               <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-4 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
                 Abrir menú
                 <div className="absolute right-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-y-4 border-y-transparent border-r-4 border-r-gray-900 dark:border-r-gray-700" />

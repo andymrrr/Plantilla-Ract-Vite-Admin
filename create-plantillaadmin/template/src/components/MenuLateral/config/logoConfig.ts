@@ -12,36 +12,34 @@ import {
   FaStar
 } from 'react-icons/fa';
 
-// ===== TIPOS PARA LA CONFIGURACIÓN DEL LOGO =====
 
 export interface LogoConfig {
-  // Configuración de imagen
+
   imagePath?: string;
   altText: string;
-  
-  // Configuración de fallback
+
   fallbackIcon: IconType;
   fallbackBgGradient: {
     from: string;
     to: string;
   };
   
-  // Textos
+  
   title: string;
   subtitle?: string;
   showSubtitle: boolean;
+
   
-  // Configuración visual
   size: 'sm' | 'md' | 'lg' | 'xl';
   showOnlineIndicator: boolean;
   showTooltip: boolean;
   
-  // Configuración de animaciones
+  
   enableHoverEffects: boolean;
   enablePulseIndicator: boolean;
 }
 
-// ===== TAMAÑOS PREDEFINIDOS =====
+
 
 export const LOGO_SIZES = {
   sm: {
@@ -74,12 +72,12 @@ export const LOGO_SIZES = {
   }
 } as const;
 
-// ===== CONFIGURACIONES PREDEFINIDAS =====
+
 
 export const LOGO_PRESETS: Record<string, LogoConfig> = {
   default: {
-    imagePath: '/vite.svg',
-    altText: 'Logo Admin',
+    imagePath: '/Logo.png',
+    altText: 'Plantilla',
     fallbackIcon: FaUserShield,
     fallbackBgGradient: {
       from: 'from-blue-500',
@@ -257,22 +255,17 @@ export const LOGO_PRESETS: Record<string, LogoConfig> = {
   }
 };
 
-// ===== CONFIGURACIÓN ACTIVA =====
-// 🎯 Cambia este preset para usar diferentes configuraciones
-export const ACTIVE_LOGO_CONFIG: LogoConfig = LOGO_PRESETS.premium;
 
-// ===== FUNCIONES DE UTILIDAD =====
+export const ACTIVE_LOGO_CONFIG: LogoConfig = LOGO_PRESETS.default;
 
-/**
- * Obtiene la configuración de tamaño basada en el preset seleccionado
- */
+
+
+
 export const getLogoSizeConfig = (size: LogoConfig['size']) => {
   return LOGO_SIZES[size];
 };
 
-/**
- * Crea una configuración personalizada mezclando un preset base con modificaciones
- */
+
 export const createCustomLogoConfig = (
   basePreset: keyof typeof LOGO_PRESETS,
   overrides: Partial<LogoConfig>
@@ -283,9 +276,7 @@ export const createCustomLogoConfig = (
   };
 };
 
-/**
- * Valida si una configuración de logo es válida
- */
+
 export const validateLogoConfig = (config: LogoConfig): boolean => {
   try {
     return (

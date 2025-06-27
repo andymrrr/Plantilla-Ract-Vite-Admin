@@ -1,30 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaComments } from 'react-icons/fa';
-
-// Componentes existentes
-import DropdownUser from './DropdownUser';
-import DarkModeSwitcher from './DarkModeSwitcher';
-
-// Nuevos componentes modularizados
-import { HamburgerMenu, SearchBar } from './HamburguesaMenu';
-import DropdownNotificaciones from './DropdownNotificaciones';
-
-// Hooks y tipos
-import { useHeaderNotifications } from './hooks/useHeaderNotifications';
+import React, { memo, useMemo } from 'react';
+import { SearchBar } from './HamburguesaMenu';
+import { HeaderLogo, HeaderActions, HeaderMobile } from './components';
+import { useHeaderNotifications, useHeaderConfig } from './hooks';
 import { HeaderProps } from './types';
+import { HEADER_DEFAULTS, DEFAULT_USER, DEFAULT_LOGO } from './constants/headerConstants';
 
 // Assets
 import LogoIcon from '../../images/logo/logo-icon.svg';
 import UserOneImage from '../../images/user/user-01.png';
 
-const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
+const Header: React.FC<HeaderProps> = memo(({
+  sidebarOpen,
+  setSidebarOpen,
+  className = '',
+  userData,
+  onLogout,
+  onSearch,
+  showNotifications = true,
+  showMessages = true,
+  showSearch = true
+}) => {
+  // Usar el hook de configuración
+  const config = useHeaderConfig({
+    sidebarOpen,
+    setSidebarOpen,
+    showNotifications,
+    showMessages,
+    showSearch
+  });
+
   const {
     // Estados
     notificaciones,
     mensajes,
     cargandoNotificaciones,
     cargandoMensajes,
+    
+    // Estadísticas
+    estadisticasNotificaciones,
+    estadisticasMensajes,
     
     // Funciones de notificaciones
     marcarNotificacionComoLeida,
@@ -41,88 +55,81 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
     // Funciones generales
     manejarBusqueda
   } = useHeaderNotifications();
+
+  // Memoizar el usuario por defecto si no se proporciona
+  const defaultUserData = useMemo(() => ({
+    ...DEFAULT_USER,
+    avatar: UserOneImage
+  }), []);
+
+  // Memoizar la función de logout por defecto
+  const defaultLogout = useMemo(() => () => {
+    console.log('Cerrando sesión...');
+    // Aquí iría la lógica de logout
+  }, []);
+
+  // Memoizar la función de búsqueda
+  const handleSearch = useMemo(() => (query: string) => {
+    if (onSearch) {
+      onSearch(query);
+    } else {
+      manejarBusqueda(query);
+    }
+  }, [onSearch, manejarBusqueda]);
+
+  // Memoizar la función de toggle del sidebar
+  const handleToggleSidebar = useMemo(() => () => {
+    setSidebarOpen(!sidebarOpen);
+  }, [sidebarOpen, setSidebarOpen]);
+
   return (
-    <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
+    <header 
+      className={`sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none ${className}`}
+      role="banner"
+      aria-label={config.ariaLabel}
+    >
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         {/* Mobile Menu Section */}
-        <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
-          <HamburgerMenu
-            isOpen={sidebarOpen}
-            onToggle={() => setSidebarOpen(!sidebarOpen)}
-          />
-          
-          <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" />
-          </Link>
-        </div>
-
-        {/* Search Bar */}
-        <SearchBar
-          onSearch={manejarBusqueda}
-          placeholder="Buscar en el sistema..."
+        <HeaderMobile
+          sidebarOpen={sidebarOpen}
+          onToggleSidebar={handleToggleSidebar}
+          logoUrl={LogoIcon}
+          logoAltText={config.logoAltText}
         />
 
-        {/* Actions Section */}
-        <div className="flex items-center gap-3 2xsm:gap-7">
-          <ul className="flex items-center gap-2 2xsm:gap-4">
-            {/* Dark Mode Toggler */}
-            <DarkModeSwitcher />
-
-            {/* Notification Menu */}
-            <DropdownNotificaciones
-              notificaciones={notificaciones}
-              cargando={cargandoNotificaciones}
-              onMarcarComoLeida={marcarNotificacionComoLeida}
-              onMarcarTodasComoLeidas={marcarTodasNotificacionesComoLeidas}
-              onEliminarNotificacion={eliminarNotificacion}
-              onClickNotificacion={manejarClickNotificacion}
-              titulo="Notificaciones del Sistema"
-              configuracion={{
-                tamaño: 'medium',
-                posicion: 'right',
-                maxHeight: 400,
-                width: 350
-              }}
-            />
-
-            {/* Messages Menu */}
-            <DropdownNotificaciones
-              notificaciones={mensajes}
-              cargando={cargandoMensajes}
-              onMarcarComoLeida={marcarMensajeComoLeido}
-              onMarcarTodasComoLeidas={marcarTodosMensajesComoLeidos}
-              onEliminarNotificacion={eliminarMensaje}
-              onClickNotificacion={manejarClickMensaje}
-              titulo="Mensajes"
-              iconoPersonalizado={<FaComments />}
-              configuracion={{
-                tamaño: 'medium',
-                posicion: 'right',
-                maxHeight: 400,
-                width: 350,
-                mostrarIconos: false
-              }}
-              ariaLabel="Mensajes"
-            />
-          </ul>
-
-          {/* User Area */}
-          <DropdownUser
-            userData={{
-              nombre: 'Admin Usuario',
-              cargo: 'Administrador del Sistema',
-              avatar: UserOneImage
-            }}
-            onLogout={() => {
-              console.log('Cerrando sesión...');
-              // Aquí iría la lógica de logout
-            }}
-            logoutLabel="Cerrar Sesión"
+        {/* Search Bar */}
+        {config.showSearch && (
+          <SearchBar
+            onSearch={handleSearch}
+            placeholder={config.searchPlaceholder}
+            className="hidden md:block"
           />
-        </div>
+        )}
+
+        {/* Actions Section */}
+        <HeaderActions
+          showNotifications={config.showNotifications}
+          showMessages={config.showMessages}
+          notificaciones={notificaciones}
+          mensajes={mensajes}
+          cargandoNotificaciones={cargandoNotificaciones}
+          cargandoMensajes={cargandoMensajes}
+          onMarcarNotificacionComoLeida={marcarNotificacionComoLeida}
+          onMarcarTodasNotificacionesComoLeidas={marcarTodasNotificacionesComoLeidas}
+          onEliminarNotificacion={eliminarNotificacion}
+          onClickNotificacion={manejarClickNotificacion}
+          onMarcarMensajeComoLeido={marcarMensajeComoLeido}
+          onMarcarTodosMensajesComoLeidos={marcarTodosMensajesComoLeidos}
+          onEliminarMensaje={eliminarMensaje}
+          onClickMensaje={manejarClickMensaje}
+          userData={userData || defaultUserData}
+          onLogout={onLogout || defaultLogout}
+        />
       </div>
     </header>
   );
-};
+});
+
+Header.displayName = 'Header';
 
 export default Header;

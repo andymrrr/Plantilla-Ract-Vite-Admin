@@ -39,7 +39,7 @@ export const MenuItemLink: React.FC<MenuItemLinkProps> = ({
         )}
       </NavLink>
       
-      {/* Tooltip para sidebar colapsado */}
+      
       {!sidebarOpen && (
         <div 
           className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-2 py-1 
