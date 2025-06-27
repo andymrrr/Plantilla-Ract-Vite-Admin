@@ -1,0 +1,39 @@
+import { FetchConfig } from './types';
+import { FetchApi } from './FetchApi';
+import { FetchTokenManager } from './TokenManager';
+
+export const FetchClient = new FetchApi({
+  withAuth: true
+});
+
+export const FetchClientSinAuth = new FetchApi({
+  withAuth: false
+});
+
+export const FetchClientArchivos = new FetchApi({
+  withAuth: true,
+  headers: {
+  }
+});
+
+export const configurarTokensFetch = (accessToken: string, refreshToken?: string): void => {
+  FetchTokenManager.setTokens({ access_token: accessToken, refresh_token: refreshToken });
+};
+
+export const limpiarTokensFetch = (): void => {
+  FetchTokenManager.clearTokens();
+};
+
+export const estaAutenticadoFetch = (): boolean => {
+  return FetchTokenManager.hasValidToken();
+};
+
+export const crearFetchPersonalizado = (config: FetchConfig): FetchApi => {
+  return new FetchApi(config);
+};
+
+export { FetchApi } from './FetchApi';
+export { FetchTokenManager } from './TokenManager';
+export { FetchErrorHandler } from './ErrorHandler';
+export { FetchRefreshTokenHandler } from './RefreshTokenHandler';
+export type { FetchConfig, FetchError, FetchResponse, TokenData } from './types'; 
