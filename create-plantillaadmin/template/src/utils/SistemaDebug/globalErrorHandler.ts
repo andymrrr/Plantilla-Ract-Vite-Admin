@@ -26,7 +26,7 @@ export class GlobalErrorHandler {
       enableStackTrace: true
     };
 
-    // Guardamos las referencias originales
+    
     this.originalConsoleError = console.error.bind(console);
     this.originalConsoleWarn = console.warn.bind(console);
   }

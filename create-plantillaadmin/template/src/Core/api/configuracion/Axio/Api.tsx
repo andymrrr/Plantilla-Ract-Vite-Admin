@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+ import { AxiosInstance } from 'axios';
 import { ApiConfig } from './types';
 import { ApiFactory } from './ApiFactory';
 import { TokenManager } from './TokenManager';

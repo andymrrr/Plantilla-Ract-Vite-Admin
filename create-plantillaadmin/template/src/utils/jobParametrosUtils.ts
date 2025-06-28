@@ -1,9 +1,7 @@
 import { 
     FormularioTabData,
-    procesarConfiguracionAPI 
 } from "../components/FormulariosControles/HookFormDinamico";
-import { TipoParametro } from "../Core/Dominio/Model/enum/TipoParametro";
-import { JobParametro } from "../Core/Dominio/Model/JobProgramado/JobParametro";
+import { TipoParametro } from "../Core/Domain/Enum/TipoParametro";
 
 export interface ParametroGenerico {
     propiedad: string;
@@ -17,57 +15,8 @@ export interface ConfiguracionAPIProcessada<T = ParametroGenerico> {
     parametros: T[];
 }
 
-export function convertirConfiguracionAParametros<T = JobParametro>(
-    configuracionAPI: FormularioTabData,
-    pestanasAProcesar: string[] = ['Headers', 'Query Params'],
-    crearParametroFn?: (tipo: TipoParametro, propiedad: string, valor: string) => T
-): ConfiguracionAPIProcessada<T> {
-    
-    const configuracionProcesada = procesarConfiguracionAPI(
-        configuracionAPI, 
-        pestanasAProcesar
-    );
 
-    const parametros: T[] = [];
-    
-    const crearParametro = crearParametroFn || ((tipo: TipoParametro, propiedad: string, valor: string): T => 
-        crearJobParametro(tipo, propiedad, valor) as T
-    );
-    
-    configuracionProcesada.headers.forEach(header => {
-        if (header.nombre && header.valor) {
-            parametros.push(
-                crearParametro(TipoParametro.Header, header.nombre, header.valor)
-            );
-        }
-    });
-    
-    configuracionProcesada.queryParams.forEach(param => {
-        if (param.nombre && param.valor) {
-            parametros.push(
-                crearParametro(TipoParametro.Query, param.nombre, param.valor)
-            );
-        }
-    });
 
-    return {
-        headers: configuracionProcesada.headers,
-        queryParams: configuracionProcesada.queryParams,
-        parametros
-    };
-}
-
-export function crearJobParametro(
-    tipo: TipoParametro,
-    propiedad: string,
-    valor: string
-): JobParametro {
-    return {
-        propiedad: propiedad,
-        valor: valor,
-        tipo: tipo
-    };
-}
 
 export function validarConfiguracionAPI(
     configuracionAPI: FormularioTabData
@@ -99,16 +48,5 @@ export function validarConfiguracionAPI(
     return {
         esValida: errores.length === 0,
         errores
-    };
-}
-
-export function obtenerEstadisticasParametros<T extends JobParametro>(parametros: T[]) {
-    const headers = parametros.filter(p => p.tipo === TipoParametro.Header).length;
-    const queryParams = parametros.filter(p => p.tipo === TipoParametro.Query).length;
-
-    return {
-        totalParametros: parametros.length,
-        headers,
-        queryParams
     };
 }
