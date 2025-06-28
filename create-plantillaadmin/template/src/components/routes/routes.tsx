@@ -25,6 +25,7 @@ import HookFormSelectBusquedaExamples from "../../pages/Componentes/SelectBusque
 import HookFormDinamicoExamples from "../../pages/Componentes/HookFormDinamicoExamples";
 import TablaPaginadaExamples from "../../pages/Componentes/TablaPaginadaExamples";
 import StepByStepExamples from "../../pages/Componentes/StepByStepExamples";
+import ContenedorExamples from "../../pages/Componentes/ContenedorExamples";
 import TestSidebar from "../../pages/TestSidebar";
 import { RouteConfig } from "./RouteConfig";
 
@@ -164,6 +165,11 @@ export const routes: RouteConfig[] = [
     path: '/componentes/step-by-step-examples',
     title: 'Ejemplos de StepByStep | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <StepByStepExamples />,
+  },
+  {
+    path: '/componentes/contenedor-examples',
+    title: 'Ejemplos de Contenedor Mejorado | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    element: <ContenedorExamples />,
   },
   {
     path: '/test-sidebar',

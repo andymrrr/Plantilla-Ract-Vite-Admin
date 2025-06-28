@@ -10,7 +10,8 @@ import {
   FaSearch,
   FaArrowRight,
   FaCode,
-  FaEye
+  FaEye,
+  FaBox
 } from 'react-icons/fa'
 
 interface ComponenteInfo {
@@ -182,6 +183,26 @@ export default function ComponentesIndex() {
         "Gestión de inventario",
         "Directorios extensos",
         "Bases de datos grandes"
+      ]
+    },
+    {
+      nombre: "Contenedor",
+      descripcion: "Componente flexible y responsive para organizar contenido con múltiples opciones de layout, espaciado y personalización.",
+      icono: FaBox,
+      ruta: "/componentes/contenedor-examples",
+      caracteristicas: [
+        "Múltiples layouts (Grid, Flex, Block)",
+        "Espaciado configurable (6 niveles)",
+        "Padding personalizable (5 niveles)",
+        "Columnas flexibles (1, 2, 3, 4, 6, 12)",
+        "Accesibilidad integrada"
+      ],
+      casosUso: [
+        "Layouts de páginas",
+        "Galerías de productos",
+        "Dashboards de métricas",
+        "Formularios complejos",
+        "Organización de contenido"
       ]
     }
   ]

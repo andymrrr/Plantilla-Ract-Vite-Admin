@@ -1,6 +1,6 @@
 import Tooltip from '../../components/UI/Tooltip';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import { Contenedor } from '../../components/UI/Contenedor';
+import { Contenedor } from '../../components/UI/Contenedor/Contenedor';
 import { Tarjeta } from '../../components/UI/Tarjeta';
 
 export default function TooltipExamples() {

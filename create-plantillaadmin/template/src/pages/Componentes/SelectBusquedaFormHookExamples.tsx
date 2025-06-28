@@ -4,7 +4,7 @@ import { HookFormSelectBusqueda } from '../../components/FormulariosControles/Ho
 import { FaUser, FaGlobe, FaBuilding, FaCity, FaBook, FaTag } from 'react-icons/fa'
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb"
 import Tarjeta from "../../components/UI/Tarjeta/Tarjeta"
-import { Contenedor } from "../../components/UI/Contenedor"
+import { Contenedor } from "../../components/UI/Contenedor/Contenedor"
 
 interface FormValues {
   [key: string]: string

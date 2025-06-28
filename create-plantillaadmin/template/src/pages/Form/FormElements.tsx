@@ -6,7 +6,7 @@ import { HookFormCheckbox } from "../../components/FormulariosControles/HookForm
 import HookFormFile from "../../components/FormulariosControles/HookFormFile";
 import { HookFormSwitcher } from "../../components/FormulariosControles/HookFormSwitcher";
 import { Tarjeta } from "../../components/UI/Tarjeta";
-import { Contenedor } from "../../components/UI/Contenedor";
+import { Contenedor } from "../../components/UI/Contenedor/Contenedor";
 import EtiquetaEstado from "../../components/UI/Etiqueta-Estado";
 // Importamos algunos iconos para los ejemplos
 import {

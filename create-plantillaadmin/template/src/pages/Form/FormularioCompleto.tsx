@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb"
 import { Tarjeta } from '../../components/UI/Tarjeta'
-import { Contenedor } from "../../components/UI/Contenedor"
+import { Contenedor } from "../../components/UI/Contenedor/Contenedor"
 
 // Importar TODOS los componentes HookForm
 import HookFormInput from '../../components/FormulariosControles/HookFormInput/HookFormInput'

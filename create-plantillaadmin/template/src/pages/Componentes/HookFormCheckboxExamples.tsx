@@ -5,7 +5,7 @@ import { FaHeart, FaStar, FaCheck, FaTimes, FaUser, FaBell, FaCog } from 'react-
 import { FaShieldAlt as FaShield } from 'react-icons/fa';
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import Tarjeta from "../../components/UI/Tarjeta/Tarjeta";
-import { Contenedor } from "../../components/UI/Contenedor";
+import { Contenedor } from "../../components/UI/Contenedor/Contenedor";
 
 interface FormValues {
   [key: string]: boolean

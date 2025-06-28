@@ -7,7 +7,7 @@ import {
   GraficoPastel,
   GraficoRadar,
 } from "../../components/Charts";
-import { Contenedor } from "../../components/UI/Contenedor";
+import { Contenedor } from "../../components/UI/Contenedor/Contenedor";
 import Tarjeta from "../../components/UI/Tarjeta/Tarjeta";
 
 const Graficas: React.FC = () => {

@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb"
 import Tarjeta from "../../components/UI/Tarjeta/Tarjeta"
-import { Contenedor } from "../../components/UI/Contenedor"
+import { Contenedor } from "../../components/UI/Contenedor/Contenedor"
 import HookFormDinamico from '../../components/FormulariosControles/HookFormDinamico'
 
 // Configuraciones predefinidas

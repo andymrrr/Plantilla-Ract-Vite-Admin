@@ -16,7 +16,7 @@ import {
   FaLock
 } from 'react-icons/fa';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import { Contenedor } from '../../components/UI/Contenedor';
+import { Contenedor } from '../../components/UI/Contenedor/Contenedor';
 import StepByStep from '../../components/UI/StepByStep';
 import { Paso, TemaStepByStep, TamanoStepByStep, VarianteStepByStep } from '../../components/UI/StepByStep/types';
 import HookFormInput from '../../components/FormulariosControles/HookFormInput/HookFormInput';

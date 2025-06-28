@@ -1,6 +1,6 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useForm } from 'react-hook-form';
-import { Contenedor } from '../../components/UI/Contenedor';
+import { Contenedor } from '../../components/UI/Contenedor/Contenedor';
 import Tarjeta from '../../components/UI/Tarjeta/Tarjeta';
 import { HookFormInput } from '../../components/FormulariosControles/HookFormInput';
 import { HookFormTextarea } from '../../components/FormulariosControles/HookFormTextTarea';

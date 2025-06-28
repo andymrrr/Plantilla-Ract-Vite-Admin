@@ -3,7 +3,7 @@ import { HookFormInput } from '../../components/FormulariosControles/HookFormInp
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaSearch, FaEye, FaEyeSlash, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaGlobe, FaCreditCard, FaDollarSign, FaPercentage, FaHashtag } from 'react-icons/fa';
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import Tarjeta from "../../components/UI/Tarjeta/Tarjeta";
-import { Contenedor } from "../../components/UI/Contenedor";
+import { Contenedor } from "../../components/UI/Contenedor/Contenedor";
 
 interface FormValues {
   [key: string]: string
